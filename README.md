@@ -2,10 +2,10 @@
 # 🚀 SGPI: Sistema de Gestión de Procesos Institucionales
 ## 📋 Tabla de Contenidos
 - [Descripción del Proyecto](#-descripción-del-proyecto)
-- [Arquitectura y Diseño](#-arquitectura-y-diseño)
-- [Instalación y Configuración](#-instalación-y-configuración)
-- [Uso del Sistema](#-uso-del-sistema)
 - [Equipo de Trabajo](#-equipo-de-trabajo)
+- [Tecnologias Utilizadas](#-tecnolgias-utlizadas)
+- [Estructura del Repositorio](#-estructura-del-repositorio)
+
 
   
 Este proyecto consiste en el diseño y desarrollo de un Sistema de Información de Gestión Institucional, creado con el propósito de centralizar, automatizar y optimizar la administración de los planes de acción vinculados a los diferentes procesos de una institución.
