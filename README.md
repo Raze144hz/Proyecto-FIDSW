@@ -35,14 +35,14 @@ A nivel de seguridad, el sistema cuenta con autenticación de usuarios y control
 
 *   **David Andrés Galindo Rojas** - *Líder Técnico / Responsable de Repositorio y Arquitectura*
 *   **Miguel Ángel Gómez López** - *Scrum Master / Responsable de Planeación Ágil*
-*   **[Nombre Responsable 1]** - *Responsable de Requisitos y Propuesta*
+*   **Juan Sebastián Martínez** - *Responsable de Requisitos y Propuesta*
 *   **David Álvarez Rodríguez** - *Responsable de Gestión y Reportes*
 
 ## 🛠️ Tecnologías Utilizadas
 
-*   **Lenguaje de Programación:** [Ej: C++, Java, Python]
-*   **Base de Datos:** [Ej: PostgreSQL, MySQL]
-*   **Herramientas:** GitHub Projects, Git, [Otras herramientas]
+*   **Lenguaje de Programación:**  Java
+*   **Base de Datos:** 
+*   **Herramientas:** GitHub Projects, Git
 
 ## 📂 Estructura del Repositorio
 
