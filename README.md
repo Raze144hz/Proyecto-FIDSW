@@ -1,5 +1,12 @@
 # Proyecto-FIDSW
 # 🚀 SGPI: Sistema de Gestión de Procesos Institucionales
+
+![GitHub repo size](https://img.shields.io/github/repo-size/Raze144hz/Proyecto-FIDSW?style=for-the-badge)
+![GitHub contributors](https://img.shields.io/github/contributors/Raze144hz/Proyecto-FIDSW?style=for-the-badge&color=orange)
+![GitHub last commit](https://img.shields.io/github/last-commit/Raze144hz/Proyecto-FIDSW?style=for-the-badge&color=green)
+![Status](https://img.shields.io/badge/Estado-En%20Desarrollo-blue?style=for-the-badge)
+
+
 ## 📋 Tabla de Contenidos
 - [Descripción del Proyecto](#-descripción-del-proyecto)
 - [Equipo de Trabajo](#-equipo-de-trabajo)
