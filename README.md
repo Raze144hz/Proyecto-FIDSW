@@ -1,6 +1,13 @@
 # Proyecto-FIDSW
-# 🚀 Título del Proyecto
+# 🚀 SGPI: Sistema de Gestión de Procesos Institucionales
+## 📋 Tabla de Contenidos
+- [Descripción del Proyecto](#-descripción-del-proyecto)
+- [Arquitectura y Diseño](#-arquitectura-y-diseño)
+- [Instalación y Configuración](#-instalación-y-configuración)
+- [Uso del Sistema](#-uso-del-sistema)
+- [Equipo de Trabajo](#-equipo-de-trabajo)
 
+  
 Este proyecto consiste en el diseño y desarrollo de un Sistema de Información de Gestión Institucional, creado con el propósito de centralizar, automatizar y optimizar la administración de los planes de acción vinculados a los diferentes procesos de una institución.
 
 Frente a la necesidad de mantener un control riguroso sobre las metas y proyectos internos, esta plataforma integral busca transformar la planificación institucional, pasando de métodos manuales o descentralizados a un ecosistema digital colaborativo, seguro y enfocado en el cumplimiento.
