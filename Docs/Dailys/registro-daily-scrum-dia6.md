@@ -1,4 +1,4 @@
-# Registro de Daily Scrum - Día 5
+# Registro de Daily Scrum - Día 6
 **Fecha:** 23/09/2026
 **Scrum Master:** Miguel Ángel Gómez López
 **Asistentes:** David Galindo, Miguel Gómez, Juan Martínez, David Álvarez
