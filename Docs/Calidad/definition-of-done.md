@@ -69,6 +69,6 @@ Un sprint está terminado cuando:
 
 ## 4. Cómo se aplica
 
-- El autor del pull request marca la lista de verificación de la plantilla de PR (`.github/pull_request_template.md`), que resume la sección 1.
-- Quien revisa el PR comprueba la lista antes de aprobar.
+- Quien abre el pull request revisa que la HU cumpla la sección 1 antes de pedir la revisión.
+- Quien revisa el PR comprueba la sección 1 antes de aprobar.
 - Si el equipo cambia un criterio, se actualiza este documento por pull request y se avisa en la siguiente daily.
