@@ -38,8 +38,7 @@
 | CP-ENT-03 | Ejecutar el script del modelo relacional de `Database/` sobre una base vacía | Se crean las 7 tablas (AREA, ROL, USUARIO, EVIDENCIA, PLAN_ACCION, OBSERVACION, NOTIFICACION) con sus llaves, sin errores. |
 | CP-ENT-04 | Abrir el frontend web en el navegador | Carga la página inicial sin errores en la consola del navegador. |
 | CP-ENT-05 | Arrancar el proyecto en Windows y en Linux (RNF-08) | Arranca en los dos sistemas sin cambiar el código. |
-| CP-ENT-06 | Abrir un pull request de prueba hacia `develop` | Aparece la lista de verificación de la Definition of Done. |
-| CP-ENT-07 | Revisar que `develop` está al día con `main` | `develop` contiene `Docs/`, `Graficas/` y `.github/` actuales. |
+| CP-ENT-06 | Revisar que `develop` está al día con `main` | `develop` contiene las carpetas `Docs/` y `Graficas/` actuales. |
 
 ## 5. Resultados
 
@@ -51,13 +50,12 @@
 | CP-ENT-04 | | | | |
 | CP-ENT-05 | | | | |
 | CP-ENT-06 | | | | |
-| CP-ENT-07 | | | | |
 
 ## 6. Resumen
 
 | Indicador | Valor |
 |---|---|
-| Casos planeados | 7 |
+| Casos planeados | 6 |
 | Casos ejecutados | |
 | Casos que pasan | |
 | Casos que fallan | |

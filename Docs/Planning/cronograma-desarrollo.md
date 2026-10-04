@@ -29,7 +29,7 @@ El Sprint 2 va con unos **6 días de atraso**. Las HU que estaban para programar
 | Fecha | Hito | Objetivo |
 |---|---|---|
 | 3 – 4 oct (sáb – dom) | Cierre del diseño técnico | Aprobar la DoD, el formato de actas de prueba y este cronograma. Subir los mockups (`Docs/Mockups`) y el modelo de BD (`Database/`). Decidir los estados del plan de acción. |
-| 5 oct (lun) | Configuración del entorno | Esqueleto del proyecto Spring + frontend web en `develop`, PostgreSQL con el script del modelo relacional, ramas y plantilla de PR funcionando. Crear el milestone y los issues del Sprint 3. |
+| 5 oct (lun) | Configuración del entorno | Esqueleto del proyecto Spring + frontend web en `develop`, PostgreSQL con el script del modelo relacional, ramas `develop` y `feature/` funcionando. Crear el milestone y los issues del Sprint 3. |
 | 6 oct (mar) | Congelamiento y pruebas | Verificar que el entorno arranca y conecta con la base de datos. Llenar la primera acta de pruebas (prueba del entorno). |
 | 7 oct (mié) | Sprint Review y Retrospectiva | Presentar el diseño técnico y el entorno funcionando. Registrar la Review y la Retro en `Docs/Review` y `Docs/Retrospective`. |
 
