@@ -6,7 +6,7 @@ Grupo Los FIS
 
 - David Galindo Rojas
 - Miguel Ángel Gómez
-- Juan Sebastián Gómez
+- Juan Sebastián Martínez
 - David Álvarez Rodríguez
 
 Pontificia Universidad Javeriana, Facultad de Ingeniería
@@ -23,7 +23,7 @@ Durante este proceso se revisó cada una de las historias mediante criterios de 
 
 Además, cada historia fue complementada con sub-historias que permiten descomponer el trabajo necesario para su desarrollo, incluyendo actividades de implementación, validación y pruebas. También se estableció una Definition of Done, que es un conjunto de condiciones que deben cumplirse antes de considerar una historia terminada. Algunos ejemplos de DoD pueden ser la validación funcional, la ejecución de pruebas, la integración del trabajo y la aprobación correspondiente.
 
-Finalmente, las historias de usuario fueron gestionadas mediante el tablero Kaban de GitHub, con GitHub Issues y GitHub Projects, utilizando estados, etiquetas y criterios de seguimiento para organizar el trabajo del equipo. Esta estructura permite relacionar cada funcionalidad con su trabajo de desarrollo y visualizar el avance del proyecto mediante un tablero de seguimiento.
+Finalmente, las historias de usuario fueron gestionadas mediante el tablero Kanban de GitHub, con GitHub Issues y GitHub Projects, utilizando estados, etiquetas y criterios de seguimiento para organizar el trabajo del equipo. Esta estructura permite relacionar cada funcionalidad con su trabajo de desarrollo y visualizar el avance del proyecto mediante un tablero de seguimiento.
 
 ## 2. WBS del proyecto
 
@@ -113,6 +113,6 @@ Nuestro equipo trabaja bajo la orientación del Product Owner/Cliente, Ing. Kerw
 | David Esteban Álvarez | Responsable de Gestión y Reportes |
 | David Andrés Galindo | Responsable del Repositorio y Arquitectura (Líder Técnico) |
 | Miguel Ángel Gómez | Responsable de Planeación Ágil (Scrum Master) |
-| Juan Sebastían Martínez | Responsable de Requisitos y Propuestas |
+| Juan Sebastián Martínez | Responsable de Requisitos y Propuestas |
 
 Product Owner / Cliente: Ing. Kerwin Barros.

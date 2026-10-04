@@ -13,7 +13,7 @@ Pontificia Universidad Javeriana, Facultad de Ingeniería
 
 | Campo | Detalle |
 |---|---|
-| Proyecto | SGPI: Sistema |
+| Proyecto | SGPI: Sistema de Gestión de Procesos Institucionales |
 | Cliente / Product Owner | Ing. Kerwin Barros |
 | Fecha del documento base | 09 de septiembre de 2026 |
 | Estado del proyecto | Historias de usuario refinadas y organizadas. Documentos oficiales actualizados hasta las últimas modificaciones. Organización del equipo gestionada y roles asignados. Proyecto aún en desarrollo. |
@@ -31,7 +31,7 @@ Actualmente seguimos trabajando en las actividades que aún se encuentran pendie
 ## 3. Avances registrados
 
 - Se refinaron y organizaron las 20 historias de usuario relacionadas al proyecto SGPI.
-- Se elaboró el Diagrama de Desglose del trabajo (WBS) y el Organigrama del proyecto.
+- Se elaboró la Estructura de Desglose del Trabajo (WBS) y el Organigrama del proyecto.
 - Se desarrolló el Lean Canvas para el proyecto.
 - Se definieron los requisitos funcionales y no funcionales.
 - Se elaboró el calendario de actividades del proyecto incluyendo los Sprints, Issues, Milestones y demás elementos relacionados con el proyecto.
@@ -61,7 +61,7 @@ Actualmente seguimos trabajando en las actividades que aún se encuentran pendie
 - Gestión y planificación de actividades, sprints e historias de usuario.
 - Tener seguimiento de avances por medio de Dailys.
 - Estructurar de manera eficaz el repositorio del proyecto SGPI en GitHub.
-- Se recopiló todos los avances en el Informe de Resultados.
+- Se recopilaron todos los avances en el Informe de Resultados.
 
 ## 6. Problemas encontrados y tratamiento
 
@@ -86,7 +86,7 @@ Actualmente seguimos trabajando en las actividades que aún se encuentran pendie
 ## 8. Próximas actividades
 
 - Continuar con el desarrollo y seguimiento de las 20 historias de usuario.
-- Revisión y consolidación de losa entregables desarrollados por el equipo.
+- Revisión y consolidación de los entregables desarrollados por el equipo.
 - Revisión final de documentos y evidencias de la primera entrega del proyecto SGPI.
 - Realizar reuniones de seguimiento necesarias, y registrar sus respectivas Actas de Reunión.
-- Preparación de Informa de Resultados con evidencias anexadas correspondientes al desarrollo del proyecto.
+- Preparación del Informe de Resultados con evidencias anexadas correspondientes al desarrollo del proyecto.

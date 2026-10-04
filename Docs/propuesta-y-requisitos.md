@@ -5,11 +5,11 @@
 
 **Autores:**
 - David Esteban Álvarez
-- David Andres Galindo
+- David Andrés Galindo
 - Miguel Ángel Gómez
-- Juan Sebastían Martínez
+- Juan Sebastián Martínez
 
-Bogotá D.C., 10 de Septiembre de 2026
+Bogotá D.C., 10 de septiembre de 2026
 
 > Versión en Markdown de `Propuesta_y_Requisitos_FIDSW.docx` / `.pdf` (Entrega 1).
 

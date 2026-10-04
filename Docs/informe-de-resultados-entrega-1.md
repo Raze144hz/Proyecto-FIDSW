@@ -47,7 +47,7 @@ El seguimiento también se complementa con la actualización de los elementos de
 
 ## 7. Evidencias del desarrollo
 
-En esta sección se deben anexar las capturas que permitan verificar los principales resultados obtenidos durante el desarrollo del proyecto.
+En esta sección se anexan las capturas que permiten verificar los principales resultados obtenidos durante el desarrollo del proyecto.
 
 ### 7.1. WBS
 
