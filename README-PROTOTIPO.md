@@ -51,3 +51,8 @@ responsable@sgpi.local
 Contraseña:
 
 Resp123*
+
+Comandos de ejecucion y compilacion:
+mvn clean compile
+mvn javafx:run -Djavafx.platform=win
+
