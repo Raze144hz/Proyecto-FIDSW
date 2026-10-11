@@ -1,0 +1,14 @@
+Prueba CP-PRO-07: una base H2 creada con el prototipo del Sprint 2 se abre con la versión de HU-017.
+Paso 1: con main @ 9390848 se crea la base y un plan en EN EJECUCION.
+Paso 2: con feature/HU-017-aprobacion-planes @ 5fce05f se abre la misma base, se listan los planes, se crea un plan nuevo, se envía a revisión, el director lo devuelve y luego se elimina.
+Entorno: Ubuntu 24.04.4 LTS, OpenJDK 21.0.10 compilando con --release 17, H2 2.2.220
+
+Fecha: 2026-10-10 21:20
+1) Base creada con la versión de main @ 9390848 (prototipo del Sprint 2):
+planes antiguos: [Plan[id=1, codigo=PA-2026-0001, objetivo=Plan creado con la versión anterior, area=Calidad, fechaInicio=2026-10-01, fechaFin=2026-11-01, estado=EN EJECUCION]]
+
+2) La misma base abierta con la versión de HU-017 (feature/HU-017-aprobacion-planes @ 5fce05f):
+planes tras migrar: [Plan[id=1, codigo=PA-2026-0001, objetivo=Plan creado con la versión anterior, area=Calidad, fechaInicio=2026-10-01, fechaFin=2026-11-01, estado=EN EJECUCION]]
+director: User[id=4, nombre=Director Demo, correo=director@sgpi.local, rol=DIRECTOR, area=Calidad]
+estado nuevo plan: EN REVISION | notificaciones coord: 1
+eliminado con observaciones (cascada): ok, planes=1

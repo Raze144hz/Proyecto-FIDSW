@@ -1,0 +1,11 @@
+Verificación de RNF-03 (contraseñas con hash y salt) en la base creada por el recorrido del 10 de octubre de 2026
+Versión: feature/HU-017-aprobacion-planes @ 5fce05f · H2 2.2.220
+Consulta: SELECT correo, rol, area, LEFT(password_hash, 7), LENGTH(password_hash) FROM usuarios
+
+CORREO                 | ROL         | AREA    | INICIO_HASH | LARGO
+admin@sgpi.local       | ADMIN       | null    | $2a$10$     | 60
+coordinador@sgpi.local | COORDINADOR | null    | $2a$10$     | 60
+responsable@sgpi.local | RESPONSABLE | null    | $2a$10$     | 60
+director@sgpi.local    | DIRECTOR    | Calidad | $2a$10$     | 60
+
+Las cuatro contraseñas se guardan como hash BCrypt (prefijo $2a$10$, 60 caracteres, con salt incluido); ninguna está en texto plano.
