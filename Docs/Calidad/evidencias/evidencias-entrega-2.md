@@ -46,6 +46,7 @@ Todas están en [`Graficas/entrega-2/`](../../../Graficas/entrega-2).
 | [registro-ejecucion-interfaz.txt](registro-ejecucion-interfaz.txt) | Cada paso del recorrido y el mensaje que mostró la aplicación | Todos los de la sección 1 |
 | [resultado-junit-hu017.txt](resultado-junit-hu017.txt) | Resultado de las 12 pruebas JUnit de HU-017: pasan las 12 | CP-HU017-01 a 04, V-01 a V-04 |
 | [migracion-base-anterior.txt](migracion-base-anterior.txt) | Una base creada con el prototipo del Sprint 2 abre con la versión de HU-017 sin perder sus planes | CP-PRO-07 |
+| [verificacion-contrasenas.txt](verificacion-contrasenas.txt) | Las contraseñas de los usuarios quedan guardadas con hash BCrypt | CP-PRO-02 (RNF-03) |
 
 ## 3. Evidencias que faltan
 
