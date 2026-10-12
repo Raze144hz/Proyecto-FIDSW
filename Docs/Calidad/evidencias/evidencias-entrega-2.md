@@ -47,13 +47,13 @@ Todas están en [`Graficas/entrega-2/`](../../../Graficas/entrega-2).
 | [resultado-junit-hu017.txt](resultado-junit-hu017.txt) | Resultado de las 12 pruebas JUnit de HU-017: pasan las 12 | CP-HU017-01 a 04, V-01 a V-04 |
 | [migracion-base-anterior.txt](migracion-base-anterior.txt) | Una base creada con el prototipo del Sprint 2 abre con la versión de HU-017 sin perder sus planes | CP-PRO-07 |
 | [verificacion-contrasenas.txt](verificacion-contrasenas.txt) | Las contraseñas de los usuarios quedan guardadas con hash BCrypt | CP-PRO-02 (RNF-03) |
+| [resultado-maven-windows.txt](resultado-maven-windows.txt) | Salida de `mvn clean test` en Windows el 12 de octubre: BUILD SUCCESS y 12 pruebas sin fallas | CP-PRO-09 |
 
 ## 3. Evidencias que faltan
 
 | Evidencia | Para qué | Responsable propuesto |
 |---|---|---|
-| Captura del prototipo corriendo en Windows con `mvn javafx:run` | CP-PRO-08 (RNF-08) | Quien revise el PR #40 |
-| Salida de `mvn clean test` | CP-PRO-09 | Quien revise el PR #40 |
+| Captura del prototipo corriendo en Windows con `mvn javafx:run` | CP-PRO-08 (RNF-08) | David Álvarez |
 | `Graficas/diagrama-clases.png` y su fuente editable | Diagrama de clases de la Entrega 2 | David Andrés Galindo |
 | Diagramas de secuencia y de procesos de HU-017 | Entrega 2 | Equipo (Galindo revisa) |
 | Captura del tablero de GitHub Projects con el estado de las tareas de la Entrega 2 | Seguimiento del sprint | Miguel Ángel Gómez |

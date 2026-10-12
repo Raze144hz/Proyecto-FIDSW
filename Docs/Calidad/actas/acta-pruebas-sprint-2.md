@@ -8,13 +8,13 @@
 |---|---|
 | Proyecto | SGPI — Sistema de Gestión de Procesos Institucionales |
 | Sprint | 2 (23 sep – 7 oct de 2026) |
-| Fecha de la sesión de pruebas | 10 de octubre de 2026. La sesión planeada para el 6 de octubre no quedó registrada, por eso las pruebas se ejecutaron después del cierre del sprint. |
+| Fecha de la sesión de pruebas | 10 de octubre de 2026. La sesión planeada para el 6 de octubre no quedó registrada, por eso las pruebas se ejecutaron después del cierre del sprint. CP-PRO-09 se ejecutó el 12 de octubre. |
 | Versión probada | `main` @ `9390848` (prototipo del Sprint 2) y `feature/HU-017-aprobacion-planes` @ `5fce05f` (PR #40: prototipo + HU-017) |
-| Entorno | Ubuntu 24.04.4 LTS con pantalla virtual (Xvfb), OpenJDK 21.0.10 compilando con `--release 17`, JavaFX 11.0.11, H2 2.2.220, jBCrypt 0.4, JUnit 5.10.1 |
+| Entorno | Ubuntu 24.04.4 LTS con pantalla virtual (Xvfb), OpenJDK 21.0.10 compilando con `--release 17`, JavaFX 11.0.11, H2 2.2.220, jBCrypt 0.4, JUnit 5.10.1. CP-PRO-09: Windows, OpenJDK 25.0.4 (Microsoft) y Maven 3.9.16 con las versiones del `pom.xml` |
 | Forma de ejecución | Recorrido automático de la interfaz real ([`Script/evidencias-prototipo`](../../../Script/evidencias-prototipo/README.md)) y pruebas JUnit, con una captura por paso |
 | Responsable del acta | David Álvarez Rodríguez (Gestión y Reportes) |
 
-> El `pom.xml` usa JavaFX 17.0.10 y H2 2.2.224. En el entorno de prueba no había acceso a Maven Central, así que se compiló con `javac` y librerías equivalentes. La prueba con Maven queda como caso CP-PRO-09.
+> El `pom.xml` usa JavaFX 17.0.10 y H2 2.2.224. En el entorno de la sesión del 10 de octubre no había acceso a Maven Central, así que se compiló con `javac` y librerías equivalentes. La prueba con Maven (CP-PRO-09) se hizo el 12 de octubre en Windows, con las versiones exactas del `pom.xml`.
 
 ## 2. Participantes
 
@@ -96,7 +96,7 @@ No están en el documento de casos. Se comprobaron con las pruebas JUnit y con c
 | CP-PRO-06 | HU-006 | Pasa | David Álvarez (automatizado) | [25](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/25-responsable-consulta.png) | — |
 | CP-PRO-07 | HU-017 | Pasa | David Álvarez | [migracion-base-anterior.txt](../evidencias/migracion-base-anterior.txt) | — |
 | CP-PRO-08 | — | No ejecutado | — | Falta probar en Windows | — |
-| CP-PRO-09 | — | No ejecutado | — | Sin acceso a Maven Central en el entorno de prueba | — |
+| CP-PRO-09 | HU-017 | Pasa | David Álvarez (Windows, 12 oct) | [resultado-maven-windows.txt](../evidencias/resultado-maven-windows.txt): BUILD SUCCESS, 12 pruebas sin fallas | — |
 | CP-PRO-10 | — | Falla | David Álvarez | `develop` está en `35ca77b` (16 sep) y `main` en `9390848` | D-08 (#42) |
 | CP-HU017-01 | HU-017 | Pasa | David Álvarez (automatizado) | [11](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/11-cp-hu017-01-confirmar-aprobacion.png), [12](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/12-cp-hu017-01-plan-aprobado.png), [13](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/13-cp-hu017-01-sin-pendientes.png), [JUnit](../evidencias/resultado-junit-hu017.txt) | — |
 | CP-HU017-02 | HU-017 | Pasa | David Álvarez (automatizado) | [09](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/09-cp-hu017-02-confirmar-devolucion.png), [10](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/10-cp-hu017-02-plan-devuelto.png), [15](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/15-cp-hu017-02-notificaciones.png), [JUnit](../evidencias/resultado-junit-hu017.txt) | — |
@@ -132,22 +132,22 @@ No están en el documento de casos. Se comprobaron con las pruebas JUnit y con c
 | Indicador | Valor |
 |---|---|
 | Casos planeados | 17 (10 del prototipo, 4 de HU-017 y 3 de HU-016) |
-| Casos ejecutados | 12 |
-| Casos que pasan | 11 |
+| Casos ejecutados | 13 |
+| Casos que pasan | 12 |
 | Casos que fallan | 1 (CP-PRO-10) |
 | Casos bloqueados | 0 |
-| Casos no ejecutados | 5 (CP-PRO-08, CP-PRO-09 y los 3 de HU-016) |
-| Porcentaje de aprobación (pasan / ejecutados) | 91,7 % (11 de 12) |
+| Casos no ejecutados | 4 (CP-PRO-08 y los 3 de HU-016) |
+| Porcentaje de aprobación (pasan / ejecutados) | 92,3 % (12 de 13) |
 | Verificaciones adicionales de HU-017 | 4 de 4 pasan |
-| Pruebas JUnit de HU-017 | 12 de 12 pasan |
+| Pruebas JUnit de HU-017 | 12 de 12 pasan, en Linux y con Maven en Windows |
 
 ## 7. Defectos encontrados
 
 | Defecto | Issue | Descripción | Severidad | Responsable | Estado |
 |---|---|---|---|---|---|
-| D-01 | PR #40 | En el prototipo del Sprint 2 el estado del plan se escogía a mano: se podía crear un plan directamente EN EJECUCION, sin aprobación. | Alta | David Álvarez | Corregido en el PR #40 (en revisión) |
-| D-02 | PR #40 | `updatePlan` y `deletePlan` no validaban el rol en la capa de datos; solo la interfaz ocultaba el formulario (RNF-05). | Media | David Álvarez | Corregido en el PR #40 (en revisión) |
-| D-03 | PR #40 | Las alertas con mensajes largos se cortaban en Linux. Se vio en la primera ejecución del recorrido. | Baja | David Álvarez | Corregido en el PR #40 (en revisión) |
+| D-01 | PR #40 | En el prototipo del Sprint 2 el estado del plan se escogía a mano: se podía crear un plan directamente EN EJECUCION, sin aprobación. | Alta | David Álvarez | Corregido en el PR #40 (unido a `main` el 12 oct) |
+| D-02 | PR #40 | `updatePlan` y `deletePlan` no validaban el rol en la capa de datos; solo la interfaz ocultaba el formulario (RNF-05). | Media | David Álvarez | Corregido en el PR #40 (unido a `main` el 12 oct) |
+| D-03 | PR #40 | Las alertas con mensajes largos se cortaban en Linux. Se vio en la primera ejecución del recorrido. | Baja | David Álvarez | Corregido en el PR #40 (unido a `main` el 12 oct) |
 | D-04 | #41 | `bootstrap_prototipo.sh` genera el proyecto con una versión anterior de `Main.java` y sobrescribe archivos; si alguien lo ejecuta, pierde el código actual. | Media | Juan Sebastián Martínez (propuesto) | Abierto |
 | D-05 | #41 | La carpeta `tools/apache-maven-3.9.16` (97 archivos, unos 19 MB) está en el repositorio. | Baja | Juan Sebastián Martínez (propuesto) | Abierto |
 | D-06 | PR #40 | El README del prototipo solo traía el comando de ejecución para Windows. | Baja | David Álvarez | Corregido en el README del PR #40; falta probarlo en Linux y macOS con Maven |
@@ -160,7 +160,7 @@ No están en el documento de casos. Se comprobaron con las pruebas JUnit y con c
 
 | HU | ¿Cumple la Definition of Done? | Decisión |
 |---|---|---|
-| HU-017 | Todavía no. Cumple: compila, tiene pruebas JUnit de cada regla, sus casos pasan, los mensajes están en español, valida roles, guarda el historial y tiene el script de la base de datos. Falta: que otro integrante revise y apruebe el PR #40, la prueba con Maven y en Windows, y unir el PR a `develop` (ver D-08). | Queda en *In review* hasta la revisión del PR #40. |
+| HU-017 | Todavía no. Cumple: compila, tiene pruebas JUnit de cada regla, sus casos pasan (también con `mvn clean test` en Windows), los mensajes están en español, valida roles, guarda el historial y tiene el script de la base de datos. Falta: que otro integrante revise el código (el PR #40 se unió a `main` el 12 de octubre sin esa revisión), arrancarlo en Windows con `mvn javafx:run` (CP-PRO-08) y llevarlo a `develop` (ver D-08). | Queda en *In review* hasta que otro integrante revise el código del PR #40. |
 | HU-001, HU-002 y HU-006 | No se evaluaron: tienen avance en el prototipo, pero no tienen casos de prueba escritos. | No pasan a *Done*. Hay que escribir y ejecutar sus casos. |
 | HU-016 | No | No se programó. |
 
@@ -180,7 +180,8 @@ Son propuestas; quedan firmes cuando el equipo apruebe el acta.
 
 | Acción | Responsable | Fecha límite |
 |---|---|---|
-| Revisar y aprobar el PR #40; correr `mvn clean test` y `mvn javafx:run` en Windows (CP-PRO-08 y CP-PRO-09) | David Andrés Galindo | 20 oct (congelamiento del Sprint 3) |
+| Revisar el código de HU-017 (PR #40, ya unido a `main`) y dejar los comentarios en el PR | David Andrés Galindo | 20 oct (congelamiento del Sprint 3) |
+| Arrancar el prototipo en Windows con `mvn javafx:run` y guardar la captura (CP-PRO-08) | David Álvarez | 20 oct |
 | Decidir el estado de un plan devuelto (EN REVISION o BORRADOR) y unificar HU-017, CU-01 y los casos de prueba | Juan Sebastián Martínez | 20 oct |
 | Resolver D-04 y D-05 (#41) | Juan Sebastián Martínez | 20 oct |
 | Actualizar `develop` con `main` o acordar que los PR van a `main` (#42) | David Andrés Galindo | 20 oct |
