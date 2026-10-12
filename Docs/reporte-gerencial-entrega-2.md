@@ -122,19 +122,19 @@ Ninguna HU cumple todavía la Definition of Done completa.
 
 **Vista del director con los planes pendientes de su área (HU-017):**
 
-![Vista del director con planes pendientes](../Graficas/entrega-2/07-director-pendientes.png)
+![Vista del director con planes pendientes](../Graficas/entrega-2/SGPI_evidencias_entrega_2/07-director-pendientes.png)
 
 **Devolver sin observaciones: el sistema no lo permite y muestra el mensaje junto al campo (CP-HU017-03):**
 
-![Validación de observaciones obligatorias](../Graficas/entrega-2/08-cp-hu017-03-sin-observaciones.png)
+![Validación de observaciones obligatorias](../Graficas/entrega-2/SGPI_evidencias_entrega_2/08-cp-hu017-03-sin-observaciones.png)
 
 **El coordinador recibe la notificación con la observación (CP-HU017-02):**
 
-![Notificaciones del coordinador](../Graficas/entrega-2/15-cp-hu017-02-notificaciones.png)
+![Notificaciones del coordinador](../Graficas/entrega-2/SGPI_evidencias_entrega_2/15-cp-hu017-02-notificaciones.png)
 
 **Historial de cambios de estado del plan:**
 
-![Historial del plan](../Graficas/entrega-2/23-historial-plan.png)
+![Historial del plan](../Graficas/entrega-2/SGPI_evidencias_entrega_2/23-historial-plan.png)
 
 Las 25 capturas y los registros de ejecución están en el [índice de evidencias](Calidad/evidencias/evidencias-entrega-2.md).
 
