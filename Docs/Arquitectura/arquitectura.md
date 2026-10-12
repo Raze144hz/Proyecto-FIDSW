@@ -5,7 +5,7 @@ Diagramas de diseño para los dos casos de uso elegidos en el ejercicio de la Se
 - **HU-016** — Búsqueda avanzada y filtrado de evidencias (líder de calidad).
 - **HU-017** — Aprobación y retroalimentación de planes de acción (director de área).
 
-Las imágenes están en la carpeta [`/Graficas`](../../Graficas). Cada diagrama tiene versión `.png` y `.svg` (el `.svg` se puede ampliar sin perder calidad).
+Las imágenes están en la carpeta [`/Graficas`](../../Graficas).
 
 ## 1. Diagrama de componentes
 
