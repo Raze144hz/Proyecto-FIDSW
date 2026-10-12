@@ -148,11 +148,11 @@ No están en el documento de casos. Se comprobaron con las pruebas JUnit y con c
 | D-01 | PR #40 | En el prototipo del Sprint 2 el estado del plan se escogía a mano: se podía crear un plan directamente EN EJECUCION, sin aprobación. | Alta | David Álvarez | Corregido en el PR #40 (unido a `main` el 12 oct) |
 | D-02 | PR #40 | `updatePlan` y `deletePlan` no validaban el rol en la capa de datos; solo la interfaz ocultaba el formulario (RNF-05). | Media | David Álvarez | Corregido en el PR #40 (unido a `main` el 12 oct) |
 | D-03 | PR #40 | Las alertas con mensajes largos se cortaban en Linux. Se vio en la primera ejecución del recorrido. | Baja | David Álvarez | Corregido en el PR #40 (unido a `main` el 12 oct) |
-| D-04 | #41 | `bootstrap_prototipo.sh` genera el proyecto con una versión anterior de `Main.java` y sobrescribe archivos; si alguien lo ejecuta, pierde el código actual. | Media | Juan Sebastián Martínez (propuesto) | Abierto |
-| D-05 | #41 | La carpeta `tools/apache-maven-3.9.16` (97 archivos, unos 19 MB) está en el repositorio. | Baja | Juan Sebastián Martínez (propuesto) | Abierto |
+| D-04 | #41 | `bootstrap_prototipo.sh` genera el proyecto con una versión anterior de `Main.java` y sobrescribe archivos; si alguien lo ejecuta, pierde el código actual. | Media | David Álvarez | Corregido en el PR #46: se quitó el script |
+| D-05 | #41 | La carpeta `tools/apache-maven-3.9.16` (97 archivos, unos 19 MB) está en el repositorio. | Baja | David Álvarez | Corregido en el PR #46: se quitó la carpeta y se agregó el Maven Wrapper (`mvnw`), que descarga Maven |
 | D-06 | PR #40 | El README del prototipo solo traía el comando de ejecución para Windows. | Baja | David Álvarez | Corregido en el README del PR #40; falta probarlo en Linux y macOS con Maven |
 | D-07 | — | Las contraseñas de los usuarios de prueba y el usuario de la base H2 están escritos en el código, lo que va contra la DoD. Sirve para el prototipo, pero hay que sacarlos antes de una versión real. El PR #40 agrega uno más, el del director de prueba. | Baja | David Andrés Galindo (propuesto) | Abierto |
-| D-08 | #42 | `develop` está desactualizada: los PR se unen directo a `main`. | Media | David Andrés Galindo (propuesto) | Abierto |
+| D-08 | #42 | `develop` está desactualizada: los PR se unen directo a `main`. | Media | David Andrés Galindo (propuesto) | En corrección: el PR #47 pone `develop` al día con `main`; falta acordar a qué rama van los PR siguientes |
 
 ## 8. Decisión
 
@@ -183,8 +183,7 @@ Son propuestas; quedan firmes cuando el equipo apruebe el acta.
 | Revisar el código de HU-017 (PR #40, ya unido a `main`) y dejar los comentarios en el PR | David Andrés Galindo | 20 oct (congelamiento del Sprint 3) |
 | Arrancar el prototipo en Windows con `mvn javafx:run` y guardar la captura (CP-PRO-08) | David Álvarez | 20 oct |
 | Decidir el estado de un plan devuelto (EN REVISION o BORRADOR) y unificar HU-017, CU-01 y los casos de prueba | Juan Sebastián Martínez | 20 oct |
-| Resolver D-04 y D-05 (#41) | Juan Sebastián Martínez | 20 oct |
-| Actualizar `develop` con `main` o acordar que los PR van a `main` (#42) | David Andrés Galindo | 20 oct |
+| Acordar si los PR van a `develop` o a `main` y dejarlo igual en el README y la DoD (#42) | David Andrés Galindo | 20 oct |
 | Escribir los casos de prueba de HU-001, HU-002 y HU-006 | Responsable de cada HU | 20 oct |
 | Registrar la Sprint Review y la Retrospectiva del Sprint 2 | Miguel Ángel Gómez | 20 oct |
 
