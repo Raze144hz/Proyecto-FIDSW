@@ -89,19 +89,19 @@ No están en el documento de casos. Se comprobaron con las pruebas JUnit y con c
 | Caso | HU | Estado | Ejecutado por | Evidencia | Defecto |
 |---|---|---|---|---|---|
 | CP-PRO-01 | — | Pasa | David Álvarez | Compilación sin errores con `javac` en las dos versiones | — |
-| CP-PRO-02 | — | Pasa | David Álvarez (automatizado) | [01](../../../Graficas/entrega-2/01-login.png), [verificación de contraseñas](../evidencias/verificacion-contrasenas.txt) | — |
-| CP-PRO-03 | HU-001, HU-006 | Pasa | David Álvarez (automatizado) | [03](../../../Graficas/entrega-2/03-coordinador-panel.png), [07](../../../Graficas/entrega-2/07-director-pendientes.png), [25](../../../Graficas/entrega-2/25-responsable-consulta.png) | — |
-| CP-PRO-04 | HU-001 | Pasa | David Álvarez (automatizado) | [02](../../../Graficas/entrega-2/02-login-error.png) | — |
-| CP-PRO-05 | HU-002 | Pasa | David Álvarez (automatizado) | [04](../../../Graficas/entrega-2/04-validacion-objetivo.png), [05](../../../Graficas/entrega-2/05-plan-creado.png) | — |
-| CP-PRO-06 | HU-006 | Pasa | David Álvarez (automatizado) | [25](../../../Graficas/entrega-2/25-responsable-consulta.png) | — |
+| CP-PRO-02 | — | Pasa | David Álvarez (automatizado) | [01](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/01-login.png), [verificación de contraseñas](../evidencias/verificacion-contrasenas.txt) | — |
+| CP-PRO-03 | HU-001, HU-006 | Pasa | David Álvarez (automatizado) | [03](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/03-coordinador-panel.png), [07](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/07-director-pendientes.png), [25](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/25-responsable-consulta.png) | — |
+| CP-PRO-04 | HU-001 | Pasa | David Álvarez (automatizado) | [02](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/02-login-error.png) | — |
+| CP-PRO-05 | HU-002 | Pasa | David Álvarez (automatizado) | [04](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/04-validacion-objetivo.png), [05](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/05-plan-creado.png) | — |
+| CP-PRO-06 | HU-006 | Pasa | David Álvarez (automatizado) | [25](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/25-responsable-consulta.png) | — |
 | CP-PRO-07 | HU-017 | Pasa | David Álvarez | [migracion-base-anterior.txt](../evidencias/migracion-base-anterior.txt) | — |
 | CP-PRO-08 | — | No ejecutado | — | Falta probar en Windows | — |
 | CP-PRO-09 | — | No ejecutado | — | Sin acceso a Maven Central en el entorno de prueba | — |
 | CP-PRO-10 | — | Falla | David Álvarez | `develop` está en `35ca77b` (16 sep) y `main` en `9390848` | D-08 (#42) |
-| CP-HU017-01 | HU-017 | Pasa | David Álvarez (automatizado) | [11](../../../Graficas/entrega-2/11-cp-hu017-01-confirmar-aprobacion.png), [12](../../../Graficas/entrega-2/12-cp-hu017-01-plan-aprobado.png), [13](../../../Graficas/entrega-2/13-cp-hu017-01-sin-pendientes.png), [JUnit](../evidencias/resultado-junit-hu017.txt) | — |
-| CP-HU017-02 | HU-017 | Pasa | David Álvarez (automatizado) | [09](../../../Graficas/entrega-2/09-cp-hu017-02-confirmar-devolucion.png), [10](../../../Graficas/entrega-2/10-cp-hu017-02-plan-devuelto.png), [15](../../../Graficas/entrega-2/15-cp-hu017-02-notificaciones.png), [JUnit](../evidencias/resultado-junit-hu017.txt) | — |
-| CP-HU017-03 | HU-017 | Pasa | David Álvarez (automatizado) | [08](../../../Graficas/entrega-2/08-cp-hu017-03-sin-observaciones.png), [JUnit](../evidencias/resultado-junit-hu017.txt) | — |
-| CP-HU017-04 | HU-017 | Pasa | David Álvarez (automatizado) | [16](../../../Graficas/entrega-2/16-cp-hu017-04-observacion-pendiente.png) a [22](../../../Graficas/entrega-2/22-cp-hu017-04-ejecucion-permitida.png), [JUnit](../evidencias/resultado-junit-hu017.txt) | — |
+| CP-HU017-01 | HU-017 | Pasa | David Álvarez (automatizado) | [11](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/11-cp-hu017-01-confirmar-aprobacion.png), [12](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/12-cp-hu017-01-plan-aprobado.png), [13](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/13-cp-hu017-01-sin-pendientes.png), [JUnit](../evidencias/resultado-junit-hu017.txt) | — |
+| CP-HU017-02 | HU-017 | Pasa | David Álvarez (automatizado) | [09](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/09-cp-hu017-02-confirmar-devolucion.png), [10](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/10-cp-hu017-02-plan-devuelto.png), [15](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/15-cp-hu017-02-notificaciones.png), [JUnit](../evidencias/resultado-junit-hu017.txt) | — |
+| CP-HU017-03 | HU-017 | Pasa | David Álvarez (automatizado) | [08](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/08-cp-hu017-03-sin-observaciones.png), [JUnit](../evidencias/resultado-junit-hu017.txt) | — |
+| CP-HU017-04 | HU-017 | Pasa | David Álvarez (automatizado) | [16](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/16-cp-hu017-04-observacion-pendiente.png) a [22](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/22-cp-hu017-04-ejecucion-permitida.png), [JUnit](../evidencias/resultado-junit-hu017.txt) | — |
 | CP-HU016-01 | HU-016 | No ejecutado | — | HU no programada | — |
 | CP-HU016-02 | HU-016 | No ejecutado | — | HU no programada | — |
 | CP-HU016-03 | HU-016 | No ejecutado | — | HU no programada | — |
@@ -122,10 +122,10 @@ No están en el documento de casos. Se comprobaron con las pruebas JUnit y con c
 
 | Verificación | Estado | Evidencia |
 |---|---|---|
-| V-01 | Pasa | JUnit: "Solo el director de área puede aprobar o devolver planes"; [25](../../../Graficas/entrega-2/25-responsable-consulta.png) |
+| V-01 | Pasa | JUnit: "Solo el director de área puede aprobar o devolver planes"; [25](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/25-responsable-consulta.png) |
 | V-02 | Pasa | JUnit: "El director no revisa planes de otra área" |
-| V-03 | Pasa | JUnit: "Un plan en revisión del director no se puede modificar; uno devuelto sí"; [24](../../../Graficas/entrega-2/24-edicion-bloqueada.png) |
-| V-04 | Pasa | JUnit: "Cada cambio de estado queda en el historial…"; [23](../../../Graficas/entrega-2/23-historial-plan.png) |
+| V-03 | Pasa | JUnit: "Un plan en revisión del director no se puede modificar; uno devuelto sí"; [24](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/24-edicion-bloqueada.png) |
+| V-04 | Pasa | JUnit: "Cada cambio de estado queda en el historial…"; [23](../../../Graficas/entrega-2/SGPI_evidencias_entrega_2/23-historial-plan.png) |
 
 ## 6. Resumen
 
