@@ -1,0 +1,125 @@
+@startuml diagrama-clases
+' Diagrama de clases del SGPI para HU-016 (búsqueda de evidencias) y HU-017 (aprobación de planes).
+' Para generar la imagen: java -jar plantuml.jar -tpng diagrama-clases.puml
+!theme plain
+skinparam classAttributeIconSize 0
+skinparam defaultFontName DejaVu Sans
+skinparam shadowing false
+skinparam classFontStyle bold
+skinparam dpi 170
+skinparam nodesep 40
+skinparam ranksep 70
+hide circle
+hide empty members
+
+title Diagrama de Clases - Búsqueda de evidencias y Aprobación de planes de acción
+
+class Usuario {
+  -idUsuario : int
+  -nombre : String
+  -correo : String
+  -contrasena : String
+  +iniciarSesion(correo : String, contrasena : String) : boolean
+  +tienePermiso(accion : String) : boolean
+}
+
+class Rol {
+  -idRol : int
+  -nombre : String
+  +getNombre() : String
+}
+
+class Area {
+  -idArea : int
+  -nombre : String
+  +getNombre() : String
+}
+
+class Evidencia {
+  -idEvidencia : int
+  -nombre : String
+  -tipoArchivo : String
+  -fechaCarga : Date
+  -palabrasClave : String
+  -ruta : String
+  +descargar() : File
+}
+
+class Busqueda {
+  -palabraClave : String
+  -tipoArchivo : String
+  -fechaInicio : Date
+  -fechaFin : Date
+  +buscar(palabraClave : String) : List<Evidencia>
+  +filtrar(tipo : String, inicio : Date, fin : Date) : List<Evidencia>
+}
+
+class PlanAccion {
+  -idPlan : int
+  -codigo : String
+  -objetivo : String
+  -fechaInicio : Date
+  -fechaFin : Date
+  -estado : EstadoPlan
+  -fechaEnvio : Date
+  +enviarRevision() : void
+  +aprobar() : void
+  +devolver(observacion : String) : void
+  +puedeEjecutarse() : boolean
+  +iniciarEjecucion() : void
+  +finalizar() : void
+}
+
+enum EstadoPlan <<enumeration>> {
+  BORRADOR
+  PENDIENTE_REVISION
+  EN_REVISION
+  APROBADO
+  EN_EJECUCION
+  FINALIZADO
+}
+
+class Observacion {
+  -idObservacion : int
+  -descripcion : String
+  -fecha : Date
+  -atendida : boolean
+  +marcarAtendida() : void
+}
+
+class Notificacion {
+  -idNotificacion : int
+  -mensaje : String
+  -fecha : Date
+  -leida : boolean
+  +enviar() : void
+  +marcarLeida() : void
+}
+
+class HistorialPlan {
+  -idHistorial : int
+  -accion : String
+  -estadoAnterior : EstadoPlan
+  -estadoNuevo : EstadoPlan
+  -detalle : String
+  -fecha : Date
+}
+
+Usuario "0..*" --> "1" Rol : tiene
+Usuario "0..*" --> "1" Area : pertenece
+Usuario "1" -- "0..*" Evidencia : responsable >
+Usuario "1" --> "0..*" Busqueda : realiza
+Area "1" -- "0..*" Evidencia : clasifica >
+Busqueda ..> Evidencia : <<use>>
+
+Usuario "1" -- "0..*" PlanAccion : coordinador >
+Usuario "0..1" -- "0..*" PlanAccion : director >
+PlanAccion "0..*" --> "1" Area : área responsable
+PlanAccion --> EstadoPlan
+PlanAccion "1" *-- "0..*" Observacion : contiene
+Usuario "1" -- "0..*" Observacion : autor >
+PlanAccion "1" --> "0..*" Notificacion : genera
+Notificacion "0..*" --> "1" Usuario : destinatario
+PlanAccion "1" --> "0..*" HistorialPlan : registra
+HistorialPlan "0..*" --> "1" Usuario : realizado por
+@enduml
