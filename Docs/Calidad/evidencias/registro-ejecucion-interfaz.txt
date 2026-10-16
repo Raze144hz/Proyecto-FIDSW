@@ -1,0 +1,85 @@
+Recorrido automático de la interfaz del prototipo (Script/evidencias-prototipo/Evidencias.java)
+Fecha: 10 de octubre de 2026, 21:20 a 21:22 (hora de Colombia)
+Versión: feature/HU-017-aprobacion-planes @ 5fce05f (PR #40)
+Entorno: Ubuntu 24.04.4 LTS con pantalla virtual Xvfb, OpenJDK 21.0.10 compilando con --release 17, JavaFX 11.0.11, H2 2.2.220
+Cada línea es un paso: qué se hizo y qué mostró la aplicación. Las líneas con "->" indican la captura guardada en Graficas/entrega-2/.
+
+- Pantalla de inicio de sesión: captura 01-login.png
+    -> 01-login.png (700x500+449+157)
+- Login con contraseña incorrecta: Mensaje: Usuario o contraseña incorrectos.
+- Login rechazado con contraseña incorrecta: captura 02-login-error.png
+    -> 02-login-error.png (700x500+449+157)
+- Panel del coordinador después de iniciar sesión: captura 03-coordinador-panel.png
+    -> 03-coordinador-panel.png (1200x700+199+90)
+- Crear plan sin objetivo: [Error] Debe ingresar el objetivo del plan.
+    -> 04-validacion-objetivo.png (1200x700+199+90)
+- Crear plan A (Calidad): [Plan creado] Se creó correctamente PA-2026-0001
+    -> 05-plan-creado.png (1200x700+199+90)
+- Crear plan B (Calidad): [Plan creado] Se creó correctamente PA-2026-0002
+- Enviar plan A a revisión: [Plan enviado a revisión] El plan PA-2026-0001 quedó PENDIENTE DE REVISION. El director de área lo debe aprobar o devolver.
+    -> 06-enviar-revision.png (1200x700+199+90)
+- Enviar plan B a revisión: [Plan enviado a revisión] El plan PA-2026-0002 quedó PENDIENTE DE REVISION. El director de área lo debe aprobar o devolver.
+- Planes después de enviarlos: PA-2026-0002=PENDIENTE DE REVISION; PA-2026-0001=PENDIENTE DE REVISION; 
+- Pendientes del director: PA-2026-0002=PENDIENTE DE REVISION; PA-2026-0001=PENDIENTE DE REVISION; 
+- Vista del director con los planes pendientes de su área: captura 07-director-pendientes.png
+    -> 07-director-pendientes.png (1200x700+199+90)
+- CP-HU017-03 · Devolver sin observaciones: Mensaje junto al campo: Debe escribir las observaciones para devolver el plan. | ¿Abrió diálogo?: false | Pendientes: PA-2026-0002=PENDIENTE DE REVISION; PA-2026-0001=PENDIENTE DE REVISION; 
+- Devolver sin escribir observaciones: captura 08-cp-hu017-03-sin-observaciones.png
+    -> 08-cp-hu017-03-sin-observaciones.png (1200x700+199+90)
+- Confirmar la devolución: [Devolver plan] ¿Devolver el plan PA-2026-0001 al coordinador? | El plan quedará EN REVISION y no podrá ejecutarse hasta que se atiendan las observaciones y se apruebe de nuevo.
+    -> 09-cp-hu017-02-confirmar-devolucion.png (1200x700+199+90)
+- Resultado de la devolución: [Plan devuelto] El plan PA-2026-0001 quedó EN REVISION. Se notificó al coordinador con las observaciones.
+    -> 10-cp-hu017-02-plan-devuelto.png (1200x700+199+90)
+- Confirmar la aprobación: [Aprobar plan] ¿Aprobar el plan PA-2026-0002? | El plan quedará APROBADO y el coordinador podrá iniciar su ejecución.
+    -> 11-cp-hu017-01-confirmar-aprobacion.png (1200x700+199+90)
+- Resultado de la aprobación: [Plan aprobado] El plan PA-2026-0002 quedó APROBADO. Se notificó al coordinador.
+    -> 12-cp-hu017-01-plan-aprobado.png (1200x700+199+90)
+- CP-HU017-01 · Pendientes después de aprobar: (sin planes)
+- Lista de pendientes después de aprobar y devolver: captura 13-cp-hu017-01-sin-pendientes.png
+    -> 13-cp-hu017-01-sin-pendientes.png (1200x700+199+90)
+- Planes del área: PA-2026-0002=APROBADO; PA-2026-0001=EN REVISION; 
+- Planes del área con su estado: captura 14-director-planes-area.png
+    -> 14-director-planes-area.png (1200x700+199+90)
+- Botón de notificaciones: Notificaciones (2)
+- Notificaciones del coordinador: [Notificaciones] Notificaciones de Coordinador Demo | [Nueva] 10/10/2026 21:21
+El plan PA-2026-0002 fue aprobado por Director Demo. Ya puede iniciar su ejecución.
+
+[Nueva] 10/10/2026 21:21
+El plan PA-2026-0001 fue devuelto por Director Demo con observaciones: Falta indicar qué procesos se auditarán.
+    -> 15-cp-hu017-02-notificaciones.png (1200x700+199+90)
+- Observaciones del plan A: [Pendiente] Falta indicar qué procesos se auditarán.; 
+- Plan A devuelto con la observación pendiente: captura 16-cp-hu017-04-observacion-pendiente.png
+    -> 16-cp-hu017-04-observacion-pendiente.png (1200x700+199+90)
+- CP-HU017-04 paso 1: iniciar ejecución del plan devuelto: [No se puede completar la acción] El plan PA-2026-0001 no se puede ejecutar: el director de área debe aprobarlo primero. Estado actual: EN REVISION.
+    -> 17-cp-hu017-04-paso1-ejecucion-bloqueada.png (1200x700+199+90)
+- Reenviar con la observación sin atender: [No se puede completar la acción] El plan PA-2026-0001 tiene observaciones sin atender. Márquelas como atendidas antes de enviarlo de nuevo a revisión.
+    -> 18-cp-hu017-04-reenvio-bloqueado.png (1200x700+199+90)
+- CP-HU017-04 paso 2: marcar la observación como atendida: [Observación atendida] La observación del plan PA-2026-0001 quedó marcada como atendida. Cuando termine los ajustes, envíe el plan de nuevo a revisión.
+    -> 19-cp-hu017-04-paso2-observacion-atendida.png (1200x700+199+90)
+- Observaciones del plan A: [Atendida] Falta indicar qué procesos se auditarán.; 
+- CP-HU017-04 paso 3: iniciar ejecución sin nueva aprobación: [No se puede completar la acción] El plan PA-2026-0001 no se puede ejecutar: el director de área debe aprobarlo primero. Estado actual: EN REVISION.
+    -> 20-cp-hu017-04-paso3-ejecucion-bloqueada.png (1200x700+199+90)
+- Reenviar plan A con la observación atendida: [Plan enviado a revisión] El plan PA-2026-0001 quedó PENDIENTE DE REVISION. El director de área lo debe aprobar o devolver.
+- El director ve la observación atendida antes de aprobar de nuevo: captura 21-director-reevalua.png
+    -> 21-director-reevalua.png (1200x700+199+90)
+- Confirmar la nueva aprobación del plan A: [Aprobar plan] ¿Aprobar el plan PA-2026-0001? | El plan quedará APROBADO y el coordinador podrá iniciar su ejecución.
+- Resultado de la nueva aprobación del plan A: [Plan aprobado] El plan PA-2026-0001 quedó APROBADO. Se notificó al coordinador.
+- Iniciar ejecución después de atender y reaprobar: [Ejecución iniciada] El plan PA-2026-0001 quedó EN EJECUCION.
+    -> 22-cp-hu017-04-ejecucion-permitida.png (1200x700+199+90)
+- Historial de cambios de estado del plan A: [Historial del plan] Historial de PA-2026-0001 | 10/10/2026 21:21 · Coordinador Demo · CREACION: — → BORRADOR
+10/10/2026 21:21 · Coordinador Demo · ENVIO_REVISION: BORRADOR → PENDIENTE DE REVISION
+10/10/2026 21:21 · Director Demo · DEVOLUCION: PENDIENTE DE REVISION → EN REVISION
+    Falta indicar qué procesos se auditarán.
+10/10/2026 21:21 · Coordinador Demo · OBSERVACION_ATENDIDA: EN REVISION → EN REVISION
+    Falta indicar qué procesos se auditarán.
+10/10/2026 21:21 · Coordinador Demo · ENVIO_REVISION: EN REVISION → PENDIENTE DE REVISION
+10/10/2026 21:21 · Director Demo · APROBACION: PENDIENTE DE REVISION → APROBADO
+10/10/2026 21:22 · Coordinador Demo · INICIO_EJECUCION: APROBADO → EN EJECUCION
+    -> 23-historial-plan.png (1200x700+199+90)
+- Modificar un plan aprobado: [Error] El plan PA-2026-0002 está en estado APROBADO. Solo se pueden modificar planes en estado BORRADOR o EN REVISION.
+    -> 24-edicion-bloqueada.png (1200x700+199+90)
+- Planes al final (coordinador): PA-2026-0002=APROBADO; PA-2026-0001=EN EJECUCION; 
+- Rol RESPONSABLE en modo consulta: captura 25-responsable-consulta.png
+    -> 25-responsable-consulta.png (1200x700+199+90)
+- Rol RESPONSABLE: ¿Tiene formulario de edición?: false | ¿Tiene botón Aprobar?: false
+- FIN: Recorrido completo sin errores del arnés.

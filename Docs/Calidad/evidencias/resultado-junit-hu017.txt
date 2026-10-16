@@ -1,0 +1,37 @@
+Pruebas JUnit 5 de HU-017 (src/test/java/com/sgpi/AprobacionPlanesTest.java)
+Fecha: 10 de octubre de 2026, 21:19 (hora de Colombia)
+Versión: feature/HU-017-aprobacion-planes @ 5fce05f (PR #40)
+Entorno: Ubuntu 24.04.4 LTS, OpenJDK 21.0.10 compilando con --release 17, H2 2.2.220, JUnit 5.10.1 (lanzador de consola de JUnit)
+
+.
++-- JUnit Platform Suite [OK]
++-- JUnit Jupiter [OK]
+| '-- AprobacionPlanesTest [OK]
+|   +-- Cada cambio de estado queda en el historial con el estado anterior y el nuevo [OK]
+|   +-- Solo el director de área puede aprobar o devolver planes [OK]
+|   +-- CP-HU017-02: devolver con observaciones deja el plan EN REVISION y notifica al c... [OK]
+|   +-- Un plan en revisión del director no se puede modificar; uno devuelto sí [OK]
+|   +-- El área del director se compara sin importar mayúsculas ni espacios [OK]
+|   +-- Una observación no se marca como atendida dos veces [OK]
+|   +-- El director no revisa planes de otra área [OK]
+|   +-- Un plan nuevo empieza en BORRADOR [OK]
+|   +-- CP-HU017-03: no se puede devolver un plan sin observaciones [OK]
+|   +-- CP-HU017-04: un plan devuelto no pasa a ejecución hasta atender las observacione... [OK]
+|   +-- CP-HU017-01: el director aprueba un plan pendiente y sale de la lista de pendien... [OK]
+|   '-- Solo se aprueban o devuelven planes pendientes de revisión [OK]
+'-- JUnit Vintage [OK]
+
+Test run finished after 7307 ms
+[         4 containers found      ]
+[         0 containers skipped    ]
+[         4 containers started    ]
+[         0 containers aborted    ]
+[         4 containers successful ]
+[         0 containers failed     ]
+[        12 tests found           ]
+[         0 tests skipped         ]
+[        12 tests started         ]
+[         0 tests aborted         ]
+[        12 tests successful      ]
+[         0 tests failed          ]
+
