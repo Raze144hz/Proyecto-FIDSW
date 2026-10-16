@@ -36,7 +36,7 @@ La DoD es el acuerdo del equipo sobre qué significa que algo está **terminado*
 
 ### Integración y documentación
 - [ ] El pull request se unió a `develop` y la aplicación arranca sin errores en esa rama.
-- [ ] Si cambió la forma de usar el sistema, se actualizó la guía de usuario (`Docs/user guide/guide.md`).
+- [ ] Si cambió la forma de usar el sistema, se actualizó la [guía de usuario](../guia-de-usuario.md).
 - [ ] El issue tiene enlazados el pull request y el acta de pruebas, y solo entonces se mueve a **Done**.
 
 ---

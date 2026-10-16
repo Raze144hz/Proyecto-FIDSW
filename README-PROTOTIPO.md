@@ -1,99 +1,74 @@
-# Primer prototipo funcional SGPI
+# Prototipo funcional del SGPI
+
+Aplicación de escritorio en Java para registrar planes de acción y aprobarlos o devolverlos con observaciones (HU-017). Cómo se usa: [guía de usuario](Docs/guia-de-usuario.md).
 
 ## Tecnologías
 
-- Java
-- JavaFX
-- Maven
-- H2
-- JDBC
-- BCrypt
+- Java 17 y JavaFX 17
+- H2 (base de datos local) con JDBC
+- BCrypt para las contraseñas
+- Maven, con el Maven Wrapper incluido (`mvnw`)
+- JUnit 5 para las pruebas automáticas
 
 ## Funcionalidades
 
-- Inicio de sesión.
-- Roles ADMIN, COORDINADOR, RESPONSABLE y DIRECTOR.
-- Dashboard.
-- Creación de planes de acción.
-- Consulta de planes registrados.
-- Persistencia local mediante H2.
-- Restricción de creación según rol.
-- Aprobación y devolución de planes con observaciones (HU-017).
-- Notificaciones al coordinador e historial de cambios de estado del plan.
-- Cierre de sesión.
+- Inicio y cierre de sesión.
+- Roles ADMIN, COORDINADOR, RESPONSABLE y DIRECTOR, cada uno con sus permisos.
+- Registro, modificación y consulta de planes de acción, con código único y validaciones.
+- Envío del plan a revisión; aprobación o devolución con observaciones obligatorias por el director de área (HU-017).
+- Notificaciones al coordinador.
+- Historial de cambios de estado de cada plan.
+- Persistencia local en H2. Una base creada con una versión anterior del prototipo se actualiza sola al abrir la aplicación, sin borrar datos.
 
-## Flujo de aprobación de planes (HU-017)
+## Requisitos
 
-1. El coordinador crea el plan. Todo plan nuevo queda en **BORRADOR**.
-2. El coordinador lo envía a revisión. El plan queda **PENDIENTE DE REVISION**.
-3. El director de área revisa los planes pendientes de su área:
-   - **Aprobar plan:** el plan queda **APROBADO**.
-   - **Devolver con observaciones:** las observaciones son obligatorias y el plan queda **EN REVISION**.
-4. En los dos casos el coordinador recibe una notificación (botón **Notificaciones** de la barra superior).
-5. Si el plan fue devuelto, el coordinador lo corrige, marca cada observación como atendida y lo envía de nuevo a revisión.
-6. Solo un plan **APROBADO** y sin observaciones pendientes puede pasar a **EN EJECUCION**. Después se puede marcar como **FINALIZADO**.
+- JDK 17 o superior.
+- Conexión a internet la primera vez: el Maven Wrapper descarga Maven 3.9.16 y Maven descarga las librerías. No hace falta instalar Maven.
 
-Reglas:
+## Cómo ejecutarlo
 
-- El coordinador solo puede modificar un plan en **BORRADOR** o **EN REVISION**.
-- El director solo revisa los planes de su área. El área se compara sin importar mayúsculas ni espacios.
-- Cada cambio de estado queda en el historial del plan (botón **Ver historial del plan**) con el estado anterior, el nuevo, quién lo hizo y cuándo.
-- Las bases de datos creadas con la versión anterior del prototipo se actualizan solas al abrir la aplicación: se agregan las columnas y tablas nuevas sin borrar datos.
+Desde la carpeta del proyecto.
+
+Windows (PowerShell o CMD):
+
+```
+.\mvnw.cmd clean compile
+.\mvnw.cmd javafx:run "-Djavafx.platform=win"
+```
+
+Linux o macOS:
+
+```
+sh mvnw clean compile
+sh mvnw javafx:run -Djavafx.platform=linux
+```
+
+En macOS se cambia `linux` por `mac`. Si Maven ya está instalado, se puede usar `mvn` en lugar de `mvnw`.
+
+La base de datos se crea en la carpeta `data/` la primera vez que se abre la aplicación, con los usuarios de prueba.
 
 ## Usuarios de prueba
 
-### Administrador
+| Rol | Correo | Contraseña | Área |
+|---|---|---|---|
+| Administrador | `admin@sgpi.local` | `Admin123*` | — |
+| Coordinador | `coordinador@sgpi.local` | `Coord123*` | — |
+| Responsable | `responsable@sgpi.local` | `Resp123*` | — |
+| Director de área | `director@sgpi.local` | `Dir123*` | Calidad |
 
-Correo:
+Para que un plan le aparezca al director, el plan debe tener "Calidad" como área responsable.
 
-admin@sgpi.local
+## Pruebas automáticas
 
-Contraseña:
+Las reglas de HU-017 tienen 12 pruebas JUnit 5 en `src/test/java`, que usan una base H2 en memoria:
 
-Admin123*
+```
+.\mvnw.cmd clean test      (Windows)
+sh mvnw clean test         (Linux o macOS)
+```
 
-### Coordinador
+El flujo de GitHub Actions (`.github/workflows/maven.yml`) corre las mismas pruebas en Linux y en Windows en cada push a `main` o `develop` y en cada pull request.
 
-Correo:
+## Base de datos
 
-coordinador@sgpi.local
-
-Contraseña:
-
-Coord123*
-
-### Responsable
-
-Correo:
-
-responsable@sgpi.local
-
-Contraseña:
-
-Resp123*
-
-### Director de área (HU-017)
-
-Correo:
-
-director@sgpi.local
-
-Contraseña:
-
-Dir123*
-
-Área: Calidad. Para que un plan le aparezca al director, el plan debe tener "Calidad" como área responsable.
-
-Comandos de ejecucion y compilacion:
-
-
-mvn clean compile
-
-mvn javafx:run -Djavafx.platform=win
-
-En Linux o macOS se cambia `win` por `linux` o `mac`.
-
-Pruebas automáticas (JUnit 5) de las reglas de HU-017:
-
-mvn test
-
+El esquema que crea la aplicación está documentado en [`Database/prototipo-h2.sql`](Database/prototipo-h2.sql).

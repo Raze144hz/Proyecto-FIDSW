@@ -66,11 +66,11 @@ Las capturas están en `Graficas/entrega-2/` y el detalle de cada una en el [ín
 | D-01 | El estado del plan se escogía a mano (se podía crear EN EJECUCION) | Alta | David Álvarez: corregido en el PR #40 (unido a `main`) |
 | D-02 | `updatePlan` y `deletePlan` no validaban el rol | Media | David Álvarez: corregido en el PR #40 (unido a `main`) |
 | D-03 | Las alertas cortaban los mensajes largos en Linux | Baja | David Álvarez: corregido en el PR #40 (unido a `main`) |
-| D-04 | `bootstrap_prototipo.sh` sobrescribe el código actual con una versión anterior | Media | Juan Sebastián Martínez (propuesto), #41 |
-| D-05 | Copia de Maven en `tools/` dentro del repositorio | Baja | Juan Sebastián Martínez (propuesto), #41 |
+| D-04 | `bootstrap_prototipo.sh` sobrescribe el código actual con una versión anterior | Media | David Álvarez: corregido en el PR #46, #41 |
+| D-05 | Copia de Maven en `tools/` dentro del repositorio | Baja | David Álvarez: corregido en el PR #46 (Maven Wrapper), #41 |
 | D-06 | El README del prototipo solo traía el comando para Windows | Baja | David Álvarez: corregido en el PR #40 (unido a `main`) |
 | D-07 | Contraseñas de prueba y usuario de H2 escritos en el código | Baja | David Andrés Galindo (propuesto) |
-| D-08 | `develop` desactualizada respecto a `main` | Media | David Andrés Galindo (propuesto), #42 |
+| D-08 | `develop` desactualizada respecto a `main` | Media | David Andrés Galindo (propuesto), #42. El PR #47 la pone al día |
 
 ## 6. Decisión
 
@@ -84,8 +84,7 @@ Las capturas están en `Graficas/entrega-2/` y el detalle de cada una en el [ín
 | Revisar el código del PR #40 | David Andrés Galindo | 20 oct |
 | Ejecutar CP-PRO-08 (`mvn javafx:run` en Windows) | David Álvarez | 20 oct |
 | Decidir el estado de un plan devuelto y unificar HU-017, CU-01 y los casos | Juan Sebastián Martínez | 20 oct |
-| Resolver #41 | Juan Sebastián Martínez | 20 oct |
-| Resolver #42 | David Andrés Galindo | 20 oct |
+| Acordar a qué rama van los PR (#42) | David Andrés Galindo | 20 oct |
 | Escribir los casos de prueba de HU-001, HU-002 y HU-006 | Responsable de cada HU | 20 oct |
 | Registrar la Sprint Review y la Retrospectiva del Sprint 2 | Miguel Ángel Gómez | 20 oct |
 

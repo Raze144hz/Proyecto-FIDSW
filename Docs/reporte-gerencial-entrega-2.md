@@ -16,7 +16,7 @@ Pontificia Universidad Javeriana, Facultad de Ingeniería
 | Proyecto | SGPI: Sistema de Gestión de Procesos Institucionales |
 | Cliente / Product Owner | Ing. Kerwin Barros |
 | Sprint | 2 (23 de septiembre – 7 de octubre de 2026) |
-| Fecha del reporte | 10 de octubre de 2026; actualizado el 12 de octubre con la prueba en Maven (CP-PRO-09) y la unión del PR #40 |
+| Fecha del reporte | 10 de octubre de 2026; actualizado el 12 de octubre con la prueba en Maven (CP-PRO-09), la unión del PR #40 y el orden del repositorio; y el 16 de octubre con el diagrama de clases y el modelo relacional |
 | Responsable | David Álvarez Rodríguez (Gestión y Reportes) |
 | Estado del proyecto | Primer prototipo funcional en JavaFX + H2. HU-017 implementada y unida a `main`; falta la revisión de otro integrante. La arquitectura documentada todavía no coincide con el prototipo. |
 
@@ -44,24 +44,26 @@ Según el historial del repositorio entre el 23 de septiembre y el 7 de octubre:
 | Juan Sebastián Martínez | Primer prototipo funcional (PR #36): inicio de sesión con contraseñas cifradas, roles ADMIN, COORDINADOR y RESPONSABLE, creación y consulta de planes, base de datos H2 | 6 oct |
 | David Andrés Galindo | No hay commits suyos en el repositorio ni cambios en la Wiki durante el sprint | — |
 
-**Después del cierre (8 – 12 oct), como parte de la Entrega 2:**
+**Después del cierre (8 – 16 oct), como parte de la Entrega 2:**
 
 - **David Álvarez:**
   - Implementó la HU-017 sobre el prototipo, con 12 pruebas JUnit (PR #40, unido a `main` el 12 de octubre).
   - Ejecutó las pruebas del prototipo y reunió las evidencias. El 12 de octubre corrió `mvn clean test` en Windows: las 12 pruebas pasan (CP-PRO-09).
   - Completó el acta de pruebas y este reporte.
   - Registró las tareas de la Entrega 2 en los issues #25 y #37 a #39, y los defectos en los issues #41 y #42.
+  - Ordenó el repositorio (PR #46): quitó la copia de Maven y el script de arranque (#41), agregó el Maven Wrapper, la guía de usuario y el respaldo de la Wiki, y actualizó el README. Abrió el PR #47 para poner `develop` al día con `main`.
+  - Subió el diagrama de clases y el modelo relacional con su fuente en PlantUML, corregidos para que coincidan entre sí y con el prototipo (PR #48).
 
 ## 4. Trabajo pendiente
 
 | Pendiente | Responsable en el planning | Situación |
 |---|---|---|
-| Modelo entidad-relación y diagramas UML en el repositorio | David Andrés Galindo | El diagrama de clases y el modelo relacional existen como imágenes, pero no están en el repositorio. |
-| Entorno de desarrollo base | David Andrés Galindo | No se configuró el entorno Spring + web + PostgreSQL del cronograma. El prototipo usa otro stack (ver sección 7). `develop` sigue con solo la estructura de carpetas. |
-| Mockups | Juan Sebastián Martínez | `Docs/Mockups/mockups.md` está vacío. |
+| Modelo entidad-relación y diagramas UML en el repositorio | David Andrés Galindo | El diagrama de clases y el modelo relacional ya están en `Graficas/`, con su fuente editable (PR #48). Faltan los diagramas de secuencia y de procesos. |
+| Entorno de desarrollo base | David Andrés Galindo | No se configuró el entorno Spring + web + PostgreSQL del cronograma. El prototipo usa otro stack (ver sección 7). `develop` tenía solo la estructura de carpetas; el PR #47 la pone al día con `main`. |
+| Mockups | Juan Sebastián Martínez | No se hicieron. Las pantallas del prototipo están en las capturas de la Entrega 2. |
 | Issues del sprint, milestone y Burn up | Miguel Ángel Gómez | No se crearon issues nuevos durante el sprint. Los issues abiertos siguen en el milestone "Sprint", que venció el 21 de septiembre. |
-| Sprint Review y Retrospectiva | Miguel Ángel Gómez | `Docs/Review/review.md` y `Docs/Retrospective/retro.md` están vacíos. |
-| Daily del día 7 | Miguel Ángel Gómez | El archivo existe, pero está vacío; la del día 6 solo tiene una de las cuatro partes. |
+| Sprint Review y Retrospectiva | Miguel Ángel Gómez | No se han registrado. |
+| Daily del día 7 | Miguel Ángel Gómez | No se registró; la del día 6 solo tiene una de las cuatro partes. |
 | HU-003, HU-005 y HU-018 | Juan Sebastián Martínez y David Álvarez | Sin programar. |
 
 ## 5. Estado de las historias de usuario
@@ -87,10 +89,10 @@ Ninguna HU cumple todavía la Definition of Done completa.
 | HU con avance en código | 3 | HU-001, HU-002 y HU-006, en el prototipo |
 | HU en *Done* | 0 | Falta revisión de PR y casos de prueba |
 | Pull requests unidos en el sprint | 8 | Del #29 al #36, todos directo a `main` y sin revisión registrada |
-| Dailies registradas en el sprint | 1 de forma parcial | Día 6 (solo una parte); día 7 vacío |
+| Dailies registradas en el sprint | 1 de forma parcial | Día 6 (solo una parte); día 7 sin registrar |
 | Casos de prueba ejecutados | 13 | 12 pasan y 1 falla (`develop` desactualizada); 4 no se ejecutaron |
 | Pruebas automáticas (JUnit) | 12 | Las 12 pasan, también con `mvn clean test` en Windows; son las primeras del proyecto |
-| Defectos registrados | 8 | 4 corregidos en el PR #40, ya en `main`, y 4 abiertos (#41, #42 y D-07) |
+| Defectos registrados | 8 | 6 corregidos (4 en el PR #40 y 2 en el PR #46), 1 en corrección (#42) y 1 abierto (D-07) |
 
 ## 7. Problemas encontrados y tratamiento
 
@@ -98,8 +100,8 @@ Ninguna HU cumple todavía la Definition of Done completa.
 |---|---|---|
 | El prototipo usa JavaFX + H2, mientras que el cronograma, el acta de pruebas preparada y la documentación de arquitectura suponen Spring, frontend web y PostgreSQL | Los documentos no describen el sistema real; los casos de prueba del entorno quedaron sin sentido | Los casos se reemplazaron por casos sobre el prototipo. La revisión de la arquitectura quedó asignada a Galindo para la Entrega 2. |
 | Atraso de unos 6 días en el diseño técnico | Las HU planeadas no se programaron en el sprint | Se pasaron al Sprint 3 en el cronograma. |
-| El prototipo se unió directo a `main` sin revisión ni issue vinculado, y `develop` quedó atrás | No se cumple la estrategia de ramas del README ni la DoD | Defecto D-08 (#42): sincronizar `develop` o acordar que los PR van a `main`. |
-| El prototipo trae un script que sobrescribe el código y una copia de Maven | Riesgo de perder código y repositorio más pesado | Defectos D-04 y D-05 (#41). |
+| El prototipo se unió directo a `main` sin revisión ni issue vinculado, y `develop` quedó atrás | No se cumple la estrategia de ramas del README ni la DoD | Defecto D-08 (#42): el PR #47 pone `develop` al día; falta acordar a qué rama van los PR. |
+| El prototipo trae un script que sobrescribe el código y una copia de Maven | Riesgo de perder código y repositorio más pesado | Defectos D-04 y D-05 (#41), corregidos en el PR #46. Maven se descarga con el Maven Wrapper. |
 | Inconsistencia en HU-017: el CU-01 dice que un plan devuelto vuelve a "En borrador" y la HU dice "En revisión" | Duda sobre el comportamiento correcto | Se implementó "En revisión", como dicen la HU y los casos; cambiarlo es una línea. Juan Sebastián decide con el equipo. |
 | Issues de HU cerrados en la Entrega 1 aunque no estaban programados | El tablero no refleja el avance real | Miguel revisará issues, estados y milestone en la Entrega 2. |
 | Registro Scrum incompleto (dailies, Review, Retro) | Poca evidencia del seguimiento del sprint | Miguel completará la Review y la Retro en la Entrega 2. |
@@ -115,6 +117,8 @@ Ninguna HU cumple todavía la Definition of Done completa.
   - Historial de cambios de estado.
   - Reglas validadas también en la capa de datos.
 - **Primeras pruebas automáticas** del proyecto: 12 pruebas JUnit 5 sobre una base H2 en memoria, que se ejecutan con `mvn test`.
+- **Maven Wrapper** (`mvnw`): el proyecto compila y corre sin instalar Maven.
+- **Guía de usuario** del prototipo en `Docs/guia-de-usuario.md`.
 - **Esquema de la base de datos del prototipo** documentado en `Database/prototipo-h2.sql`. Las bases creadas con la versión anterior se actualizan solas.
 - **Base de calidad:** Definition of Done, formatos de caso y acta de pruebas, y casos de prueba de HU-016 y HU-017.
 
@@ -170,7 +174,7 @@ La propuesta, registrada en el acta de pruebas, es cerrar el Sprint 2 con el pro
 | Integrante | Tareas |
 |---|---|
 | David Álvarez | Implementación de HU-017 (PR #40); Reporte Gerencial del Sprint 2; acta de pruebas; coordinación de evidencias del prototipo |
-| David Andrés Galindo | Diagrama de clases (`Graficas/diagrama-clases.png` y su fuente); revisión técnica del SDD frente al código real; revisión de los diagramas de secuencia y procesos; identificar los patrones que existen en el código |
+| David Andrés Galindo | Diagrama de clases y su fuente editable; revisión técnica del SDD frente al código real; revisión de los diagramas de secuencia y procesos; identificar los patrones que existen en el código |
 | Miguel Ángel Gómez | Sprint Review; Retrospectiva; seguimiento de issues, responsables, estados, milestone y tablero |
 | Juan Sebastián Martínez | Corregir la inconsistencia de HU-017 y CU-01; trazabilidad entre requisitos y diseño; revisión de los casos de prueba de HU-016 y HU-017; documentar los patrones en el SDD |
 | Todo el equipo | Diagrama de secuencia alrededor de HU-017 (Galindo revisa); diagrama de procesos (David y Juan Sebastián definen el flujo funcional, Galindo valida) |

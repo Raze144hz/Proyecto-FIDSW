@@ -1,0 +1,116 @@
+@startuml modelo-relacional-bd
+' Modelo relacional de la base de datos del SGPI para HU-016 y HU-017.
+' Para generar la imagen: java -jar plantuml.jar -tsvg modelo-relacional-bd.puml
+!theme plain
+skinparam defaultFontName DejaVu Sans
+skinparam shadowing false
+skinparam dpi 170
+skinparam linetype ortho
+skinparam nodesep 50
+skinparam ranksep 60
+hide circle
+hide empty members
+
+title Modelo Relacional - Base de Datos
+
+entity AREA {
+  • id_area : INT <<PK>>
+  --
+  • nombre : VARCHAR(100)
+}
+
+entity ROL {
+  • id_rol : INT <<PK>>
+  --
+  • nombre : VARCHAR(50)
+}
+
+entity USUARIO {
+  • id_usuario : INT <<PK>>
+  --
+  • nombre : VARCHAR(100)
+  • correo : VARCHAR(100) <<UK>>
+  • contrasena : VARCHAR(255)
+  • id_rol : INT <<FK>>
+  • id_area : INT <<FK>>
+}
+
+entity EVIDENCIA {
+  • id_evidencia : INT <<PK>>
+  --
+  • nombre : VARCHAR(150)
+  • tipo_archivo : VARCHAR(10)
+  • fecha_carga : DATE
+  <U+2007><U+2007>palabras_clave : VARCHAR(255)
+  • ruta : VARCHAR(255)
+  • id_usuario : INT <<FK>>
+  • id_area : INT <<FK>>
+}
+
+entity PLAN_ACCION {
+  • id_plan : INT <<PK>>
+  --
+  • codigo : VARCHAR(20) <<UK>>
+  • objetivo : TEXT
+  • fecha_inicio : DATE
+  • fecha_fin : DATE
+  • estado : VARCHAR(20)
+  <U+2007><U+2007>fecha_envio : TIMESTAMP
+  • id_area : INT <<FK>>
+  • id_coordinador : INT <<FK>>
+  <U+2007><U+2007>id_director : INT <<FK>>
+}
+
+entity OBSERVACION {
+  • id_observacion : INT <<PK>>
+  --
+  • descripcion : TEXT
+  • fecha : TIMESTAMP
+  • atendida : BOOLEAN
+  • id_plan : INT <<FK>>
+  • id_autor : INT <<FK>>
+}
+
+entity NOTIFICACION {
+  • id_notificacion : INT <<PK>>
+  --
+  • mensaje : VARCHAR(255)
+  • fecha : TIMESTAMP
+  • leida : BOOLEAN
+  • id_usuario : INT <<FK>>
+  <U+2007><U+2007>id_plan : INT <<FK>>
+}
+
+entity HISTORIAL_PLAN {
+  • id_historial : INT <<PK>>
+  --
+  • accion : VARCHAR(30)
+  <U+2007><U+2007>estado_anterior : VARCHAR(20)
+  • estado_nuevo : VARCHAR(20)
+  <U+2007><U+2007>detalle : TEXT
+  • fecha : TIMESTAMP
+  • id_plan : INT <<FK>>
+  • id_usuario : INT <<FK>>
+}
+
+AREA ||--o{ USUARIO
+ROL ||--o{ USUARIO
+AREA ||--o{ EVIDENCIA
+USUARIO ||--o{ EVIDENCIA
+AREA ||--o{ PLAN_ACCION
+USUARIO ||--o{ PLAN_ACCION : coordinador
+USUARIO |o--o{ PLAN_ACCION : director
+PLAN_ACCION ||--o{ OBSERVACION
+USUARIO ||--o{ OBSERVACION
+USUARIO ||--o{ NOTIFICACION
+PLAN_ACCION |o--o{ NOTIFICACION
+PLAN_ACCION ||--o{ HISTORIAL_PLAN
+USUARIO ||--o{ HISTORIAL_PLAN
+
+legend right
+  • = NOT NULL
+  PK = llave primaria
+  FK = llave foránea
+  UK = valor único
+endlegend
+@enduml
