@@ -16,7 +16,7 @@ Pontificia Universidad Javeriana, Facultad de Ingeniería
 | Proyecto | SGPI: Sistema de Gestión de Procesos Institucionales |
 | Cliente / Product Owner | Ing. Kerwin Barros |
 | Sprint | 2 (23 de septiembre – 7 de octubre de 2026) |
-| Fecha del reporte | 10 de octubre de 2026; actualizado el 12 de octubre con la prueba en Maven (CP-PRO-09), la unión del PR #40 y el orden del repositorio |
+| Fecha del reporte | 10 de octubre de 2026; actualizado el 12 de octubre con la prueba en Maven (CP-PRO-09), la unión del PR #40 y el orden del repositorio; y el 16 de octubre con el diagrama de clases y el modelo relacional |
 | Responsable | David Álvarez Rodríguez (Gestión y Reportes) |
 | Estado del proyecto | Primer prototipo funcional en JavaFX + H2. HU-017 implementada y unida a `main`; falta la revisión de otro integrante. La arquitectura documentada todavía no coincide con el prototipo. |
 
@@ -44,7 +44,7 @@ Según el historial del repositorio entre el 23 de septiembre y el 7 de octubre:
 | Juan Sebastián Martínez | Primer prototipo funcional (PR #36): inicio de sesión con contraseñas cifradas, roles ADMIN, COORDINADOR y RESPONSABLE, creación y consulta de planes, base de datos H2 | 6 oct |
 | David Andrés Galindo | No hay commits suyos en el repositorio ni cambios en la Wiki durante el sprint | — |
 
-**Después del cierre (8 – 12 oct), como parte de la Entrega 2:**
+**Después del cierre (8 – 16 oct), como parte de la Entrega 2:**
 
 - **David Álvarez:**
   - Implementó la HU-017 sobre el prototipo, con 12 pruebas JUnit (PR #40, unido a `main` el 12 de octubre).
@@ -52,12 +52,13 @@ Según el historial del repositorio entre el 23 de septiembre y el 7 de octubre:
   - Completó el acta de pruebas y este reporte.
   - Registró las tareas de la Entrega 2 en los issues #25 y #37 a #39, y los defectos en los issues #41 y #42.
   - Ordenó el repositorio (PR #46): quitó la copia de Maven y el script de arranque (#41), agregó el Maven Wrapper, la guía de usuario y el respaldo de la Wiki, y actualizó el README. Abrió el PR #47 para poner `develop` al día con `main`.
+  - Subió el diagrama de clases y el modelo relacional con su fuente en PlantUML, corregidos para que coincidan entre sí y con el prototipo (PR #48).
 
 ## 4. Trabajo pendiente
 
 | Pendiente | Responsable en el planning | Situación |
 |---|---|---|
-| Modelo entidad-relación y diagramas UML en el repositorio | David Andrés Galindo | El diagrama de clases y el modelo relacional existen como imágenes, pero no están en el repositorio. |
+| Modelo entidad-relación y diagramas UML en el repositorio | David Andrés Galindo | El diagrama de clases y el modelo relacional ya están en `Graficas/`, con su fuente editable (PR #48). Faltan los diagramas de secuencia y de procesos. |
 | Entorno de desarrollo base | David Andrés Galindo | No se configuró el entorno Spring + web + PostgreSQL del cronograma. El prototipo usa otro stack (ver sección 7). `develop` tenía solo la estructura de carpetas; el PR #47 la pone al día con `main`. |
 | Mockups | Juan Sebastián Martínez | `Docs/Mockups/mockups.md` está vacío. |
 | Issues del sprint, milestone y Burn up | Miguel Ángel Gómez | No se crearon issues nuevos durante el sprint. Los issues abiertos siguen en el milestone "Sprint", que venció el 21 de septiembre. |
