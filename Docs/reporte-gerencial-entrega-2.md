@@ -60,10 +60,10 @@ Según el historial del repositorio entre el 23 de septiembre y el 7 de octubre:
 |---|---|---|
 | Modelo entidad-relación y diagramas UML en el repositorio | David Andrés Galindo | El diagrama de clases y el modelo relacional ya están en `Graficas/`, con su fuente editable (PR #48). Faltan los diagramas de secuencia y de procesos. |
 | Entorno de desarrollo base | David Andrés Galindo | No se configuró el entorno Spring + web + PostgreSQL del cronograma. El prototipo usa otro stack (ver sección 7). `develop` tenía solo la estructura de carpetas; el PR #47 la pone al día con `main`. |
-| Mockups | Juan Sebastián Martínez | `Docs/Mockups/mockups.md` está vacío. |
+| Mockups | Juan Sebastián Martínez | No se hicieron. Las pantallas del prototipo están en las capturas de la Entrega 2. |
 | Issues del sprint, milestone y Burn up | Miguel Ángel Gómez | No se crearon issues nuevos durante el sprint. Los issues abiertos siguen en el milestone "Sprint", que venció el 21 de septiembre. |
-| Sprint Review y Retrospectiva | Miguel Ángel Gómez | `Docs/Review/review.md` y `Docs/Retrospective/retro.md` están vacíos. |
-| Daily del día 7 | Miguel Ángel Gómez | El archivo existe, pero está vacío; la del día 6 solo tiene una de las cuatro partes. |
+| Sprint Review y Retrospectiva | Miguel Ángel Gómez | No se han registrado. |
+| Daily del día 7 | Miguel Ángel Gómez | No se registró; la del día 6 solo tiene una de las cuatro partes. |
 | HU-003, HU-005 y HU-018 | Juan Sebastián Martínez y David Álvarez | Sin programar. |
 
 ## 5. Estado de las historias de usuario
@@ -89,7 +89,7 @@ Ninguna HU cumple todavía la Definition of Done completa.
 | HU con avance en código | 3 | HU-001, HU-002 y HU-006, en el prototipo |
 | HU en *Done* | 0 | Falta revisión de PR y casos de prueba |
 | Pull requests unidos en el sprint | 8 | Del #29 al #36, todos directo a `main` y sin revisión registrada |
-| Dailies registradas en el sprint | 1 de forma parcial | Día 6 (solo una parte); día 7 vacío |
+| Dailies registradas en el sprint | 1 de forma parcial | Día 6 (solo una parte); día 7 sin registrar |
 | Casos de prueba ejecutados | 13 | 12 pasan y 1 falla (`develop` desactualizada); 4 no se ejecutaron |
 | Pruebas automáticas (JUnit) | 12 | Las 12 pasan, también con `mvn clean test` en Windows; son las primeras del proyecto |
 | Defectos registrados | 8 | 6 corregidos (4 en el PR #40 y 2 en el PR #46), 1 en corrección (#42) y 1 abierto (D-07) |
@@ -174,7 +174,7 @@ La propuesta, registrada en el acta de pruebas, es cerrar el Sprint 2 con el pro
 | Integrante | Tareas |
 |---|---|
 | David Álvarez | Implementación de HU-017 (PR #40); Reporte Gerencial del Sprint 2; acta de pruebas; coordinación de evidencias del prototipo |
-| David Andrés Galindo | Diagrama de clases (`Graficas/diagrama-clases.png` y su fuente); revisión técnica del SDD frente al código real; revisión de los diagramas de secuencia y procesos; identificar los patrones que existen en el código |
+| David Andrés Galindo | Diagrama de clases y su fuente editable; revisión técnica del SDD frente al código real; revisión de los diagramas de secuencia y procesos; identificar los patrones que existen en el código |
 | Miguel Ángel Gómez | Sprint Review; Retrospectiva; seguimiento de issues, responsables, estados, milestone y tablero |
 | Juan Sebastián Martínez | Corregir la inconsistencia de HU-017 y CU-01; trazabilidad entre requisitos y diseño; revisión de los casos de prueba de HU-016 y HU-017; documentar los patrones en el SDD |
 | Todo el equipo | Diagrama de secuencia alrededor de HU-017 (Galindo revisa); diagrama de procesos (David y Juan Sebastián definen el flujo funcional, Galindo valida) |

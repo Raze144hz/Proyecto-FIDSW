@@ -71,7 +71,7 @@ Requisitos, usuarios de prueba y pruebas automáticas: [`README-PROTOTIPO.md`](R
 | Arquitectura | [`Docs/Arquitectura/arquitectura.md`](Docs/Arquitectura/arquitectura.md) |
 | Calidad | [Definition of Done](Docs/Calidad/definition-of-done.md), [formato de caso de prueba](Docs/Calidad/formato-caso-de-prueba.md), [formato de acta de pruebas](Docs/Calidad/formato-acta-de-pruebas.md), [casos de HU-016 y HU-017](Docs/Calidad/casos-de-prueba-HU016-HU017.md) |
 | Planeación | [Acta de Sprint Planning del Sprint 2](Docs/Planning/Acta-Planning-Sprint2.md), [cronograma de desarrollo](Docs/Planning/cronograma-desarrollo.md) |
-| Scrum | [Dailies](Docs/Dailys), [Sprint Review](Docs/Review/review.md), [Retrospectiva](Docs/Retrospective/retro.md) |
+| Scrum | [Dailies](Docs/Dailys) |
 | Uso del prototipo | [Guía de usuario](Docs/guia-de-usuario.md) |
 
 ## 📂 Estructura del Repositorio

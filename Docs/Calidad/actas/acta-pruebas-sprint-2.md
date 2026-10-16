@@ -170,7 +170,7 @@ El Sprint 2 no cumple la DoD de sprint:
 - Ninguna HU queda en *Done*.
 - `develop` no se unió a `main`.
 - La Sprint Review y la Retrospectiva no están registradas.
-- La daily del día 7 está vacía.
+- La daily del día 7 no se registró.
 
 Se propone cerrar el Sprint 2 con el prototipo como resultado parcial y pasar las HU pendientes al Sprint 3, con los compromisos de la sección 9.
 
