@@ -1,6 +1,6 @@
 # Datos para el acta de pruebas — Sprint 2
 
-**Sesión de pruebas:** 10 de octubre de 2026. La sesión planeada para el 6 de octubre no quedó registrada.
+**Sesión de pruebas:** 10 de octubre de 2026. La sesión planeada para el 6 de octubre no quedó registrada. CP-PRO-09 se ejecutó el 12 de octubre.
 **Acta que se llena con esto:** [`acta-pruebas-sprint-2.md`](acta-pruebas-sprint-2.md)
 
 Estos son los datos recopilados en la sesión de pruebas. Con ellos se completó el acta y se calculó el resumen.
@@ -10,7 +10,7 @@ Estos son los datos recopilados en la sesión de pruebas. Con ellos se completó
 ## 1. Versión probada
 
 - Prototipo del Sprint 2: `main` @ `9390848`
-- Prototipo con HU-017: `feature/HU-017-aprobacion-planes` @ `5fce05f` (PR #40)
+- Prototipo con HU-017: `feature/HU-017-aprobacion-planes` @ `5fce05f` (PR #40, unido a `main` el 12 de octubre como `daffdb4`; el código y el `pom.xml` no cambiaron)
 
 ## 2. Entorno
 
@@ -22,8 +22,9 @@ Estos son los datos recopilados en la sesión de pruebas. Con ellos se completó
 | Base de datos y versión | H2 2.2.220, base local en `data/sgpi` |
 | Otras librerías | jBCrypt 0.4 y JUnit 5.10.1 |
 | Forma de ejecución | Recorrido automático de la interfaz (`Script/evidencias-prototipo`) y pruebas JUnit |
+| Entorno de CP-PRO-09 | Windows, OpenJDK 25.0.4 (Microsoft), Maven 3.9.16 (`tools/` del repositorio), con las versiones del `pom.xml` |
 
-> El `pom.xml` usa JavaFX 17.0.10 y H2 2.2.224. No hubo acceso a Maven Central en el entorno de prueba, por eso falta el caso CP-PRO-09.
+> El `pom.xml` usa JavaFX 17.0.10 y H2 2.2.224. No hubo acceso a Maven Central en el entorno del 10 de octubre; CP-PRO-09 se corrió después en Windows con Maven.
 
 ## 3. Participantes
 
@@ -48,7 +49,7 @@ Estado: **Pasa** · **Falla** · **Bloqueado** · **No ejecutado**
 | CP-PRO-06 | El rol RESPONSABLE solo consulta | Pasa | David Álvarez | `25-responsable-consulta.png` | |
 | CP-PRO-07 | Abrir una base de la versión anterior | Pasa | David Álvarez | `migracion-base-anterior.txt` | |
 | CP-PRO-08 | Arrancar en Windows (RNF-08) | No ejecutado | — | — | Solo se probó en Linux |
-| CP-PRO-09 | `mvn clean test` | No ejecutado | — | — | Sin acceso a Maven Central |
+| CP-PRO-09 | `mvn clean test` | Pasa | David Álvarez (12 oct) | `resultado-maven-windows.txt` | |
 | CP-PRO-10 | `develop` al día con `main` | Falla | David Álvarez | `develop` @ `35ca77b`, `main` @ `9390848` | `develop` solo tiene la estructura de carpetas del 16 de septiembre |
 | CP-HU017-01 | Aprobar un plan pendiente | Pasa | David Álvarez | `11`, `12`, `13`, JUnit | |
 | CP-HU017-02 | Devolver con observaciones y notificar | Pasa | David Álvarez | `09`, `10`, `15`, JUnit | |
@@ -62,25 +63,26 @@ Las capturas están en `Graficas/entrega-2/` y el detalle de cada una en el [ín
 
 | Defecto | Descripción | Severidad | Responsable de corregirlo |
 |---|---|---|---|
-| D-01 | El estado del plan se escogía a mano (se podía crear EN EJECUCION) | Alta | David Álvarez: corregido en el PR #40 |
-| D-02 | `updatePlan` y `deletePlan` no validaban el rol | Media | David Álvarez: corregido en el PR #40 |
-| D-03 | Las alertas cortaban los mensajes largos en Linux | Baja | David Álvarez: corregido en el PR #40 |
+| D-01 | El estado del plan se escogía a mano (se podía crear EN EJECUCION) | Alta | David Álvarez: corregido en el PR #40 (unido a `main`) |
+| D-02 | `updatePlan` y `deletePlan` no validaban el rol | Media | David Álvarez: corregido en el PR #40 (unido a `main`) |
+| D-03 | Las alertas cortaban los mensajes largos en Linux | Baja | David Álvarez: corregido en el PR #40 (unido a `main`) |
 | D-04 | `bootstrap_prototipo.sh` sobrescribe el código actual con una versión anterior | Media | Juan Sebastián Martínez (propuesto), #41 |
 | D-05 | Copia de Maven en `tools/` dentro del repositorio | Baja | Juan Sebastián Martínez (propuesto), #41 |
-| D-06 | El README del prototipo solo traía el comando para Windows | Baja | David Álvarez: corregido en el PR #40 |
+| D-06 | El README del prototipo solo traía el comando para Windows | Baja | David Álvarez: corregido en el PR #40 (unido a `main`) |
 | D-07 | Contraseñas de prueba y usuario de H2 escritos en el código | Baja | David Andrés Galindo (propuesto) |
 | D-08 | `develop` desactualizada respecto a `main` | Media | David Andrés Galindo (propuesto), #42 |
 
 ## 6. Decisión
 
-- ¿HU-017 pasa a *Done*? **No todavía.** Queda en *In review* hasta que otro integrante revise el PR #40 y se ejecuten CP-PRO-08 y CP-PRO-09.
+- ¿HU-017 pasa a *Done*? **No todavía.** CP-PRO-09 ya pasó. Queda en *In review* hasta que otro integrante revise el código del PR #40 (se unió a `main` el 12 de octubre sin esa revisión) y se ejecute CP-PRO-08.
 - ¿El Sprint 2 cumple la DoD de sprint? **No.** Se propone cerrarlo con el prototipo como resultado parcial y pasar las HU pendientes al Sprint 3 (ver la sección 8 del acta).
 
 ## 7. Compromisos
 
 | Acción | Responsable | Fecha límite |
 |---|---|---|
-| Revisar el PR #40 y ejecutar CP-PRO-08 y CP-PRO-09 | David Andrés Galindo | 20 oct |
+| Revisar el código del PR #40 | David Andrés Galindo | 20 oct |
+| Ejecutar CP-PRO-08 (`mvn javafx:run` en Windows) | David Álvarez | 20 oct |
 | Decidir el estado de un plan devuelto y unificar HU-017, CU-01 y los casos | Juan Sebastián Martínez | 20 oct |
 | Resolver #41 | Juan Sebastián Martínez | 20 oct |
 | Resolver #42 | David Andrés Galindo | 20 oct |

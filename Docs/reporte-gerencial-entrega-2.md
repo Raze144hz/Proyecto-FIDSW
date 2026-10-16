@@ -16,9 +16,9 @@ Pontificia Universidad Javeriana, Facultad de Ingeniería
 | Proyecto | SGPI: Sistema de Gestión de Procesos Institucionales |
 | Cliente / Product Owner | Ing. Kerwin Barros |
 | Sprint | 2 (23 de septiembre – 7 de octubre de 2026) |
-| Fecha del reporte | 10 de octubre de 2026 |
+| Fecha del reporte | 10 de octubre de 2026; actualizado el 12 de octubre con la prueba en Maven (CP-PRO-09) y la unión del PR #40 |
 | Responsable | David Álvarez Rodríguez (Gestión y Reportes) |
-| Estado del proyecto | Primer prototipo funcional en JavaFX + H2. HU-017 implementada y en revisión. La arquitectura documentada todavía no coincide con el prototipo. |
+| Estado del proyecto | Primer prototipo funcional en JavaFX + H2. HU-017 implementada y unida a `main`; falta la revisión de otro integrante. La arquitectura documentada todavía no coincide con el prototipo. |
 
 ## 2. Objetivo del Sprint 2
 
@@ -44,11 +44,11 @@ Según el historial del repositorio entre el 23 de septiembre y el 7 de octubre:
 | Juan Sebastián Martínez | Primer prototipo funcional (PR #36): inicio de sesión con contraseñas cifradas, roles ADMIN, COORDINADOR y RESPONSABLE, creación y consulta de planes, base de datos H2 | 6 oct |
 | David Andrés Galindo | No hay commits suyos en el repositorio ni cambios en la Wiki durante el sprint | — |
 
-**Después del cierre (8 – 10 oct), como parte de la Entrega 2:**
+**Después del cierre (8 – 12 oct), como parte de la Entrega 2:**
 
 - **David Álvarez:**
-  - Implementó la HU-017 sobre el prototipo, con 12 pruebas JUnit (PR #40, en revisión).
-  - Ejecutó las pruebas del prototipo y reunió las evidencias.
+  - Implementó la HU-017 sobre el prototipo, con 12 pruebas JUnit (PR #40, unido a `main` el 12 de octubre).
+  - Ejecutó las pruebas del prototipo y reunió las evidencias. El 12 de octubre corrió `mvn clean test` en Windows: las 12 pruebas pasan (CP-PRO-09).
   - Completó el acta de pruebas y este reporte.
   - Registró las tareas de la Entrega 2 en los issues #25 y #37 a #39, y los defectos en los issues #41 y #42.
 
@@ -74,7 +74,7 @@ Según el historial del repositorio entre el 23 de septiembre y el 7 de octubre:
 | HU-003 | Carga de evidencias documentales | Juan Sebastián Martínez | Sin iniciar. |
 | HU-005 | Notificaciones de vencimiento | David Álvarez | Sin iniciar. El PR #40 agrega notificaciones internas que pueden servir de base. |
 | HU-018 | Recuperación de contraseña | David Álvarez | Sin iniciar. |
-| HU-017 | Aprobación y retroalimentación de planes | David Álvarez (Entrega 2) | Implementada en el PR #40: sus 4 casos de prueba y las 12 pruebas JUnit pasan. Queda en *In review* hasta que otro integrante revise el PR. |
+| HU-017 | Aprobación y retroalimentación de planes | David Álvarez (Entrega 2) | Implementada en el PR #40, unido a `main` el 12 de octubre: sus 4 casos de prueba y las 12 pruebas JUnit pasan, también con Maven en Windows. Queda en *In review*: el PR se unió sin la revisión de otro integrante y falta arrancarlo en Windows (CP-PRO-08). |
 | HU-016 | Búsqueda avanzada de evidencias | Asignada a Changostt en el issue #24 | Sin iniciar; depende de HU-003. |
 
 Ninguna HU cumple todavía la Definition of Done completa.
@@ -88,9 +88,9 @@ Ninguna HU cumple todavía la Definition of Done completa.
 | HU en *Done* | 0 | Falta revisión de PR y casos de prueba |
 | Pull requests unidos en el sprint | 8 | Del #29 al #36, todos directo a `main` y sin revisión registrada |
 | Dailies registradas en el sprint | 1 de forma parcial | Día 6 (solo una parte); día 7 vacío |
-| Casos de prueba ejecutados | 12 | 11 pasan y 1 falla (`develop` desactualizada); 5 no se ejecutaron |
-| Pruebas automáticas (JUnit) | 12 | Las 12 pasan; son las primeras del proyecto |
-| Defectos registrados | 8 | 4 corregidos en el PR #40 y 4 abiertos (#41, #42 y D-07) |
+| Casos de prueba ejecutados | 13 | 12 pasan y 1 falla (`develop` desactualizada); 4 no se ejecutaron |
+| Pruebas automáticas (JUnit) | 12 | Las 12 pasan, también con `mvn clean test` en Windows; son las primeras del proyecto |
+| Defectos registrados | 8 | 4 corregidos en el PR #40, ya en `main`, y 4 abiertos (#41, #42 y D-07) |
 
 ## 7. Problemas encontrados y tratamiento
 
@@ -177,6 +177,6 @@ La propuesta, registrada en el acta de pruebas, es cerrar el Sprint 2 con el pro
 
 **Riesgos para el Sprint 3:**
 - Que la arquitectura documentada siga sin coincidir con el prototipo.
-- Que los PR se sigan uniendo sin revisión, lo que impide cumplir la DoD.
-- Que no se pruebe el prototipo en Windows (RNF-08), que es la plataforma del comando de ejecución del README.
+- Que los PR se sigan uniendo sin revisión, lo que impide cumplir la DoD. El PR #40 también se unió sin revisión de otro integrante; su revisión queda pendiente.
+- Que no se pruebe el arranque del prototipo en Windows (RNF-08, CP-PRO-08), que es la plataforma del comando de ejecución del README. La compilación y las pruebas con Maven ya pasan en Windows.
 - Que el atraso del Sprint 2 se acumule con las HU del Sprint 3.
