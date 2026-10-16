@@ -25,11 +25,11 @@ En la barra superior están el botón **Notificaciones (n)**, con el número de 
 
 1. Pulse **Nuevo** para limpiar el formulario.
 2. Escriba el objetivo y el área responsable y elija las fechas de inicio y de fin.
-3. Pulse **Guardar**. El plan recibe un código único (por ejemplo `PA-2026-0001`) y queda en **BORRADOR**.
+3. Pulse **Crear plan**. El plan recibe un código único (por ejemplo `PA-2026-0001`) y queda en **BORRADOR**.
 
 Si falta un dato, la aplicación lo indica, por ejemplo "Debe ingresar el objetivo del plan.".
 
-Para modificar un plan, selecciónelo en la tabla, cambie los datos y pulse **Guardar**. Solo se pueden modificar planes en **BORRADOR** o **EN REVISION**. **Eliminar** borra el plan seleccionado.
+Para modificar un plan, selecciónelo en la tabla, cambie los datos y pulse **Actualizar plan**. Solo se pueden modificar planes en **BORRADOR** o **EN REVISION**. **Eliminar** borra el plan seleccionado, después de confirmar.
 
 ## 4. Enviar un plan a revisión
 
@@ -55,7 +55,7 @@ En los dos casos el coordinador recibe una notificación. Si el plan se devolvi�
 ## 6. Atender un plan devuelto (coordinador)
 
 1. Abra **Notificaciones** para ver qué pidió el director.
-2. Seleccione el plan y corrija los datos. Pulse **Guardar**.
+2. Seleccione el plan, corrija los datos y pulse **Actualizar plan**.
 3. Seleccione cada observación y pulse **Marcar observación como atendida**.
 4. Pulse **Enviar a revisión del director**. El plan vuelve a **PENDIENTE DE REVISION**.
 
