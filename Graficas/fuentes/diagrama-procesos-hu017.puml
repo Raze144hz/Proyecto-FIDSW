@@ -1,0 +1,56 @@
+@startuml diagrama-procesos-hu017
+' Diagrama de procesos de HU-017: ciclo de aprobación de un plan de acción.
+' Para generar la imagen, desde la carpeta Graficas: java -jar plantuml.jar -tpng -o .. fuentes/diagrama-procesos-hu017.puml
+!theme plain
+skinparam defaultFontName DejaVu Sans
+skinparam shadowing false
+skinparam dpi 150
+
+title Diagrama de Procesos - HU-017 Aprobación y retroalimentación de planes de acción
+
+|Coordinador|
+start
+:Registrar el plan de acción
+(objetivo, área y fechas);
+|Sistema SGPI|
+:Asignar código único
+y dejar el plan en BORRADOR;
+repeat
+  |Coordinador|
+  :Enviar el plan a revisión;
+  |Sistema SGPI|
+  :Cambiar a PENDIENTE DE REVISION
+  y registrar el cambio en el historial;
+  |Director de área|
+  :Revisar el plan de su área;
+  if (¿El plan es correcto?) then (no)
+    :Escribir las observaciones
+    y devolver el plan;
+    note right: Las observaciones\nson obligatorias.
+    |Sistema SGPI|
+    :Cambiar a EN REVISION,
+    guardar las observaciones
+    y notificar al coordinador;
+    |Coordinador|
+    :Corregir el plan y marcar
+    cada observación como atendida;
+  else (sí)
+    |Director de área|
+    :Aprobar el plan;
+    |Sistema SGPI|
+    :Cambiar a APROBADO
+    y notificar al coordinador;
+  endif
+repeat while (¿El plan fue devuelto?) is (sí) not (no)
+|Coordinador|
+:Iniciar la ejecución;
+|Sistema SGPI|
+:Verificar que el plan esté APROBADO
+y sin observaciones pendientes;
+:Cambiar a EN EJECUCION;
+|Coordinador|
+:Finalizar el plan;
+|Sistema SGPI|
+:Cambiar a FINALIZADO;
+stop
+@enduml
