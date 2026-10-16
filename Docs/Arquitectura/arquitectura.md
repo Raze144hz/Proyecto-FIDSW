@@ -5,11 +5,11 @@ Diagramas de diseño para los dos casos de uso elegidos en el ejercicio de la Se
 - **HU-016** — Búsqueda avanzada y filtrado de evidencias (líder de calidad).
 - **HU-017** — Aprobación y retroalimentación de planes de acción (director de área).
 
-Las imágenes están en la carpeta [`/Graficas`](../../Graficas). El diagrama de clases y el modelo relacional están en SVG y tienen su fuente editable en PlantUML (`.puml`) en la misma carpeta.
+Todos los diagramas están en PNG en la carpeta [`/Graficas`](../../Graficas). Los de clases, modelo relacional, secuencia y procesos tienen su fuente editable en PlantUML (`.puml`) en [`Graficas/fuentes`](../../Graficas/fuentes).
 
 ## 1. Diagrama de clases
 
-![Diagrama de clases](../../Graficas/diagrama-clases.svg)
+![Diagrama de clases](../../Graficas/diagrama-clases.png)
 
 - Clases del dominio de las dos HU: `Usuario`, `Rol`, `Area`, `Busqueda`, `Evidencia`, `PlanAccion`, `EstadoPlan` (enumeración), `Observacion`, `Notificacion` y `HistorialPlan`.
 - Un `Usuario` tiene un `Rol` y pertenece a un `Area`. Es responsable de evidencias, hace búsquedas, coordina o dirige planes de acción, escribe observaciones y recibe notificaciones.
@@ -24,7 +24,7 @@ Las imágenes están en la carpeta [`/Graficas`](../../Graficas). El diagrama de
 
 ## 2. Modelo relacional de la base de datos
 
-![Modelo relacional de la base de datos](../../Graficas/modelo-relacional-bd.svg)
+![Modelo relacional de la base de datos](../../Graficas/modelo-relacional-bd.png)
 
 - Ocho tablas: `AREA`, `ROL`, `USUARIO`, `EVIDENCIA`, `PLAN_ACCION`, `OBSERVACION`, `NOTIFICACION` y `HISTORIAL_PLAN`. Cada clase del diagrama es una tabla, salvo `Busqueda`, que no se guarda, y `EstadoPlan`, que es la columna `estado`.
 - `USUARIO` referencia a `ROL` y `AREA`; `correo` es único porque con él se inicia sesión.
@@ -69,6 +69,26 @@ El prototipo de la Entrega 2 implementa la parte de HU-017 de este modelo en H2,
 
 Mismos nodos y conectores del punto 4, con los componentes del punto 3 ubicados dentro de cada nodo (formato de la diapositiva "Uniendo diagrama de despliegue con componentes").
 
+## 6. Diagrama de secuencia (HU-017)
+
+![Diagrama de secuencia de HU-017](../../Graficas/diagrama-secuencia-hu017.png)
+
+- Participantes: el director de área, el coordinador y los componentes del punto 3 que intervienen en HU-017: Vista Revisión de Planes, Gestión de Planes de Acción, Seguridad y Roles, Notificaciones, Persistencia y BD SGPI.
+- Los mensajes son las operaciones de las interfaces del punto 3 y los métodos del diagrama de clases: `aprobar()`, `devolver(observacion)`, `puedeEjecutarse()`, `tienePermiso(accion)`, `enviar(destinatario, mensaje)`, `guardar(entidad)`, `consultar(criterios)` y `buscarPorId(id)`. `listarPendientes(area)` es la consulta con la que la vista del director carga los planes de su área.
+- Tiene tres partes:
+  - El director consulta los planes pendientes de su área.
+  - Revisa un plan: el bloque `alt` separa aprobar de devolver. Dentro de devolver, otro `alt` muestra que con las observaciones vacías la vista muestra el error y no llama a Gestión de Planes.
+  - La regla de negocio: si el coordinador intenta ejecutar un plan devuelto, `puedeEjecutarse()` responde `false`.
+
+## 7. Diagrama de procesos (HU-017)
+
+![Diagrama de procesos de HU-017](../../Graficas/diagrama-procesos-hu017.png)
+
+- Diagrama de actividades con tres carriles: Coordinador, Sistema SGPI y Director de área.
+- Sigue el ciclo de vida del plan: BORRADOR → PENDIENTE DE REVISION → APROBADO → EN EJECUCION → FINALIZADO.
+- El ciclo de revisión se repite mientras el director devuelva el plan. Cada devolución deja el plan EN REVISION, con observaciones obligatorias; el coordinador lo corrige, marca las observaciones como atendidas y lo reenvía.
+- Un plan devuelto queda EN REVISION, como dice HU-017. El CU-01 dice "En borrador"; esa diferencia está pendiente de decisión del equipo.
+
 ## Supuestos pendientes de confirmar por el equipo
 
 | Tema | Supuesto usado en los diagramas | Fuente |
@@ -79,12 +99,12 @@ Mismos nodos y conectores del punto 4, con los componentes del punto 3 ubicados 
 | Hardware mínimo | 2 núcleos, 4 GB de RAM, discos de 50 GB (aplicaciones) y 100 GB (BD) | Propuesto en estos diagramas; no definido en otro documento |
 | Filtro de evidencias | `filtrar(tipo, inicio, fin, area, responsable)` | HU-016 (filtrar por tipo, fecha, área o responsable) |
 
-Si el equipo decide una aplicación web o MySQL, hay que actualizar los cinco diagramas.
+Si el equipo decide una aplicación web o MySQL, hay que actualizar los diagramas. Los de secuencia y procesos están pendientes de la revisión técnica del líder técnico.
 
-## Cómo regenerar las imágenes de clases y del modelo relacional
+## Cómo regenerar las imágenes desde las fuentes
 
-Las fuentes son [`Graficas/diagrama-clases.puml`](../../Graficas/diagrama-clases.puml) y [`Graficas/modelo-relacional-bd.puml`](../../Graficas/modelo-relacional-bd.puml). Se abren en cualquier editor de PlantUML (por ejemplo, la extensión de PlantUML de VS Code o el servidor web de PlantUML), o se generan las imágenes con:
+Las fuentes de los diagramas de clases, modelo relacional, secuencia y procesos están en [`Graficas/fuentes`](../../Graficas/fuentes). Se abren en cualquier editor de PlantUML (por ejemplo, la extensión de PlantUML de VS Code o el servidor web de PlantUML), o se generan las imágenes desde la carpeta `Graficas` con:
 
 ```
-java -jar plantuml.jar -tsvg Graficas/diagrama-clases.puml Graficas/modelo-relacional-bd.puml
+java -jar plantuml.jar -tpng -o .. fuentes/*.puml
 ```

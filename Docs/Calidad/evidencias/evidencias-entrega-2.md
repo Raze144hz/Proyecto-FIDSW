@@ -54,5 +54,4 @@ Todas están en [`Graficas/entrega-2/`](../../../Graficas/entrega-2).
 | Evidencia | Para qué | Responsable propuesto |
 |---|---|---|
 | Captura del prototipo corriendo en Windows con `mvn javafx:run` | CP-PRO-08 (RNF-08) | David Álvarez |
-| Diagramas de secuencia y de procesos de HU-017 | Entrega 2 | Equipo (Galindo revisa) |
 | Captura del tablero de GitHub Projects con el estado de las tareas de la Entrega 2 | Seguimiento del sprint | Miguel Ángel Gómez |

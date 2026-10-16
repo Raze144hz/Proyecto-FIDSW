@@ -1,0 +1,102 @@
+@startuml diagrama-secuencia-hu017
+' Diagrama de secuencia de HU-017 (aprobación y retroalimentación de planes de acción).
+' Para generar la imagen, desde la carpeta Graficas: java -jar plantuml.jar -tpng -o .. fuentes/diagrama-secuencia-hu017.puml
+!theme plain
+skinparam defaultFontName DejaVu Sans
+skinparam shadowing false
+skinparam dpi 150
+skinparam sequenceMessageAlign left
+skinparam responseMessageBelowArrow true
+skinparam maxMessageSize 260
+hide footbox
+
+title Diagrama de Secuencia - HU-017 Aprobación y retroalimentación de planes de acción
+
+actor "Director\nde área" as D
+actor "Coordinador" as C
+participant "Vista Revisión\nde Planes" as V
+participant "Gestión de Planes\nde Acción" as G
+participant "Seguridad\ny Roles" as S
+participant "Notificaciones" as N
+participant "Persistencia\n(JDBC)" as P
+database "BD SGPI" as DB
+
+== Consultar los planes pendientes del área ==
+D -> V : abre "Pendientes de revisión"
+activate V
+V -> G : listarPendientes(area)
+activate G
+G -> P : consultar(PENDIENTE_REVISION, area)
+activate P
+P -> DB : SELECT
+DB --> P : planes
+P --> G : planes
+deactivate P
+G --> V : planes pendientes
+deactivate G
+V --> D : lista de planes del área
+D -> V : selecciona un plan
+note right of V : las operaciones siguientes\nse aplican al plan seleccionado
+
+== Revisar el plan ==
+alt Aprobar plan
+  D -> V : pulsa "Aprobar plan" y confirma
+  V -> G : aprobar()
+  activate G
+  G -> S : tienePermiso("aprobar")
+  activate S
+  S --> G : true (es director del área del plan)
+  deactivate S
+  G -> G : estado = APROBADO
+  G -> P : guardar(plan), guardar(historial)
+  activate P
+  P -> DB : UPDATE / INSERT
+  deactivate P
+  G -> N : enviar(coordinador, "plan aprobado")
+  activate N
+  N -> P : guardar(notificacion)
+  deactivate N
+  G --> V : plan APROBADO
+  deactivate G
+  V --> D : "El plan quedó APROBADO"
+else Devolver con observaciones
+  D -> V : escribe observaciones y elige Devolver
+  alt observaciones vacías
+    V --> D : "Debe escribir las observaciones\npara devolver el plan."
+  else observaciones escritas
+    V -> G : devolver(observacion)
+    activate G
+    G -> S : tienePermiso("devolver")
+    activate S
+    S --> G : true
+    deactivate S
+    G -> G : crea Observacion\nestado = EN_REVISION
+    G -> P : guardar(plan), guardar(observacion),\nguardar(historial)
+    activate P
+    P -> DB : UPDATE / INSERT
+    deactivate P
+    G -> N : enviar(coordinador, observacion)
+    activate N
+    N -> P : guardar(notificacion)
+    deactivate N
+    G --> V : plan EN_REVISION
+    deactivate G
+    V --> D : "El plan quedó EN REVISION"
+  end
+end
+deactivate V
+
+== Regla de negocio: un plan devuelto no pasa a ejecución ==
+C -> V : Iniciar ejecución
+activate V
+V -> G : puedeEjecutarse()
+activate G
+G -> P : buscarPorId(idPlan)
+activate P
+P --> G : plan EN_REVISION con observaciones pendientes
+deactivate P
+G --> V : false
+deactivate G
+V --> C : "El plan no se puede ejecutar:\nel director debe aprobarlo primero."
+deactivate V
+@enduml
