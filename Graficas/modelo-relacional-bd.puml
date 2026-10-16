@@ -1,6 +1,6 @@
 @startuml modelo-relacional-bd
 ' Modelo relacional de la base de datos del SGPI para HU-016 y HU-017.
-' Para generar la imagen: java -jar plantuml.jar -tpng modelo-relacional-bd.puml
+' Para generar la imagen: java -jar plantuml.jar -tsvg modelo-relacional-bd.puml
 !theme plain
 skinparam defaultFontName DejaVu Sans
 skinparam shadowing false

@@ -1,6 +1,6 @@
 @startuml diagrama-clases
 ' Diagrama de clases del SGPI para HU-016 (búsqueda de evidencias) y HU-017 (aprobación de planes).
-' Para generar la imagen: java -jar plantuml.jar -tpng diagrama-clases.puml
+' Para generar la imagen: java -jar plantuml.jar -tsvg diagrama-clases.puml
 !theme plain
 skinparam classAttributeIconSize 0
 skinparam defaultFontName DejaVu Sans

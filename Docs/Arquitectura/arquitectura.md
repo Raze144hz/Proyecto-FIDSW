@@ -5,11 +5,11 @@ Diagramas de diseño para los dos casos de uso elegidos en el ejercicio de la Se
 - **HU-016** — Búsqueda avanzada y filtrado de evidencias (líder de calidad).
 - **HU-017** — Aprobación y retroalimentación de planes de acción (director de área).
 
-Las imágenes están en la carpeta [`/Graficas`](../../Graficas). El diagrama de clases y el modelo relacional tienen su fuente editable en PlantUML (`.puml`) en la misma carpeta.
+Las imágenes están en la carpeta [`/Graficas`](../../Graficas). El diagrama de clases y el modelo relacional están en SVG y tienen su fuente editable en PlantUML (`.puml`) en la misma carpeta.
 
 ## 1. Diagrama de clases
 
-![Diagrama de clases](../../Graficas/diagrama-clases.png)
+![Diagrama de clases](../../Graficas/diagrama-clases.svg)
 
 - Clases del dominio de las dos HU: `Usuario`, `Rol`, `Area`, `Busqueda`, `Evidencia`, `PlanAccion`, `EstadoPlan` (enumeración), `Observacion`, `Notificacion` y `HistorialPlan`.
 - Un `Usuario` tiene un `Rol` y pertenece a un `Area`. Es responsable de evidencias, hace búsquedas, coordina o dirige planes de acción, escribe observaciones y recibe notificaciones.
@@ -24,7 +24,7 @@ Las imágenes están en la carpeta [`/Graficas`](../../Graficas). El diagrama de
 
 ## 2. Modelo relacional de la base de datos
 
-![Modelo relacional de la base de datos](../../Graficas/modelo-relacional-bd.png)
+![Modelo relacional de la base de datos](../../Graficas/modelo-relacional-bd.svg)
 
 - Ocho tablas: `AREA`, `ROL`, `USUARIO`, `EVIDENCIA`, `PLAN_ACCION`, `OBSERVACION`, `NOTIFICACION` y `HISTORIAL_PLAN`. Cada clase del diagrama es una tabla, salvo `Busqueda`, que no se guarda, y `EstadoPlan`, que es la columna `estado`.
 - `USUARIO` referencia a `ROL` y `AREA`; `correo` es único porque con él se inicia sesión.
@@ -86,5 +86,5 @@ Si el equipo decide una aplicación web o MySQL, hay que actualizar los cinco di
 Las fuentes son [`Graficas/diagrama-clases.puml`](../../Graficas/diagrama-clases.puml) y [`Graficas/modelo-relacional-bd.puml`](../../Graficas/modelo-relacional-bd.puml). Se abren en cualquier editor de PlantUML (por ejemplo, la extensión de PlantUML de VS Code o el servidor web de PlantUML), o se generan las imágenes con:
 
 ```
-java -jar plantuml.jar -tpng Graficas/diagrama-clases.puml Graficas/modelo-relacional-bd.puml
+java -jar plantuml.jar -tsvg Graficas/diagrama-clases.puml Graficas/modelo-relacional-bd.puml
 ```
