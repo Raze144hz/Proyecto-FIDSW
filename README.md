@@ -70,7 +70,7 @@ Requisitos, usuarios de prueba y pruebas automáticas: [`README-PROTOTIPO.md`](R
 | Entrega 2 | [Reporte gerencial del Sprint 2](Docs/reporte-gerencial-entrega-2.md), [acta de pruebas](Docs/Calidad/actas/acta-pruebas-sprint-2.md), [evidencias del prototipo](Docs/Calidad/evidencias/evidencias-entrega-2.md) |
 | Arquitectura | [`Docs/Arquitectura/arquitectura.md`](Docs/Arquitectura/arquitectura.md) |
 | Calidad | [Definition of Done](Docs/Calidad/definition-of-done.md), [formato de caso de prueba](Docs/Calidad/formato-caso-de-prueba.md), [formato de acta de pruebas](Docs/Calidad/formato-acta-de-pruebas.md), [casos de HU-016 y HU-017](Docs/Calidad/casos-de-prueba-HU016-HU017.md) |
-| Planeación | [Acta de Sprint Planning del Sprint 2](Docs/Planning/Acta-Planning-Sprint2.md), [cronograma de desarrollo](Docs/Planning/cronograma-desarrollo.md) |
+| Planeación | Actas de Sprint Planning del [Sprint 2](Docs/Planning/Acta-Planning-Sprint2.md) y del [Sprint 3](Docs/Planning/Acta-Planning-Sprint3.md), [cronograma de desarrollo](Docs/Planning/cronograma-desarrollo.md) |
 | Scrum | [Dailies](Docs/Dailys) |
 | Uso del prototipo | [Guía de usuario](Docs/guia-de-usuario.md) |
 

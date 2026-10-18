@@ -1,5 +1,5 @@
 @startuml modelo-relacional-bd
-' Modelo relacional de la base de datos del SGPI para HU-016 y HU-017.
+' Modelo relacional de la base de datos del SGPI para HU-016, HU-017 y HU-004.
 ' Para generar la imagen, desde la carpeta Graficas: java -jar plantuml.jar -tpng -o .. fuentes/modelo-relacional-bd.puml
 !theme plain
 skinparam defaultFontName DejaVu Sans
@@ -45,6 +45,7 @@ entity EVIDENCIA {
   • ruta : VARCHAR(255)
   • id_usuario : INT <<FK>>
   • id_area : INT <<FK>>
+  <U+2007><U+2007>id_seguimiento : INT <<FK>>
 }
 
 entity PLAN_ACCION {
@@ -54,7 +55,7 @@ entity PLAN_ACCION {
   • objetivo : TEXT
   • fecha_inicio : DATE
   • fecha_fin : DATE
-  • estado : VARCHAR(20)
+  • estado : VARCHAR(30)
   <U+2007><U+2007>fecha_envio : TIMESTAMP
   • id_area : INT <<FK>>
   • id_coordinador : INT <<FK>>
@@ -81,12 +82,22 @@ entity NOTIFICACION {
   <U+2007><U+2007>id_plan : INT <<FK>>
 }
 
+entity SEGUIMIENTO_PLAN {
+  • id_seguimiento : INT <<PK>>
+  --
+  • fecha : TIMESTAMP
+  • porcentaje_avance : INT
+  <U+2007><U+2007>comentario : TEXT
+  • id_plan : INT <<FK>>
+  • id_usuario : INT <<FK>>
+}
+
 entity HISTORIAL_PLAN {
   • id_historial : INT <<PK>>
   --
   • accion : VARCHAR(30)
-  <U+2007><U+2007>estado_anterior : VARCHAR(20)
-  • estado_nuevo : VARCHAR(20)
+  <U+2007><U+2007>estado_anterior : VARCHAR(30)
+  • estado_nuevo : VARCHAR(30)
   <U+2007><U+2007>detalle : TEXT
   • fecha : TIMESTAMP
   • id_plan : INT <<FK>>
@@ -106,6 +117,9 @@ USUARIO ||--o{ NOTIFICACION
 PLAN_ACCION |o--o{ NOTIFICACION
 PLAN_ACCION ||--o{ HISTORIAL_PLAN
 USUARIO ||--o{ HISTORIAL_PLAN
+PLAN_ACCION ||--o{ SEGUIMIENTO_PLAN
+USUARIO ||--o{ SEGUIMIENTO_PLAN
+SEGUIMIENTO_PLAN |o--o{ EVIDENCIA
 
 legend right
   • = NOT NULL
