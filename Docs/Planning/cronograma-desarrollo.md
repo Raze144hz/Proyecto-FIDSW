@@ -1,14 +1,14 @@
 # Cronograma de la fase de desarrollo — SGPI
 
 **Responsable:** David Álvarez Rodríguez (Gestión y Reportes)
-**Actualizado:** 3 de octubre de 2026
+**Actualizado:** 3 de octubre de 2026; supuesto de stack corregido el 18 de octubre
 **Estado:** propuesta para aprobar en el Planning del Sprint 3
 
 ## Supuestos
 
 - Sprints de **dos semanas**, de jueves a miércoles, igual que el Sprint 2 (23 sep – 7 oct).
 - Cada sprint sigue la misma estructura del Sprint 2: Planning el primer día, desarrollo, **congelamiento de código y pruebas** el penúltimo día, y **Sprint Review + Retrospectiva** el último día.
-- Stack: backend **Java 17 + Spring**, frontend **web** y base de datos relacional (**PostgreSQL**, por confirmar frente a MySQL según el RNF-09).
+- ~~Stack: backend **Java 17 + Spring**, frontend **web** y base de datos relacional (**PostgreSQL**, por confirmar frente a MySQL según el RNF-09).~~ **Corregido el 18 de octubre:** ese supuesto no se cumplió. El prototipo es una aplicación de escritorio en **Java 17 + JavaFX** con base de datos **H2** local, y la arquitectura objetivo es un cliente JavaFX con una API en Java 17 y **PostgreSQL 16** (ver [arquitectura](../Arquitectura/arquitectura.md)). Las menciones a Spring y a un frontend web en el Sprint 2 reajustado se dejan como registro de lo que se planeó en su momento.
 - **Fecha de entrega final: [POR CONFIRMAR CON EL PROFESOR].** El cronograma asume que el proyecto cierra a finales de noviembre; si la fecha es otra, se ajusta el sprint de cierre.
 - Festivos en Colombia dentro del periodo: **12 de octubre**, **2 de noviembre** y **16 de noviembre** (lunes).
 
@@ -38,6 +38,8 @@ El Sprint 2 va con unos **6 días de atraso**. Las HU que estaban para programar
 La distribución de HU sigue la prioridad de la Propuesta y las dependencias de cada issue. Primero va la base (acceso, roles y estructura); después, lo que depende de ella.
 
 ### Sprint 3 (8 – 21 oct) — Acceso, roles y registro de planes
+
+> Las fechas de este cronograma son las del sprint (congelamiento el 20 y Review el 21). Si la entrega del curso tiene otra fecha, se registra aparte en el acta del sprint para no confundirlas.
 
 | Fecha | Hito |
 |---|---|

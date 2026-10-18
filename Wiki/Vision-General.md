@@ -1,7 +1,7 @@
 # 👁️ Visión General del Proyecto
 
 ## 🎯 Propósito del Sistema
-El objetivo principal de este proyecto es desarrollar un sistema de información web que permita centralizar y optimizar la administración de los planes de acción de la institución. Pasaremos de una gestión manual a un ecosistema digital que garantice el cumplimiento de las metas institucionales.
+El objetivo principal de este proyecto es desarrollar un sistema de información de escritorio (Java 17 + JavaFX) que permita centralizar y optimizar la administración de los planes de acción de la institución. Pasaremos de una gestión manual a un ecosistema digital que garantice el cumplimiento de las metas institucionales.
 
 ## 💼 Modelo de Negocio (Canvas)
 
@@ -9,7 +9,11 @@ El objetivo principal de este proyecto es desarrollar un sistema de información
 
 ## 📝 Requisitos Generales
 El sistema debe cumplir con el siguiente ciclo de vida:
-1. **Formulación:** Creación de planes con responsables y fechas.
-2. **Seguimiento:** Control de avance y auditoría de modificaciones.
-3. **Documentación:** Cargue de evidencias por cada actividad.
-4. **Cierre y Reportes:** Generación de informes de cumplimiento.
+1. **Formulación:** Creación de planes con sus actividades, responsables y fechas.
+2. **Aprobación:** Revisión del director de área, que aprueba o devuelve el plan con observaciones.
+3. **Seguimiento:** Avance calculado por actividades finalizadas sobre el total, y auditoría de modificaciones.
+4. **Documentación:** Cargue de evidencias por cada actividad.
+5. **Cierre y Reportes:** Evaluación final del director e informes de cumplimiento.
+
+## 🚦 Estado actual
+El prototipo implementa la aprobación y retroalimentación de planes (HU-017) y parte del inicio de sesión, los roles y el registro de planes. El detalle está en el [README del repositorio](https://github.com/Raze144hz/Proyecto-FIDSW#-estado-actual-del-prototipo).
