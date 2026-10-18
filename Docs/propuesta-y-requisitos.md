@@ -12,6 +12,8 @@
 Bogotá D.C., 10 de septiembre de 2026
 
 > Versión en Markdown de `Propuesta_y_Requisitos_FIDSW.docx` / `.pdf` (Entrega 1).
+>
+> **Actualizado el 18 de octubre de 2026:** se agregó la sección [2.3](#23-reglas-de-negocio-precisadas-18-de-octubre-de-2026) con las reglas de HU-004, HU-020, evidencias e historial que usan los diagramas y el modelo de datos. El resto del documento es el de la Entrega 1.
 
 ---
 
@@ -130,6 +132,19 @@ A continuación se detallan los tres casos de uso principales del sistema, corre
 - Si el usuario no tiene permisos sobre esa actividad, el sistema no permite el arrastre.
 
 **Postcondición:** La actividad refleja su estado real de ejecución, el avance del plan queda recalculado y el cambio queda trazado en el historial.
+
+### 2.3 Reglas de negocio precisadas (18 de octubre de 2026)
+
+Estas reglas no cambian el backlog; precisan cómo se entienden las historias para que requisitos, diagramas, base de datos y pruebas coincidan. Están reflejadas en la [arquitectura](Arquitectura/arquitectura.md), el [modelo objetivo de la base de datos](../Database/modelo-objetivo-postgresql.sql) y los [casos de prueba de HU-004 y HU-020](Calidad/casos-de-prueba-HU004-HU020.md).
+
+| Regla | Historias | Detalle |
+|---|---|---|
+| **RN-01. Avance del plan** | HU-004, HU-012b, CU-03 | El avance es el número de actividades en estado *Finalizada* dividido entre el total de actividades del plan, expresado en porcentaje. Se recalcula cada vez que una actividad cambia de estado. Nadie lo digita. Un plan sin actividades tiene avance 0 %. |
+| **RN-02. Estados de una actividad** | HU-004, HU-012a, HU-012b | *Por hacer*, *En proceso* y *Finalizada*, las columnas del tablero Kanban. |
+| **RN-03. Evidencia antes de finalizar** | HU-003, CU-02, CU-03 | Cada evidencia se carga sobre una actividad. Una actividad solo pasa a *Finalizada* si tiene al menos una evidencia. Las evidencias de un plan son las de sus actividades. |
+| **RN-04. Seguimiento del plan** | HU-004 | El coordinador registra cortes de seguimiento con un comentario; el sistema guarda junto al comentario el avance calculado en esa fecha. |
+| **RN-05. Cierre del plan** | HU-020 | El director de área cierra el plan cuando su avance es 100 %, registrando la calificación y las observaciones de cierre. El estado final se llama **FINALIZADO** (el issue de HU-020 decía "Cerrado"; es el mismo estado). Un plan finalizado no se modifica y solo un administrador puede reabrirlo. |
+| **RN-06. Historial** | HU-013, HU-017, RNF-10 | El historial de un plan se conserva aunque el plan se elimine. |
 
 ## 3. Requisitos No Funcionales
 

@@ -1,11 +1,13 @@
 # Actas de Reunión
 
-**Entregable 2, Gestión y Reportes**
+**Entrega 1 · Entregable 2, Gestión y Reportes**
 SGPI: Sistema de Gestión de Procesos Institucionales
 Grupo Los FIS
 Pontificia Universidad Javeriana, Facultad de Ingeniería
 
 > Versión en Markdown de `Actas de Reunión_Los FIS_SGPI_Entrega 1.pdf`.
+>
+> **Documento histórico de la Entrega 1** (corte: septiembre de 2026). Se conserva como evidencia de esa entrega y no se actualiza. Para el estado actual ver el [reporte gerencial del Sprint 2](reporte-gerencial-entrega-2.md) y la [trazabilidad HU ↔ issues](Planning/trazabilidad-hu-issues.md).
 
 ---
 

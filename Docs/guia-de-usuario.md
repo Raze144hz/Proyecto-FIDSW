@@ -66,6 +66,8 @@ No se puede reenviar un plan con observaciones sin atender, y un plan devuelto n
 - **Iniciar ejecución:** solo para un plan **APROBADO** y sin observaciones pendientes. El plan queda **EN EJECUCION**.
 - **Finalizar plan:** el plan en ejecución queda **FINALIZADO**.
 
+> En el prototipo, **Finalizar plan** lo hace el coordinador y no pide evaluación. Cuando se programe HU-020, el cierre lo hará el director de área con la calificación y las observaciones de cierre, y solo cuando el avance de las actividades sea 100 %.
+
 ## 8. Historial del plan
 
 **Ver historial del plan** muestra cada cambio de estado con la fecha, quién lo hizo, el estado anterior y el nuevo. En las devoluciones también muestra la observación.

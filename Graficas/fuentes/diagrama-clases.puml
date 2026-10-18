@@ -1,5 +1,6 @@
 @startuml diagrama-clases
-' Diagrama de clases del SGPI para HU-016 (búsqueda de evidencias), HU-017 (aprobación de planes) y HU-004 (seguimiento).
+' Diagrama de clases del SGPI para HU-016 (búsqueda de evidencias), HU-017 (aprobación de planes),
+' HU-004 (seguimiento del avance por actividades) y HU-020 (cierre y evaluación final).
 ' Para generar la imagen, desde la carpeta Graficas: java -jar plantuml.jar -tpng -o .. fuentes/diagrama-clases.puml
 !theme plain
 skinparam classAttributeIconSize 0
@@ -12,7 +13,7 @@ skinparam ranksep 70
 hide circle
 hide empty members
 
-title Diagrama de Clases - Búsqueda de evidencias, Aprobación y Seguimiento de planes de acción
+title Diagrama de Clases - Búsqueda de evidencias, Aprobación, Seguimiento y Cierre de planes de acción
 
 class Usuario {
   -idUsuario : int
@@ -62,14 +63,34 @@ class PlanAccion {
   -fechaFin : Date
   -estado : EstadoPlan
   -fechaEnvio : Date
+  -calificacionCierre : int
+  -observacionesCierre : String
+  -fechaCierre : Date
   +enviarRevision() : void
   +aprobar() : void
   +devolver(observacion : String) : void
   +puedeEjecutarse() : boolean
   +iniciarEjecucion() : void
-  +registrarSeguimiento(porcentaje : int, comentario : String) : void
+  +agregarActividad(actividad : Actividad) : void
   +calcularAvance() : int
-  +finalizar() : void
+  +registrarSeguimiento(comentario : String) : void
+  +puedeFinalizarse() : boolean
+  +finalizar(calificacion : int, observaciones : String) : void
+}
+
+class Actividad {
+  -idActividad : int
+  -descripcion : String
+  -fechaLimite : Date
+  -estado : EstadoActividad
+  +cambiarEstado(nuevo : EstadoActividad) : void
+  +tieneEvidencia() : boolean
+}
+
+enum EstadoActividad <<enumeration>> {
+  POR_HACER
+  EN_PROCESO
+  FINALIZADA
 }
 
 enum EstadoPlan <<enumeration>> {
@@ -106,13 +127,14 @@ class Notificacion {
 class SeguimientoPlan {
   -idSeguimiento : int
   -fecha : Date
-  -porcentajeAvance : int
+  -avanceCalculado : int
   -comentario : String
-  +getPorcentajeAvance() : int
+  +getAvanceCalculado() : int
 }
 
 class HistorialPlan {
   -idHistorial : int
+  -codigoPlan : String
   -accion : String
   -estadoAnterior : EstadoPlan
   -estadoNuevo : EstadoPlan
@@ -135,9 +157,31 @@ PlanAccion "1" *-- "0..*" Observacion : contiene
 Usuario "1" -- "0..*" Observacion : autor >
 PlanAccion "1" --> "0..*" Notificacion : genera
 Notificacion "0..*" --> "1" Usuario : destinatario
-PlanAccion "1" --> "0..*" HistorialPlan : registra
+PlanAccion "0..1" --> "0..*" HistorialPlan : registra
+PlanAccion "1" *-- "0..*" Actividad : contiene
+Actividad "0..*" --> "1" Usuario : responsable
+Actividad --> EstadoActividad
+Actividad "1" -- "0..*" Evidencia : soportada por >
 PlanAccion "1" *-- "0..*" SeguimientoPlan : tiene
 SeguimientoPlan "0..*" --> "1" Usuario : registrado por
-SeguimientoPlan "0..1" -- "0..*" Evidencia : respaldado por >
 HistorialPlan "0..*" --> "1" Usuario : realizado por
+
+note top of PlanAccion
+  HU-004: calcularAvance() = actividades FINALIZADA × 100 / total de
+  actividades. Una actividad solo pasa a FINALIZADA si tiene evidencia (CU-03).
+  HU-020: solo el director del área finaliza el plan, cuando el avance
+  es 100 %, y registra la calificación y las observaciones de cierre.
+end note
+
+note bottom of SeguimientoPlan
+  Corte de seguimiento: el coordinador escribe
+  el comentario y el sistema guarda el avance
+  calculado en esa fecha. No se digita.
+end note
+
+note bottom of HistorialPlan
+  Se conserva si el plan se elimina:
+  guarda el código del plan y en la BD
+  no tiene llave foránea a PLAN_ACCION.
+end note
 @enduml

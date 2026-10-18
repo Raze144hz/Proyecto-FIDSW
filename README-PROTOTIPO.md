@@ -18,6 +18,7 @@ Aplicación de escritorio en Java para registrar planes de acción y aprobarlos 
 - Envío del plan a revisión; aprobación o devolución con observaciones obligatorias por el director de área (HU-017).
 - Notificaciones al coordinador.
 - Historial de cambios de estado de cada plan.
+- **Finalizar plan** deja un plan en ejecución en FINALIZADO. Es una simplificación: el prototipo no tiene actividades, cálculo de avance ni la evaluación de cierre del director que define HU-020 (ver [arquitectura](Docs/Arquitectura/arquitectura.md)).
 - Persistencia local en H2. Una base creada con una versión anterior del prototipo se actualiza sola al abrir la aplicación, sin borrar datos.
 
 ## Requisitos
@@ -68,6 +69,8 @@ sh mvnw clean test         (Linux o macOS)
 ```
 
 El flujo de GitHub Actions (`.github/workflows/maven.yml`) corre las mismas pruebas en Linux y en Windows en cada push a `main` o `develop` y en cada pull request.
+
+> **Estado de GitHub Actions (18 de octubre):** las 36 ejecuciones registradas desde que se creó el flujo (12 de octubre) aparecen como fallidas porque los trabajos nunca arrancan: GitHub informa que la cuenta dueña del repositorio está bloqueada por un problema de facturación. No es un error del código ni de las pruebas. Hasta que el dueño del repositorio lo resuelva en la configuración de facturación de su cuenta, el resultado de Actions no sirve como evidencia y las pruebas se corren localmente.
 
 ## Base de datos
 

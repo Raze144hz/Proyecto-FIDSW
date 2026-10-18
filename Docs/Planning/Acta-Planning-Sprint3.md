@@ -1,6 +1,8 @@
 # Acta de Sprint Planning - Sprint 3
 
 > **Borrador para completar.** Las HU, los issues, los responsables y las tareas salen del [cronograma de desarrollo](cronograma-desarrollo.md), del [reporte gerencial del Sprint 2](../reporte-gerencial-entrega-2.md) (sección 11) y del [acta de pruebas del Sprint 2](../Calidad/actas/acta-pruebas-sprint-2.md). Lo marcado con **[completar]** es lo que se decide en la reunión y lo registra el Scrum Master.
+>
+> **Corte del 18 de octubre:** el sprint empezó el 8 de octubre y este borrador se armó después, a partir del cronograma; no es el acta de una reunión. Los campos **[completar]** solo se llenan con lo que el equipo haya acordado de verdad y con la fecha real en que lo acordó. Si no hubo reunión de planning, se deja constancia de eso en lugar de reconstruirla.
 
 **Fecha:** [completar]
 **Scrum Master:** Miguel Ángel Gómez López
@@ -29,13 +31,13 @@ Acceso, roles y registro de planes: completar el inicio de sesión, el control d
 | HU-010 | Gestión de la estructura organizacional | Media | Medio | [completar] | [#10](https://github.com/Raze144hz/Proyecto-FIDSW/issues/10) | Sin iniciar | [completar] |
 | HU-002 | Registro de un nuevo plan de acción | Media | Medio | Juan Sebastián Martínez | [#19](https://github.com/Raze144hz/Proyecto-FIDSW/issues/19) | Avance en el prototipo: crear, editar y consultar planes | [completar] |
 
-La prioridad y el esfuerzo son los de la [propuesta](../propuesta-y-requisitos.md). Los issues #1, #6, #8, #10 y #19 se cerraron en la Entrega 1 sin estar programados, así que hay que reabrirlos y moverlos al milestone del Sprint 3.
+La prioridad y el esfuerzo son los de la [propuesta](../propuesta-y-requisitos.md). Los issues #1, #6, #8, #10 y #19 se cerraron en la Entrega 1 sin estar programados; se reabrieron el 18 de octubre y falta moverlos al milestone del Sprint 3. El mapeo de cada HU con su issue está en [`trazabilidad-hu-issues.md`](trazabilidad-hu-issues.md).
 
 ## Tareas de la Entrega 2 ligadas a las HU
 
 | Tarea | HU | Issue o PR | Responsable |
 |---|---|---|---|
-| Implementar la aprobación y retroalimentación de planes, con pruebas JUnit | HU-017 | [#25](https://github.com/Raze144hz/Proyecto-FIDSW/issues/25), PR #40 | David Álvarez |
+| Implementar la aprobación y retroalimentación de planes, con pruebas JUnit | HU-017 | [#25](https://github.com/Raze144hz/Proyecto-FIDSW/issues/25) (cerrado, aunque la HU sigue *In review* hasta que otro integrante revise el PR #40), PR #40 | David Álvarez |
 | Reporte gerencial del Sprint 2 con el estado de cada HU | HU del Sprint 2 | [#37](https://github.com/Raze144hz/Proyecto-FIDSW/issues/37) | David Álvarez |
 | Acta de pruebas del Sprint 2 | HU-016, HU-017 | [#38](https://github.com/Raze144hz/Proyecto-FIDSW/issues/38) | David Álvarez |
 | Evidencias del prototipo | HU-017 | [#39](https://github.com/Raze144hz/Proyecto-FIDSW/issues/39) | David Álvarez |
@@ -61,3 +63,8 @@ La prioridad y el esfuerzo son los de la [propuesta](../propuesta-y-requisitos.m
 ## Cambios durante el sprint
 
 - **16 de octubre:** revisión de los diagramas con el profesor. Las correcciones (clases, componentes y procesos, que incluyen el seguimiento del plan de HU-004) quedaron en el PR #52 y en [`Docs/Arquitectura/arquitectura.md`](../Arquitectura/arquitectura.md).
+- **18 de octubre:** decisiones registradas por David Álvarez (Gestión y Reportes) para confirmar con el equipo en la Review del 21 de octubre:
+  - El avance de un plan se calcula por actividades (finalizadas / total), como dice HU-004; el cierre lo hace el director con la evaluación de HU-020 y el estado final es FINALIZADO. Diagramas, modelo de datos y casos de prueba quedaron alineados ([decisiones](../Arquitectura/arquitectura.md#decisiones-del-18-de-octubre)).
+  - Los pull requests van a `develop` (Git Flow, como dicen el README y la DoD). `develop` quedó al día con `main` en el PR #53 y el issue #42 se cerró.
+  - Se cerraron como duplicados los issues repetidos de HU-002, HU-003, HU-005, HU-011, HU-013, HU-016 y HU-017, y se reabrieron #1, #6, #8, #10 y #19.
+  - GitHub Actions no ha corrido nunca: la cuenta dueña del repositorio está bloqueada por un problema de facturación. Lo debe resolver el dueño del repositorio.

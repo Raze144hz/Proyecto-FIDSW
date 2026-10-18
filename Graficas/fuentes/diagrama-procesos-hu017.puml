@@ -1,5 +1,5 @@
 @startuml diagrama-procesos-hu017
-' Diagrama de procesos de HU-017 y HU-004: aprobación y seguimiento de un plan de acción.
+' Diagrama de procesos de HU-017, HU-004 y HU-020: aprobación, seguimiento y cierre de un plan de acción.
 ' Para generar la imagen, desde la carpeta Graficas: java -jar plantuml.jar -tpng -o .. fuentes/diagrama-procesos-hu017.puml
 !theme plain
 skinparam defaultFontName DejaVu Sans
@@ -7,12 +7,14 @@ skinparam shadowing false
 skinparam dpi 150
 skinparam conditionStyle diamond
 
-title Diagrama de Procesos - Aprobación (HU-017) y seguimiento (HU-004) de un plan de acción
+title Diagrama de Procesos - Aprobación (HU-017), seguimiento (HU-004) y cierre (HU-020) de un plan de acción
 
 |Coordinador|
 start
 :Registrar el plan de acción
-(objetivo, área y fechas);
+(objetivo, área y fechas)
+y sus actividades
+(responsable y fecha límite);
 |Sistema SGPI|
 :Asignar código único
 y dejar el plan en BORRADOR;
@@ -49,23 +51,38 @@ y notificar al coordinador;
 :Iniciar la ejecución;
 |Sistema SGPI|
 :Cambiar a EN EJECUCION;
-|Coordinador|
-:Registrar el seguimiento
-(porcentaje de avance y comentario);
-|Sistema SGPI|
-:Guardar el seguimiento
-y recalcular el avance del plan;
-|Coordinador|
-while (¿El avance llegó al 100 %?) is (no)
+while (¿Todas las actividades están FINALIZADA?\n(avance = 100 %)) is (no)
+  |Responsable de actividad|
+  :Ejecutar una actividad
+  y cargar su evidencia (HU-003);
   |Coordinador|
-  :Registrar un nuevo seguimiento;
+  :Mover la actividad a FINALIZADA;
+  |Sistema SGPI|
+  if (¿La actividad tiene evidencia?) then (no)
+    :Rechazar el cambio
+    y avisar al coordinador;
+  else (sí)
+    :Cambiar la actividad a FINALIZADA,
+    recalcular el avance
+    (finalizadas / total)
+    y registrar el cambio en el historial;
+  endif
+  |Coordinador|
+  :Registrar el seguimiento
+  (comentario del avance);
   |Sistema SGPI|
   :Guardar el seguimiento
-  y recalcular el avance del plan;
+  con el avance calculado;
 endwhile (sí)
-|Coordinador|
-:Finalizar el plan;
+:Notificar al director
+que el plan llegó al 100 %;
+|Director de área|
+:Registrar la evaluación final
+(calificación y observaciones)
+y finalizar el plan;
 |Sistema SGPI|
-:Cambiar a FINALIZADO;
+:Cambiar a FINALIZADO,
+bloquear las modificaciones
+y registrar el cierre en el historial;
 stop
 @enduml
