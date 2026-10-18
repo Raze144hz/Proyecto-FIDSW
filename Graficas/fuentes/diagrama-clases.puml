@@ -1,5 +1,5 @@
 @startuml diagrama-clases
-' Diagrama de clases del SGPI para HU-016 (búsqueda de evidencias) y HU-017 (aprobación de planes).
+' Diagrama de clases del SGPI para HU-016 (búsqueda de evidencias), HU-017 (aprobación de planes) y HU-004 (seguimiento).
 ' Para generar la imagen, desde la carpeta Graficas: java -jar plantuml.jar -tpng -o .. fuentes/diagrama-clases.puml
 !theme plain
 skinparam classAttributeIconSize 0
@@ -12,7 +12,7 @@ skinparam ranksep 70
 hide circle
 hide empty members
 
-title Diagrama de Clases - Búsqueda de evidencias y Aprobación de planes de acción
+title Diagrama de Clases - Búsqueda de evidencias, Aprobación y Seguimiento de planes de acción
 
 class Usuario {
   -idUsuario : int
@@ -50,8 +50,8 @@ class Busqueda {
   -tipoArchivo : String
   -fechaInicio : Date
   -fechaFin : Date
-  +buscar(palabraClave : String) : List<Evidencia>
-  +filtrar(tipo : String, inicio : Date, fin : Date) : List<Evidencia>
+  +buscar(palabraClave : String, usuario : Usuario) : List<Evidencia>
+  +filtrar(tipo : String, inicio : Date, fin : Date, area : Area, responsable : Usuario) : List<Evidencia>
 }
 
 class PlanAccion {
@@ -67,6 +67,8 @@ class PlanAccion {
   +devolver(observacion : String) : void
   +puedeEjecutarse() : boolean
   +iniciarEjecucion() : void
+  +registrarSeguimiento(porcentaje : int, comentario : String) : void
+  +calcularAvance() : int
   +finalizar() : void
 }
 
@@ -77,6 +79,11 @@ enum EstadoPlan <<enumeration>> {
   APROBADO
   EN_EJECUCION
   FINALIZADO
+  --
+  -estado : String
+  --
+  +getEstado() : String
+  +esEditable() : boolean
 }
 
 class Observacion {
@@ -96,6 +103,14 @@ class Notificacion {
   +marcarLeida() : void
 }
 
+class SeguimientoPlan {
+  -idSeguimiento : int
+  -fecha : Date
+  -porcentajeAvance : int
+  -comentario : String
+  +getPorcentajeAvance() : int
+}
+
 class HistorialPlan {
   -idHistorial : int
   -accion : String
@@ -108,7 +123,7 @@ class HistorialPlan {
 Usuario "0..*" --> "1" Rol : tiene
 Usuario "0..*" --> "1" Area : pertenece
 Usuario "1" -- "0..*" Evidencia : responsable >
-Usuario "1" --> "0..*" Busqueda : realiza
+Busqueda ..> Usuario : <<use>>
 Area "1" -- "0..*" Evidencia : clasifica >
 Busqueda ..> Evidencia : <<use>>
 
@@ -121,5 +136,8 @@ Usuario "1" -- "0..*" Observacion : autor >
 PlanAccion "1" --> "0..*" Notificacion : genera
 Notificacion "0..*" --> "1" Usuario : destinatario
 PlanAccion "1" --> "0..*" HistorialPlan : registra
+PlanAccion "1" *-- "0..*" SeguimientoPlan : tiene
+SeguimientoPlan "0..*" --> "1" Usuario : registrado por
+SeguimientoPlan "0..1" -- "0..*" Evidencia : respaldado por >
 HistorialPlan "0..*" --> "1" Usuario : realizado por
 @enduml
