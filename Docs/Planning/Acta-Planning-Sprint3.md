@@ -37,7 +37,7 @@ La prioridad y el esfuerzo son los de la [propuesta](../propuesta-y-requisitos.m
 
 | Tarea | HU | Issue o PR | Responsable |
 |---|---|---|---|
-| Implementar la aprobación y retroalimentación de planes, con pruebas JUnit | HU-017 | [#25](https://github.com/Raze144hz/Proyecto-FIDSW/issues/25) (cerrado, aunque la HU sigue *In review* hasta que otro integrante revise el PR #40), PR #40 | David Álvarez |
+| Implementar la aprobación y retroalimentación de planes, con pruebas JUnit | HU-017 | [#25](https://github.com/Raze144hz/Proyecto-FIDSW/issues/25) (abierto: la HU sigue *In review* hasta que otro integrante revise el PR #40), PR #40 | David Álvarez |
 | Reporte gerencial del Sprint 2 con el estado de cada HU | HU del Sprint 2 | [#37](https://github.com/Raze144hz/Proyecto-FIDSW/issues/37) | David Álvarez |
 | Acta de pruebas del Sprint 2 | HU-016, HU-017 | [#38](https://github.com/Raze144hz/Proyecto-FIDSW/issues/38) | David Álvarez |
 | Evidencias del prototipo | HU-017 | [#39](https://github.com/Raze144hz/Proyecto-FIDSW/issues/39) | David Álvarez |
