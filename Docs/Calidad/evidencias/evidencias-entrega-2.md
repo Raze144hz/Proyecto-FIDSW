@@ -5,6 +5,8 @@
 **Versión:** rama `feature/HU-017-aprobacion-planes` @ `5fce05f` (PR #40). Incluye el prototipo del Sprint 2 (`main` @ `9390848`) más la HU-017.
 **Entorno:** Ubuntu 24.04.4 LTS con pantalla virtual (Xvfb), OpenJDK 21.0.10 compilando con `--release 17`, JavaFX 11.0.11, H2 2.2.220, jBCrypt 0.4 y JUnit 5.10.1.
 
+> **Corte del 18 de octubre:** estas evidencias son de la versión indicada arriba y no se han vuelto a tomar sobre `main` actual, cuyo `pom.xml` usa JavaFX 17.0.10 y H2 2.2.224. Sirven como evidencia de HU-017 en la Entrega 2, no de la versión actual; hay que repetir el recorrido y las pruebas sobre `main` antes de usarlas para el Sprint 3. Tampoco hay evidencias de HU-004 ni de HU-020, que no están programadas.
+
 Las capturas salen del recorrido automático de la interfaz real del prototipo ([`Script/evidencias-prototipo`](../../../Script/evidencias-prototipo/README.md)). Lo que mostró la aplicación en cada paso está en el [registro de ejecución](registro-ejecucion-interfaz.txt). Los resultados por caso están en el [acta de pruebas del Sprint 2](../actas/acta-pruebas-sprint-2.md).
 
 ## 1. Capturas

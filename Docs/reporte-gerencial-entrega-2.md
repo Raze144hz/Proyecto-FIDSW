@@ -16,7 +16,7 @@ Pontificia Universidad Javeriana, Facultad de Ingeniería
 | Proyecto | SGPI: Sistema de Gestión de Procesos Institucionales |
 | Cliente / Product Owner | Ing. Kerwin Barros |
 | Sprint | 2 (23 de septiembre – 7 de octubre de 2026) |
-| Fecha del reporte | 10 de octubre de 2026; actualizado el 12 de octubre con la prueba en Maven (CP-PRO-09), la unión del PR #40 y el orden del repositorio; y el 16 de octubre con los diagramas de clases, modelo relacional, secuencia y procesos |
+| Fecha del reporte | 10 de octubre de 2026; actualizado el 12 de octubre con la prueba en Maven (CP-PRO-09), la unión del PR #40 y el orden del repositorio; el 16 de octubre con los diagramas de clases, modelo relacional, secuencia y procesos; y el 18 de octubre (sección 12) |
 | Responsable | David Álvarez Rodríguez (Gestión y Reportes) |
 | Estado del proyecto | Primer prototipo funcional en JavaFX + H2. HU-017 implementada y unida a `main`; falta la revisión de otro integrante. La arquitectura documentada todavía no coincide con el prototipo. |
 
@@ -185,3 +185,36 @@ La propuesta, registrada en el acta de pruebas, es cerrar el Sprint 2 con el pro
 - Que los PR se sigan uniendo sin revisión, lo que impide cumplir la DoD. El PR #40 también se unió sin revisión de otro integrante; su revisión queda pendiente.
 - Que no se pruebe el arranque del prototipo en Windows (RNF-08, CP-PRO-08), que es la plataforma del comando de ejecución del README. La compilación y las pruebas con Maven ya pasan en Windows.
 - Que el atraso del Sprint 2 se acumule con las HU del Sprint 3.
+
+## 12. Actualización del 18 de octubre
+
+**Diagramas.** El PR #52 incorporó las correcciones de la revisión con el profesor del 16 de octubre (clases, componentes y procesos, con el seguimiento del plan de HU-004). Al compararlos con los requisitos apareció una diferencia: el seguimiento registraba un porcentaje digitado, mientras que HU-004 calcula el avance como actividades completadas sobre el total. Se alinearon requisitos, diagramas, base de datos y pruebas con estas decisiones ([detalle](Arquitectura/arquitectura.md#decisiones-del-18-de-octubre)):
+
+- Avance por actividades (nueva entidad `Actividad`); `SeguimientoPlan` queda como corte de seguimiento con el avance calculado.
+- Cada evidencia pertenece a una actividad, y una actividad no se finaliza sin evidencia.
+- El director de área finaliza el plan al 100 % con la evaluación de HU-020; el estado final es FINALIZADO.
+- El historial se conserva aunque el plan se elimine.
+- Nuevos: [modelo objetivo en PostgreSQL](../Database/modelo-objetivo-postgresql.sql) y [casos de prueba de HU-004 y HU-020](Calidad/casos-de-prueba-HU004-HU020.md), sin ejecutar porque esas HU no están programadas.
+- La [arquitectura](Arquitectura/arquitectura.md) separa la arquitectura objetivo del prototipo implementado.
+
+**Integración continua.** El flujo de GitHub Actions se agregó el 12 de octubre, pero **ninguna de sus 36 ejecuciones ha arrancado**: GitHub informa que la cuenta dueña del repositorio está bloqueada por un problema de facturación. Los fallos no se deben al código. Hasta que el dueño del repositorio lo resuelva, la única evidencia de pruebas es la ejecución local de `mvn clean test` (CP-PRO-09, 12 de octubre).
+
+**Ramas.** El PR #53 puso `develop` al día con `main` y se cerró el defecto D-08 (#42). Los PR van a `develop`, como dicen el README y la DoD.
+
+**Issues.** Se definió un issue por HU ([trazabilidad](Planning/trazabilidad-hu-issues.md)): se cerraron 8 duplicados y se reabrieron #1, #6, #8, #10 y #19. Siguen cerrados sin implementar #4, #7, #9, #12, #14, #15 y #18.
+
+**Indicadores al 18 de octubre**
+
+| Indicador | Resultado |
+|---|---|
+| HU en *Done* | 0 |
+| Issues de HU abiertos | 12 de 20 issues canónicos |
+| Ejecuciones de GitHub Actions que arrancaron | 0 de 36 (cuenta bloqueada por facturación) |
+| Defectos del acta del Sprint 2 abiertos | 1 (D-07); D-08 se cerró |
+
+**Pendiente:**
+
+- Que el dueño del repositorio resuelva el bloqueo de facturación para que Actions pueda correr.
+- Revisión del PR #40 por otro integrante (HU-017 sigue *In review*).
+- Volver a correr las pruebas y tomar las evidencias sobre la versión actual de `main`: las capturas de la Entrega 2 son de `feature/HU-017` en `5fce05f` (10 de octubre), con JavaFX 11 y H2 2.2.220, y hoy el `pom.xml` usa JavaFX 17.0.10 y H2 2.2.224.
+- Dailies, Sprint Review y Retrospectiva del Sprint 3, registradas el día en que ocurren.
