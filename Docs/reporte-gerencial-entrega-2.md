@@ -201,14 +201,14 @@ La propuesta, registrada en el acta de pruebas, es cerrar el Sprint 2 con el pro
 
 **Ramas.** El PR #53 puso `develop` al día con `main` y se cerró el defecto D-08 (#42). Los PR van a `develop`, como dicen el README y la DoD.
 
-**Issues.** Se definió un issue por HU ([trazabilidad](Planning/trazabilidad-hu-issues.md)): se cerraron 8 duplicados y se reabrieron #1, #6, #8, #10 y #19. Siguen cerrados sin implementar #4, #7, #9, #12, #14, #15 y #18.
+**Issues.** Se definió un issue por HU ([trazabilidad](Planning/trazabilidad-hu-issues.md)): se cerraron 8 duplicados; se reabrieron los issues que estaban cerrados sin implementar (#1, #4, #6, #7, #8, #9, #10, #15, #18 y #19) y #25, que sigue *In review*; HU-012 y HU-014 se dividieron en #56, #57, #58 y #59, como en la propuesta; y la prioridad de cada issue se alineó con la de la propuesta.
 
 **Indicadores al 18 de octubre**
 
 | Indicador | Resultado |
 |---|---|
 | HU en *Done* | 0 |
-| Issues de HU abiertos | 12 de 20 issues canónicos |
+| Issues de HU abiertos | 22 de 22 issues canónicos (ninguna HU cumple la DoD) |
 | Ejecuciones de GitHub Actions que arrancaron | 0 de 36 (cuenta bloqueada por facturación) |
 | Defectos del acta del Sprint 2 abiertos | 1 (D-07); D-08 se cerró |
 
