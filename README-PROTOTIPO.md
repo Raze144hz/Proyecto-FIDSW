@@ -68,9 +68,7 @@ Las reglas de HU-017 tienen 12 pruebas JUnit 5 en `src/test/java`, que usan una 
 sh mvnw clean test         (Linux o macOS)
 ```
 
-El flujo de GitHub Actions (`.github/workflows/maven.yml`) corre las mismas pruebas en Linux y en Windows en cada push a `main` o `develop` y en cada pull request.
-
-> **Estado de GitHub Actions (18 de octubre):** las 36 ejecuciones registradas desde que se creó el flujo (12 de octubre) aparecen como fallidas porque los trabajos nunca arrancan: GitHub informa que la cuenta dueña del repositorio está bloqueada por un problema de facturación. No es un error del código ni de las pruebas. Hasta que el dueño del repositorio lo resuelva en la configuración de facturación de su cuenta, el resultado de Actions no sirve como evidencia y las pruebas se corren localmente.
+Las pruebas se corren localmente con estos comandos, y el resultado se registra en el acta de pruebas del sprint.
 
 ## Base de datos
 

@@ -66,7 +66,7 @@ El mapeo completo entre historias, issues y estado real está en [`Docs/Planning
 *   **Interfaz:** JavaFX (aplicación de escritorio)
 *   **Base de Datos:** H2 con JDBC en el prototipo
 *   **Seguridad:** contraseñas con hash BCrypt
-*   **Construcción y pruebas:** Maven (con Maven Wrapper), JUnit 5 y GitHub Actions. Ninguna de las ejecuciones de Actions ha arrancado desde que se creó el flujo (12 de octubre): GitHub informa que la cuenta dueña del repositorio está bloqueada por un problema de facturación. Mientras se resuelve, las pruebas se corren localmente con `mvnw clean test`.
+*   **Construcción y pruebas:** Maven (con Maven Wrapper) y JUnit 5. Las pruebas se corren localmente con `mvnw clean test` (ver [`README-PROTOTIPO.md`](README-PROTOTIPO.md#pruebas-automáticas)).
 *   **Herramientas:** GitHub Projects, Git
 
 ## ▶️ Cómo ejecutar el prototipo
@@ -105,7 +105,6 @@ El repositorio está organizado de la siguiente manera para mantener el orden y 
 *   `/Graficas`: Recursos visuales, capturas de pantalla, diagramas y organigramas; `/Graficas/fuentes` tiene las fuentes PlantUML de los diagramas.
 *   `/Wiki`: Respaldo de la documentación de la Wiki (ver su [README](Wiki/README.md)).
 *   `pom.xml`, `mvnw`, `mvnw.cmd` y `.mvn/`: Configuración de Maven y Maven Wrapper.
-*   `.github/workflows`: Compilación y pruebas automáticas en GitHub Actions.
 
 ## 🌿 Estrategia de Ramas (Git Flow)
 

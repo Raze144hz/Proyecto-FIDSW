@@ -12,7 +12,7 @@ La arquitectura objetivo es **cliente-servidor**: un cliente de escritorio JavaF
 | Lógica | Java 17 en la misma aplicación | API SGPI en Java 17 (HTTPS) |
 | Base de datos | H2 local con JDBC | PostgreSQL 16 con JDBC |
 | Seguridad | Contraseñas con hash BCrypt | Contraseñas con hash BCrypt y control de roles |
-| Construcción y pruebas | Maven (Maven Wrapper), JUnit 5, GitHub Actions | Igual |
+| Construcción y pruebas | Maven (Maven Wrapper) y JUnit 5, con pruebas locales | Igual |
 | Control de versiones | Git y GitHub (Git Flow con `main`, `develop` y `feature/`) | Igual |
 
 ## 📂 Estructura de Directorios (Repositorio)
