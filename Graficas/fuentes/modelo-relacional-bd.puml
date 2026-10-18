@@ -1,5 +1,6 @@
 @startuml modelo-relacional-bd
-' Modelo relacional de la base de datos del SGPI para HU-016, HU-017 y HU-004.
+' Modelo relacional (objetivo) de la base de datos del SGPI para HU-016, HU-017, HU-004 y HU-020.
+' El DDL equivalente está en Database/modelo-objetivo-postgresql.sql.
 ' Para generar la imagen, desde la carpeta Graficas: java -jar plantuml.jar -tpng -o .. fuentes/modelo-relacional-bd.puml
 !theme plain
 skinparam defaultFontName DejaVu Sans
@@ -11,7 +12,7 @@ skinparam ranksep 60
 hide circle
 hide empty members
 
-title Modelo Relacional - Base de Datos
+title Modelo Relacional - Base de Datos (modelo objetivo)
 
 entity AREA {
   • id_area : INT <<PK>>
@@ -45,7 +46,7 @@ entity EVIDENCIA {
   • ruta : VARCHAR(255)
   • id_usuario : INT <<FK>>
   • id_area : INT <<FK>>
-  <U+2007><U+2007>id_seguimiento : INT <<FK>>
+  • id_actividad : INT <<FK>>
 }
 
 entity PLAN_ACCION {
@@ -57,9 +58,22 @@ entity PLAN_ACCION {
   • fecha_fin : DATE
   • estado : VARCHAR(30)
   <U+2007><U+2007>fecha_envio : TIMESTAMP
+  <U+2007><U+2007>calificacion_cierre : INT
+  <U+2007><U+2007>observaciones_cierre : TEXT
+  <U+2007><U+2007>fecha_cierre : TIMESTAMP
   • id_area : INT <<FK>>
   • id_coordinador : INT <<FK>>
   <U+2007><U+2007>id_director : INT <<FK>>
+}
+
+entity ACTIVIDAD {
+  • id_actividad : INT <<PK>>
+  --
+  • descripcion : VARCHAR(500)
+  • fecha_limite : DATE
+  • estado : VARCHAR(20)
+  • id_plan : INT <<FK>>
+  • id_responsable : INT <<FK>>
 }
 
 entity OBSERVACION {
@@ -86,7 +100,7 @@ entity SEGUIMIENTO_PLAN {
   • id_seguimiento : INT <<PK>>
   --
   • fecha : TIMESTAMP
-  • porcentaje_avance : INT
+  • avance_calculado : INT
   <U+2007><U+2007>comentario : TEXT
   • id_plan : INT <<FK>>
   • id_usuario : INT <<FK>>
@@ -95,12 +109,13 @@ entity SEGUIMIENTO_PLAN {
 entity HISTORIAL_PLAN {
   • id_historial : INT <<PK>>
   --
+  • id_plan : INT
+  • codigo_plan : VARCHAR(20)
   • accion : VARCHAR(30)
   <U+2007><U+2007>estado_anterior : VARCHAR(30)
   • estado_nuevo : VARCHAR(30)
   <U+2007><U+2007>detalle : TEXT
   • fecha : TIMESTAMP
-  • id_plan : INT <<FK>>
   • id_usuario : INT <<FK>>
 }
 
@@ -115,11 +130,23 @@ PLAN_ACCION ||--o{ OBSERVACION
 USUARIO ||--o{ OBSERVACION
 USUARIO ||--o{ NOTIFICACION
 PLAN_ACCION |o--o{ NOTIFICACION
-PLAN_ACCION ||--o{ HISTORIAL_PLAN
 USUARIO ||--o{ HISTORIAL_PLAN
 PLAN_ACCION ||--o{ SEGUIMIENTO_PLAN
 USUARIO ||--o{ SEGUIMIENTO_PLAN
-SEGUIMIENTO_PLAN |o--o{ EVIDENCIA
+PLAN_ACCION ||--o{ ACTIVIDAD
+USUARIO ||--o{ ACTIVIDAD : responsable
+ACTIVIDAD ||--o{ EVIDENCIA
+
+note bottom of HISTORIAL_PLAN
+  id_plan y codigo_plan no son llave foránea:
+  el historial se conserva si el plan se elimina (RNF-10).
+end note
+
+note bottom of ACTIVIDAD
+  estado: POR_HACER, EN_PROCESO o FINALIZADA.
+  Avance del plan (HU-004) = actividades FINALIZADA
+  / total de actividades; se calcula, no se guarda.
+end note
 
 legend right
   • = NOT NULL
