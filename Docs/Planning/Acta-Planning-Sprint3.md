@@ -66,5 +66,5 @@ La prioridad y el esfuerzo son los de la [propuesta](../propuesta-y-requisitos.m
 - **18 de octubre:** decisiones registradas por David Álvarez (Gestión y Reportes) para confirmar con el equipo en la Review del 21 de octubre:
   - El avance de un plan se calcula por actividades (finalizadas / total), como dice HU-004; el cierre lo hace el director con la evaluación de HU-020 y el estado final es FINALIZADO. Diagramas, modelo de datos y casos de prueba quedaron alineados ([decisiones](../Arquitectura/arquitectura.md#decisiones-del-18-de-octubre)).
   - Los pull requests van a `develop` (Git Flow, como dicen el README y la DoD). `develop` quedó al día con `main` en el PR #53 y el issue #42 se cerró.
-  - Se cerraron como duplicados los issues repetidos de HU-002, HU-003, HU-005, HU-011, HU-013, HU-016 y HU-017, y se reabrieron #1, #6, #8, #10 y #19.
+  - Se cerraron como duplicados los issues repetidos de HU-002, HU-003, HU-005, HU-011, HU-013, HU-016 y HU-017; se reabrieron los issues cerrados sin implementar y #25; HU-012 y HU-014 se dividieron en #56 a #59; y las prioridades de los issues se alinearon con la propuesta ([trazabilidad](trazabilidad-hu-issues.md)).
   - GitHub Actions no ha corrido nunca: la cuenta dueña del repositorio está bloqueada por un problema de facturación. Lo debe resolver el dueño del repositorio.
