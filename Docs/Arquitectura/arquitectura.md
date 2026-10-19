@@ -7,7 +7,7 @@ Diagramas de diseño para los dos casos de uso elegidos en el ejercicio de la Se
 
 Desde la revisión con el profesor del 16 de octubre, los diagramas también incluyen el seguimiento del plan de acción (**HU-004**, seguimiento de avance) y, desde el 18 de octubre, su cierre (**HU-020**, cierre y evaluación final).
 
-Todos los diagramas están en PNG en la carpeta [`/Graficas`](../../Graficas). Los de clases, modelo relacional, secuencia y procesos tienen su fuente editable en PlantUML (`.puml`) en [`Graficas/fuentes`](../../Graficas/fuentes).
+Todos los diagramas están en PNG en la carpeta [`/Graficas`](../../Graficas). Su fuente editable está en [`Graficas/fuentes`](../../Graficas/fuentes): en PlantUML (`.puml`) los de clases, modelo relacional, secuencia y procesos, y en SVG los de componentes y de despliegue con componentes. El diagrama de despliegue todavía no tiene fuente.
 
 ## 0. Arquitectura objetivo y prototipo implementado
 
@@ -40,7 +40,7 @@ Tomadas para que requisitos, diagramas, base de datos y pruebas digan lo mismo:
 
 ![Diagrama de clases](../../Graficas/diagrama-clases.png)
 
-- Clases del dominio: `Usuario`, `Rol`, `Area`, `Busqueda`, `Evidencia`, `PlanAccion`, `EstadoPlan` (enumeración), `Actividad`, `EstadoActividad` (enumeración), `Observacion`, `Notificacion`, `HistorialPlan` y `SeguimientoPlan`.
+- Clases del dominio: `Usuario`, `Rol`, `Area`, `Busqueda`, `Evidencia`, `PlanAccion`, `EstadoPlan`, `Actividad`, `EstadoActividad`, `Observacion`, `Notificacion`, `HistorialPlan` y `SeguimientoPlan`.
 - Un `Usuario` tiene un `Rol` y pertenece a un `Area`. Es responsable de evidencias y de actividades, coordina o dirige planes de acción, escribe observaciones, registra seguimientos y recibe notificaciones.
 - `PlanAccion` es el centro del diseño:
   - Pertenece a un área, que es la que revisa su director.
@@ -52,8 +52,8 @@ Tomadas para que requisitos, diagramas, base de datos y pruebas digan lo mismo:
   - `puedeEjecutarse()` aplica la regla de HU-017: un plan devuelto no pasa a ejecución hasta que sus observaciones queden atendidas y el director lo apruebe de nuevo.
   - `calcularAvance()` aplica la regla de HU-004: actividades en `FINALIZADA` × 100 / total de actividades.
   - `puedeFinalizarse()` y `finalizar()` aplican HU-020: solo el director del área, con avance 100 %, registra la calificación y las observaciones de cierre (`calificacionCierre`, `observacionesCierre`, `fechaCierre`).
-- `Actividad` tiene descripción, fecha límite, un `Usuario` responsable y un `EstadoActividad` (`POR_HACER`, `EN_PROCESO` o `FINALIZADA`, las columnas del Kanban del CU-03). `cambiarEstado()` no deja pasar a `FINALIZADA` una actividad sin evidencia (`tieneEvidencia()`).
-- `EstadoPlan` tiene los estados del ciclo de vida: `BORRADOR` → `PENDIENTE_REVISION` → `APROBADO` o `EN_REVISION` (devuelto) → `EN_EJECUCION` → `FINALIZADO`. Su atributo `estado` es el texto que se muestra y se guarda en la base de datos (por ejemplo, `PENDIENTE_REVISION` se guarda como "PENDIENTE DE REVISION"), y `esEditable()` indica si el coordinador puede modificar el plan (solo en `BORRADOR` o `EN_REVISION`).
+- `Actividad` tiene descripción, fecha límite, un `Usuario` responsable y un `EstadoActividad`, cuyo atributo `estado` toma los valores `POR_HACER`, `EN_PROCESO` o `FINALIZADA` (las columnas del Kanban del CU-03). `cambiarEstado()` no deja pasar a `FINALIZADA` una actividad sin evidencia (`tieneEvidencia()`).
+- `EstadoPlan` tiene un solo atributo, `estado`, y los estados del ciclo de vida son los valores que toma: `BORRADOR` → `PENDIENTE_REVISION` → `APROBADO` o `EN_REVISION` (devuelto) → `EN_EJECUCION` → `FINALIZADO`. `getEstado()` devuelve el texto que se muestra y se guarda en la base de datos (por ejemplo, `PENDIENTE_REVISION` se guarda como "PENDIENTE DE REVISION"), y `esEditable()` indica si el coordinador puede modificar el plan (solo en `BORRADOR` o `EN_REVISION`).
 - `SeguimientoPlan` guarda la fecha, el avance calculado en ese momento y un comentario. Lo registra un `Usuario`.
 - `HistorialPlan` y `SeguimientoPlan` son distintos: el historial lo escribe el sistema en cada cambio (auditoría); el seguimiento lo registra una persona para reportar cómo va el plan. `HistorialPlan` guarda el código del plan para que la auditoría siga legible si el plan se elimina.
 - `Busqueda` depende de `Usuario` («use»): `buscar(palabraClave, usuario)` recibe a quien busca, porque los resultados dependen de sus permisos y de su área. También usa `Evidencia` («use») para buscar y filtrar, pero no la guarda. `filtrar()` recibe tipo, fechas, área y responsable, como pide HU-016. Cada `Evidencia` está clasificada en un `Area` y soporta una `Actividad`.
@@ -64,7 +64,7 @@ Tomadas para que requisitos, diagramas, base de datos y pruebas digan lo mismo:
 
 El script equivalente para PostgreSQL está en [`Database/modelo-objetivo-postgresql.sql`](../../Database/modelo-objetivo-postgresql.sql).
 
-- Diez tablas: `AREA`, `ROL`, `USUARIO`, `EVIDENCIA`, `PLAN_ACCION`, `ACTIVIDAD`, `OBSERVACION`, `NOTIFICACION`, `HISTORIAL_PLAN` y `SEGUIMIENTO_PLAN`. Cada clase del diagrama es una tabla, salvo `Busqueda`, que no se guarda, y las enumeraciones `EstadoPlan` y `EstadoActividad`, que son la columna `estado` de su tabla.
+- Diez tablas: `AREA`, `ROL`, `USUARIO`, `EVIDENCIA`, `PLAN_ACCION`, `ACTIVIDAD`, `OBSERVACION`, `NOTIFICACION`, `HISTORIAL_PLAN` y `SEGUIMIENTO_PLAN`. Cada clase del diagrama es una tabla, salvo `Busqueda`, que no se guarda, y `EstadoPlan` y `EstadoActividad`, cuyo atributo `estado` es la columna `estado` de su tabla.
 - `USUARIO` referencia a `ROL` y `AREA`; `correo` es único porque con él se inicia sesión.
 - `PLAN_ACCION` referencia a su área y dos veces a `USUARIO`: al coordinador y al director. `codigo` es único. `id_director` y `fecha_envio` quedan vacíos mientras el plan no se ha enviado ni revisado; `calificacion_cierre`, `observaciones_cierre` y `fecha_cierre` quedan vacíos hasta que el director lo finaliza (HU-020).
 - `ACTIVIDAD` referencia al plan y al usuario responsable. El avance del plan no se guarda: se calcula con las actividades en `FINALIZADA` sobre el total.
@@ -93,11 +93,11 @@ El prototipo implementa la parte de HU-017 de este modelo en H2, con cinco tabla
 
 | Diagrama | Observación | Cambio |
 |---|---|---|
-| Clases | `EstadoPlan` debe tener un atributo `estado` | `EstadoPlan` tiene el atributo `estado` y los métodos `getEstado()` y `esEditable()` |
+| Clases | `EstadoPlan` debe tener un atributo `estado` | `EstadoPlan` tiene un solo atributo, `estado`, y los estados (`BORRADOR`, `PENDIENTE_REVISION`, `EN_REVISION`, `APROBADO`, `EN_EJECUCION`, `FINALIZADO`) son los valores que toma; también `getEstado()` y `esEditable()`. `EstadoActividad` sigue la misma forma. *Ajustado el 18 de octubre:* la primera versión listaba los estados aparte del atributo. |
 | Clases | La búsqueda debe depender del usuario | La asociación `Usuario`–`Busqueda` pasa a ser una dependencia «use» de `Busqueda` hacia `Usuario`; `buscar()` recibe el usuario |
 | Clases | Integrar un seguimiento del plan de acción | Nueva clase `SeguimientoPlan` (HU-004), métodos `registrarSeguimiento()` y `calcularAvance()` en `PlanAccion`, y tabla `SEGUIMIENTO_PLAN` |
 | Componentes | No poner "Almacén de Archivos", sino el componente específico | El componente **Gestor de Archivos** de la API provee `IArchivos` y usa `java.nio.file` para guardar los archivos en la carpeta `evidencias/` del servidor |
-| Componentes | Especificar los componentes usados | Se agregan los componentes de terceros que usa cada componente: JavaFX 17, jBCrypt 0.4, el driver JDBC de PostgreSQL y `java.nio.file` |
+| Componentes | Especificar la herramienta que usa cada componente | Cada componente indica entre paréntesis la herramienta con la que se construye, como `BD SGPI (PostgreSQL 16)`; ver la [tabla del punto 3](#3-diagrama-de-componentes). *Ajustado el 18 de octubre:* la primera versión agregaba recuadros punteados de terceros solo para algunos componentes; se quitaron porque ahora cada componente indica su herramienta. |
 | Despliegue | Sin cambios pedidos | Solo se actualizaron la lista de tablas, las HU del cliente y los usuarios de la nota, para que coincidan con los demás diagramas |
 | Procesos | La decisión va del lado del "no" y las decisiones deben ser rombos | Las decisiones son rombos; el ciclo de devolución sale por el "no" y vuelve a la decisión; se agregó el seguimiento hasta el 100 % antes de finalizar |
 
@@ -120,11 +120,24 @@ La primera versión del seguimiento registraba un porcentaje digitado por una pe
 ![Diagrama de componentes](../../Graficas/diagrama-componentes.png)
 
 - Notación de la Sesión 15: componente con ícono, interfaz provista (bola) e interfaz requerida (media luna).
-- Cliente SGPI (JavaFX) con tres vistas: Revisión de Planes (HU-017), Seguimiento de Planes (HU-004 y HU-020) y Búsqueda de Evidencias (HU-016).
+- Cliente SGPI (JavaFX 17) con tres vistas: Revisión de Planes (HU-017), Seguimiento de Planes (HU-004 y HU-020) y Búsqueda de Evidencias (HU-016).
 - API SGPI (Java 17) con Gestión de Planes de Acción, Repositorio Documental, Notificaciones, Seguridad y Roles, Estructura Organizacional, Gestor de Archivos y Persistencia.
-- Cada componente indica las clases del diagrama de clases que lo implementan y la historia de usuario que atiende.
-- Los componentes de terceros («library» o «framework», con borde punteado) son los que usa cada componente: JavaFX 17 en el cliente, jBCrypt 0.4 en Seguridad y Roles (hash de contraseñas, RNF-03), el driver JDBC de PostgreSQL en Persistencia y `java.nio.file` del JDK en el Gestor de Archivos, que guarda los archivos en la carpeta `evidencias/` del servidor.
+- Cada componente indica entre paréntesis la herramienta con la que se construye, las clases del diagrama de clases que lo implementan y la historia de usuario que atiende.
 - El recuadro inferior define las operaciones de cada interfaz a partir de los métodos del diagrama de clases. `ISeguimientoPlanes` agrupa el seguimiento y el cierre: `agregarActividad`, `cambiarEstado`, `calcularAvance`, `registrarSeguimiento`, `puedeFinalizarse` y `finalizar`.
+
+| Componente | Herramienta | Para qué |
+|---|---|---|
+| Vista Revisión de Planes, Vista Seguimiento de Planes y Vista Búsqueda de Evidencias | JavaFX 17 | Pantallas del cliente de escritorio, como en el prototipo |
+| Gestión de Planes de Acción | Java 17 + Javalin 6 | Reglas del plan en Java; Javalin publica `IAprobacionPlanes` e `ISeguimientoPlanes` como API REST sobre HTTPS |
+| Repositorio Documental | Java 17 + Javalin 6 | Búsqueda y filtrado de evidencias; Javalin publica `IBusquedaEvidencias` |
+| Notificaciones | Jakarta Mail 2.1 | Envía los correos por SMTP (vencimientos de HU-005, alertas de HU-015 y el enlace de HU-018); los avisos internos se guardan en `NOTIFICACION` |
+| Seguridad y Roles | jBCrypt 0.4 | Hash de contraseñas (RNF-03), la misma librería del prototipo |
+| Estructura Organizacional | Java 17 | Consulta de áreas |
+| Gestor de Archivos | `java.nio.file` (JDK 17) | Guarda y lee los archivos en la carpeta `evidencias/` del servidor |
+| Persistencia | JDBC + driver PostgreSQL 42.7 | Consultas SQL a la base de datos |
+| BD SGPI | PostgreSQL 16 | Base de datos relacional |
+
+Javalin 6 y Jakarta Mail 2.1 son propuestas del 18 de octubre (ver [supuestos](#supuestos-pendientes-de-confirmar-por-el-equipo)); las demás herramientas ya estaban en los diagramas o en el prototipo.
 
 ## 4. Diagrama de despliegue
 
@@ -139,7 +152,7 @@ La primera versión del seguimiento registraba un porcentaje digitado por una pe
 
 ![Diagrama de despliegue con componentes](../../Graficas/diagrama-despliegue-con-componentes.png)
 
-Mismos nodos y conectores del punto 4, con los componentes del punto 3, incluidos los de terceros, ubicados dentro del nodo donde se ejecutan (formato de la diapositiva "Uniendo diagrama de despliegue con componentes").
+Mismos nodos y conectores del punto 4, con los componentes del punto 3 y su herramienta, ubicados dentro del nodo donde se ejecutan (formato de la diapositiva "Uniendo diagrama de despliegue con componentes").
 
 ## 6. Diagrama de secuencia (HU-017)
 
@@ -169,7 +182,8 @@ Mismos nodos y conectores del punto 4, con los componentes del punto 3, incluido
 | Tema | Supuesto usado en los diagramas | Fuente |
 |---|---|---|
 | Cliente | Aplicación de escritorio JavaFX sobre JRE 17 | Propuesta, RNF-06 y RNF-08 |
-| Comunicación cliente–servidor | API REST sobre HTTPS (puerto 443) | Propuesto en estos diagramas; no definido en otro documento |
+| Comunicación cliente–servidor | API REST sobre HTTPS (puerto 443), publicada con Javalin 6 | Propuesto en estos diagramas; no definido en otro documento |
+| Correo | Jakarta Mail 2.1 con el servidor SMTP de la institución | HU-005, HU-015 y HU-018 (RNF-04); propuesto el 18 de octubre |
 | Base de datos | PostgreSQL 16, acceso por JDBC (puerto 5432) | RNF-09 (PostgreSQL o MySQL) |
 | Hardware mínimo | 2 núcleos, 4 GB de RAM, discos de 50 GB (aplicaciones) y 100 GB (BD) | Propuesto en estos diagramas; no definido en otro documento |
 | Filtro de evidencias | `filtrar(tipo, inicio, fin, area, responsable)` | HU-016 (filtrar por tipo, fecha, área o responsable) |
@@ -184,4 +198,12 @@ Las fuentes de los diagramas de clases, modelo relacional, secuencia y procesos 
 java -jar plantuml.jar -tpng -o .. fuentes/*.puml
 ```
 
-Los diagramas de componentes, de despliegue y de despliegue con componentes no tienen fuente editable en el repositorio: se generaron con un script que no se subió. Los cambios del 18 de octubre se hicieron directamente sobre esos PNG. Si alguien del equipo tiene el script o los SVG de la versión del 16 de octubre, conviene subirlos a `Graficas/fuentes`.
+Los diagramas de componentes y de despliegue con componentes tienen su fuente en SVG (`diagrama-componentes.svg` y `diagrama-despliegue-con-componentes.svg`). Se abren en el navegador y se editan con Inkscape o con un editor de texto (cada texto del diagrama es una etiqueta `<text>`). Para exportar el PNG al mismo tamaño que el de `Graficas`, desde esa carpeta:
+
+```
+inkscape fuentes/diagrama-componentes.svg --export-type=png --export-width=3440 --export-filename=diagrama-componentes.png
+```
+
+Usan la fuente DejaVu Sans; si no está instalada, el texto sale en Arial y puede cambiar un poco de ancho.
+
+El diagrama de despliegue no tiene fuente editable en el repositorio: se generó con un script que no se subió, y sus cambios del 18 de octubre se hicieron directamente sobre el PNG.
