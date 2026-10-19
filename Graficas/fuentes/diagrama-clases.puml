@@ -87,22 +87,14 @@ class Actividad {
   +tieneEvidencia() : boolean
 }
 
-enum EstadoActividad <<enumeration>> {
-  POR_HACER
-  EN_PROCESO
-  FINALIZADA
+' Los estados son los valores que toma el atributo estado (revisión con el profesor).
+class EstadoActividad {
+  -estado : String {POR_HACER, EN_PROCESO, FINALIZADA}
+  +getEstado() : String
 }
 
-enum EstadoPlan <<enumeration>> {
-  BORRADOR
-  PENDIENTE_REVISION
-  EN_REVISION
-  APROBADO
-  EN_EJECUCION
-  FINALIZADO
-  --
-  -estado : String
-  --
+class EstadoPlan {
+  -estado : String {BORRADOR, PENDIENTE_REVISION,\n    EN_REVISION, APROBADO,\n    EN_EJECUCION, FINALIZADO}
   +getEstado() : String
   +esEditable() : boolean
 }
@@ -152,7 +144,7 @@ Busqueda ..> Evidencia : <<use>>
 Usuario "1" -- "0..*" PlanAccion : coordinador >
 Usuario "0..1" -- "0..*" PlanAccion : director >
 PlanAccion "0..*" --> "1" Area : área responsable
-PlanAccion --> EstadoPlan
+PlanAccion ---> EstadoPlan
 PlanAccion "1" *-- "0..*" Observacion : contiene
 Usuario "1" -- "0..*" Observacion : autor >
 PlanAccion "1" --> "0..*" Notificacion : genera
