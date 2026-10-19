@@ -1,0 +1,227 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1720" height="1490" viewBox="0 0 1720 1490" font-family="DejaVu Sans, Arial, sans-serif" fill="#1A1A1A">
+<!-- Diagrama de componentes del SGPI para el Taller de Diseño (HU-017, HU-004 y HU-016). -->
+<defs><marker id="open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11" fill="none" stroke="#3C4A5C" stroke-width="1.5"/></marker></defs>
+<rect width="1720" height="1490" fill="#FFFFFF"/>
+<text x="860" y="44" font-size="24" font-weight="bold" fill="#1F3A5F" text-anchor="middle" textLength="467.1" lengthAdjust="spacingAndGlyphs">SGPI — Diagrama de componentes</text>
+<text x="860" y="74" font-size="15" fill="#1F3A5F" text-anchor="middle" textLength="976.4" lengthAdjust="spacingAndGlyphs">HU-017 Aprobación y retroalimentación de planes  ·  HU-004 Seguimiento de avance  ·  HU-016 Búsqueda y filtrado de evidencias</text>
+<rect x="170" y="110" width="950" height="190" fill="#F2F2F2" stroke="#4D4D4D" stroke-width="1.5"/>
+<rect x="1096" y="120" width="13" height="16" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="1092" y="123" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="1092" y="129" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<text x="186" y="136" font-size="15" font-weight="bold" textLength="206.8" lengthAdjust="spacingAndGlyphs">Cliente SGPI (JavaFX 17)</text>
+<rect x="210" y="158" width="240" height="100" fill="#D9D9D9" stroke="#4D4D4D" stroke-width="1.4"/>
+<rect x="428" y="166" width="13" height="16" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="424" y="169" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="424" y="175" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<text x="330" y="187.5" font-size="14" text-anchor="middle" textLength="108.6" lengthAdjust="spacingAndGlyphs">Vista Búsqueda</text>
+<text x="330" y="204.5" font-size="14" text-anchor="middle" textLength="96.8" lengthAdjust="spacingAndGlyphs">de Evidencias</text>
+<text x="330" y="221.5" font-size="14" text-anchor="middle" textLength="80.4" lengthAdjust="spacingAndGlyphs">(JavaFX 17)</text>
+<text x="330" y="240.5" font-size="11" font-style="italic" fill="#555555" text-anchor="middle" textLength="41.3" lengthAdjust="spacingAndGlyphs">HU-016</text>
+<rect x="470" y="158" width="240" height="100" fill="#D9D9D9" stroke="#4D4D4D" stroke-width="1.4"/>
+<rect x="688" y="166" width="13" height="16" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="684" y="169" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="684" y="175" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<text x="590" y="187.5" font-size="14" text-anchor="middle" textLength="97.5" lengthAdjust="spacingAndGlyphs">Vista Revisión</text>
+<text x="590" y="204.5" font-size="14" text-anchor="middle" textLength="67.6" lengthAdjust="spacingAndGlyphs">de Planes</text>
+<text x="590" y="221.5" font-size="14" text-anchor="middle" textLength="80.4" lengthAdjust="spacingAndGlyphs">(JavaFX 17)</text>
+<text x="590" y="240.5" font-size="11" font-style="italic" fill="#555555" text-anchor="middle" textLength="41.3" lengthAdjust="spacingAndGlyphs">HU-017</text>
+<rect x="820" y="158" width="240" height="100" fill="#D9D9D9" stroke="#4D4D4D" stroke-width="1.4"/>
+<rect x="1038" y="166" width="13" height="16" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="1034" y="169" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="1034" y="175" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<text x="940" y="187.5" font-size="14" text-anchor="middle" textLength="127.2" lengthAdjust="spacingAndGlyphs">Vista Seguimiento</text>
+<text x="940" y="204.5" font-size="14" text-anchor="middle" textLength="67.6" lengthAdjust="spacingAndGlyphs">de Planes</text>
+<text x="940" y="221.5" font-size="14" text-anchor="middle" textLength="80.4" lengthAdjust="spacingAndGlyphs">(JavaFX 17)</text>
+<text x="940" y="240.5" font-size="11" font-style="italic" fill="#555555" text-anchor="middle" textLength="41.3" lengthAdjust="spacingAndGlyphs">HU-004</text>
+<rect x="50" y="380" width="1330" height="810" fill="#F2F2F2" stroke="#4D4D4D" stroke-width="1.5"/>
+<rect x="1356" y="390" width="13" height="16" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="1352" y="393" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="1352" y="399" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<text x="66" y="406" font-size="15" font-weight="bold" textLength="153.7" lengthAdjust="spacingAndGlyphs">API SGPI (Java 17)</text>
+<ellipse cx="330" cy="520" rx="85.25" ry="17" fill="#FFFFFF" stroke="#333333" stroke-width="1.5"/>
+<text x="330" y="524.5" font-size="12.5" text-anchor="middle" textLength="132.7" lengthAdjust="spacingAndGlyphs">IBusquedaEvidencias</text>
+<polyline points="330.0,537.0 330.0,560.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<path d="M235.9,514.2 A96.25,28 0 0 1 424.1,514.2 L418.3,515.4 A90.25,22 0 0 0 241.7,515.4 Z" fill="#FFFFFF" stroke="#333333" stroke-width="1.3"/>
+<polyline points="330.0,258.0 330.0,492.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<ellipse cx="590" cy="520" rx="77.75" ry="17" fill="#FFFFFF" stroke="#333333" stroke-width="1.5"/>
+<text x="590" y="524.5" font-size="12.5" text-anchor="middle" textLength="115.0" lengthAdjust="spacingAndGlyphs">IAprobacionPlanes</text>
+<polyline points="590.0,537.0 590.0,560.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<path d="M503.2,514.2 A88.75,28 0 0 1 676.8,514.2 L670.9,515.4 A82.75,22 0 0 0 509.1,515.4 Z" fill="#FFFFFF" stroke="#333333" stroke-width="1.3"/>
+<polyline points="590.0,258.0 590.0,492.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<ellipse cx="940" cy="520" rx="81.5" ry="17" fill="#FFFFFF" stroke="#333333" stroke-width="1.5"/>
+<text x="940" y="524.5" font-size="12.5" text-anchor="middle" textLength="123.2" lengthAdjust="spacingAndGlyphs">ISeguimientoPlanes</text>
+<polyline points="940.0,537.0 940.0,560.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<path d="M849.5,514.2 A92.5,28 0 0 1 1030.5,514.2 L1024.6,515.4 A86.5,22 0 0 0 855.4,515.4 Z" fill="#FFFFFF" stroke="#333333" stroke-width="1.3"/>
+<polyline points="940.0,258.0 940.0,492.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<rect x="190" y="560" width="280" height="140" fill="#D9D9D9" stroke="#4D4D4D" stroke-width="1.4"/>
+<rect x="448" y="568" width="13" height="16" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="444" y="571" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="444" y="577" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<text x="330" y="584" font-size="14" text-anchor="middle" textLength="78.6" lengthAdjust="spacingAndGlyphs">Repositorio</text>
+<text x="330" y="601" font-size="14" text-anchor="middle" textLength="85.0" lengthAdjust="spacingAndGlyphs">Documental</text>
+<text x="330" y="618" font-size="14" text-anchor="middle" textLength="143.0" lengthAdjust="spacingAndGlyphs">(Java 17 + Javalin 6)</text>
+<text x="330" y="637" font-size="11.5" font-style="italic" fill="#1F3A5F" text-anchor="middle" textLength="164.3" lengthAdjust="spacingAndGlyphs">ServicioBusquedaEvidencias</text>
+<text x="330" y="654" font-size="11.5" font-style="italic" fill="#1F3A5F" text-anchor="middle" textLength="195.4" lengthAdjust="spacingAndGlyphs">CriterioBusqueda · FiltroEvidencia</text>
+<text x="330" y="671" font-size="11.5" font-style="italic" fill="#1F3A5F" text-anchor="middle" textLength="55.5" lengthAdjust="spacingAndGlyphs">Evidencia</text>
+<text x="330" y="688" font-size="11" font-style="italic" fill="#555555" text-anchor="middle" textLength="41.3" lengthAdjust="spacingAndGlyphs">HU-016</text>
+<rect x="520" y="560" width="560" height="140" fill="#D9D9D9" stroke="#4D4D4D" stroke-width="1.4"/>
+<rect x="1058" y="568" width="13" height="16" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="1054" y="571" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="1054" y="577" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<text x="800" y="592.5" font-size="14" text-anchor="middle" textLength="198.1" lengthAdjust="spacingAndGlyphs">Gestión de Planes de Acción</text>
+<text x="800" y="609.5" font-size="14" text-anchor="middle" textLength="143.0" lengthAdjust="spacingAndGlyphs">(Java 17 + Javalin 6)</text>
+<text x="800" y="628.5" font-size="11.5" font-style="italic" fill="#1F3A5F" text-anchor="middle" textLength="314.8" lengthAdjust="spacingAndGlyphs">ServicioAprobacionPlanes · ServicioSeguimientoPlanes</text>
+<text x="800" y="645.5" font-size="11.5" font-style="italic" fill="#1F3A5F" text-anchor="middle" textLength="305.2" lengthAdjust="spacingAndGlyphs">PlanAccion · EstadoPlan · Actividad · EstadoActividad</text>
+<text x="800" y="662.5" font-size="11.5" font-style="italic" fill="#1F3A5F" text-anchor="middle" textLength="262.6" lengthAdjust="spacingAndGlyphs">Observacion · SeguimientoPlan · HistorialPlan</text>
+<text x="800" y="679.5" font-size="11" font-style="italic" fill="#555555" text-anchor="middle" textLength="93.1" lengthAdjust="spacingAndGlyphs">HU-017 · HU-004</text>
+<ellipse cx="145" cy="785" rx="47.75" ry="17" fill="#FFFFFF" stroke="#333333" stroke-width="1.5"/>
+<text x="145" y="789.5" font-size="12.5" text-anchor="middle" textLength="56.9" lengthAdjust="spacingAndGlyphs">IArchivos</text>
+<polyline points="145.0,802.0 145.0,825.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<path d="M87.5,779.2 A58.75,28 0 0 1 202.5,779.2 L196.6,780.4 A52.75,22 0 0 0 93.4,780.4 Z" fill="#FFFFFF" stroke="#333333" stroke-width="1.3"/>
+<polyline points="190.0,630.0 145.0,630.0 145.0,757.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<ellipse cx="365" cy="785" rx="66.5" ry="17" fill="#FFFFFF" stroke="#333333" stroke-width="1.5"/>
+<text x="365" y="789.5" font-size="12.5" text-anchor="middle" textLength="91.3" lengthAdjust="spacingAndGlyphs">IEstructuraOrg</text>
+<polyline points="365.0,802.0 365.0,825.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<path d="M289.2,779.2 A77.5,28 0 0 1 440.8,779.2 L434.9,780.4 A71.5,22 0 0 0 295.1,780.4 Z" fill="#FFFFFF" stroke="#333333" stroke-width="1.3"/>
+<polyline points="365.0,700.0 365.0,757.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<ellipse cx="670" cy="785" rx="66.5" ry="17" fill="#FFFFFF" stroke="#333333" stroke-width="1.5"/>
+<text x="670" y="789.5" font-size="12.5" text-anchor="middle" textLength="92.8" lengthAdjust="spacingAndGlyphs">IControlAcceso</text>
+<polyline points="670.0,802.0 670.0,825.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<path d="M594.2,779.2 A77.5,28 0 0 1 745.8,779.2 L739.9,780.4 A71.5,22 0 0 0 600.1,780.4 Z" fill="#FFFFFF" stroke="#333333" stroke-width="1.3"/>
+<polyline points="670.0,735.0 670.0,757.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<polyline points="440.0,700.0 440.0,735.0 670.0,735.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<polyline points="670.0,700.0 670.0,735.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<circle cx="670" cy="735" r="3.5" fill="#333333"/>
+<ellipse cx="1220" cy="785" rx="62.75" ry="17" fill="#FFFFFF" stroke="#333333" stroke-width="1.5"/>
+<text x="1220" y="789.5" font-size="12.5" text-anchor="middle" textLength="77.4" lengthAdjust="spacingAndGlyphs">INotificacion</text>
+<polyline points="1220.0,802.0 1220.0,825.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<path d="M1147.9,779.2 A73.75,28 0 0 1 1292.1,779.2 L1286.3,780.4 A67.75,22 0 0 0 1153.7,780.4 Z" fill="#FFFFFF" stroke="#333333" stroke-width="1.3"/>
+<polyline points="1040.0,700.0 1040.0,735.0 1220.0,735.0 1220.0,757.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<rect x="60" y="825" width="170" height="120" fill="#D9D9D9" stroke="#4D4D4D" stroke-width="1.4"/>
+<rect x="208" y="833" width="13" height="16" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="204" y="836" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="204" y="842" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<text x="145" y="864.5" font-size="14" text-anchor="middle" textLength="68.5" lengthAdjust="spacingAndGlyphs">Gestor de</text>
+<text x="145" y="881.5" font-size="14" text-anchor="middle" textLength="59.6" lengthAdjust="spacingAndGlyphs">Archivos</text>
+<text x="145" y="898.5" font-size="14" text-anchor="middle" textLength="91.6" lengthAdjust="spacingAndGlyphs">(java.nio.file)</text>
+<text x="145" y="917.5" font-size="11" font-style="italic" fill="#555555" text-anchor="middle" textLength="78.5" lengthAdjust="spacingAndGlyphs">apoya HU-016</text>
+<rect x="270" y="825" width="190" height="120" fill="#D9D9D9" stroke="#4D4D4D" stroke-width="1.4"/>
+<rect x="438" y="833" width="13" height="16" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="434" y="836" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="434" y="842" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<text x="365" y="856" font-size="14" text-anchor="middle" textLength="72.6" lengthAdjust="spacingAndGlyphs">Estructura</text>
+<text x="365" y="873" font-size="14" text-anchor="middle" textLength="104.2" lengthAdjust="spacingAndGlyphs">Organizacional</text>
+<text x="365" y="890" font-size="14" text-anchor="middle" textLength="62.8" lengthAdjust="spacingAndGlyphs">(Java 17)</text>
+<text x="365" y="909" font-size="11.5" font-style="italic" fill="#1F3A5F" text-anchor="middle" textLength="26.7" lengthAdjust="spacingAndGlyphs">Area</text>
+<text x="365" y="926" font-size="11" font-style="italic" fill="#555555" text-anchor="middle" textLength="78.5" lengthAdjust="spacingAndGlyphs">apoya HU-016</text>
+<rect x="540" y="825" width="260" height="120" fill="#D9D9D9" stroke="#4D4D4D" stroke-width="1.4"/>
+<rect x="778" y="833" width="13" height="16" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="774" y="836" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="774" y="842" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<text x="670" y="856" font-size="14" text-anchor="middle" textLength="125.9" lengthAdjust="spacingAndGlyphs">Seguridad y Roles</text>
+<text x="670" y="873" font-size="14" text-anchor="middle" textLength="89.1" lengthAdjust="spacingAndGlyphs">(jBCrypt 0.4)</text>
+<text x="670" y="892" font-size="11.5" font-style="italic" fill="#1F3A5F" text-anchor="middle" textLength="216.1" lengthAdjust="spacingAndGlyphs">IControlAcceso · ControlAccesoPorRol</text>
+<text x="670" y="909" font-size="11.5" font-style="italic" fill="#1F3A5F" text-anchor="middle" textLength="72.9" lengthAdjust="spacingAndGlyphs">Usuario · Rol</text>
+<text x="670" y="926" font-size="11" font-style="italic" fill="#555555" text-anchor="middle" textLength="144.8" lengthAdjust="spacingAndGlyphs">HU-017 · HU-004 · HU-016</text>
+<rect x="1100" y="825" width="240" height="120" fill="#D9D9D9" stroke="#4D4D4D" stroke-width="1.4"/>
+<rect x="1318" y="833" width="13" height="16" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="1314" y="836" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="1314" y="842" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<text x="1220" y="856" font-size="14" text-anchor="middle" textLength="98.4" lengthAdjust="spacingAndGlyphs">Notificaciones</text>
+<text x="1220" y="873" font-size="14" text-anchor="middle" textLength="119.5" lengthAdjust="spacingAndGlyphs">(Jakarta Mail 2.1)</text>
+<text x="1220" y="892" font-size="11.5" font-style="italic" fill="#1F3A5F" text-anchor="middle" textLength="178.7" lengthAdjust="spacingAndGlyphs">Notificador · NotificadorInterno</text>
+<text x="1220" y="909" font-size="11.5" font-style="italic" fill="#1F3A5F" text-anchor="middle" textLength="180.8" lengthAdjust="spacingAndGlyphs">NotificadorCorreo · Notificacion</text>
+<text x="1220" y="926" font-size="11" font-style="italic" fill="#555555" text-anchor="middle" textLength="78.5" lengthAdjust="spacingAndGlyphs">apoya HU-017</text>
+<polyline points="250.0,700.0 250.0,975.0 1220.0,975.0 1220.0,945.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<polyline points="365.0,945.0 365.0,975.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<polyline points="670.0,945.0 670.0,975.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<polyline points="860.0,700.0 860.0,975.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<circle cx="365" cy="975" r="3.5" fill="#333333"/>
+<circle cx="670" cy="975" r="3.5" fill="#333333"/>
+<circle cx="860" cy="975" r="3.5" fill="#333333"/>
+<ellipse cx="670" cy="1025" rx="62.75" ry="17" fill="#FFFFFF" stroke="#333333" stroke-width="1.5"/>
+<text x="670" y="1029.5" font-size="12.5" text-anchor="middle" textLength="80.4" lengthAdjust="spacingAndGlyphs">IRepositorios</text>
+<polyline points="670.0,1042.0 670.0,1065.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<path d="M597.9,1019.2 A73.75,28 0 0 1 742.1,1019.2 L736.3,1020.4 A67.75,22 0 0 0 603.7,1020.4 Z" fill="#FFFFFF" stroke="#333333" stroke-width="1.3"/>
+<polyline points="670.0,975.0 670.0,997.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<rect x="500" y="1065" width="340" height="100" fill="#D9D9D9" stroke="#4D4D4D" stroke-width="1.4"/>
+<rect x="818" y="1073" width="13" height="16" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="814" y="1076" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="814" y="1082" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<text x="670" y="1094.5" font-size="14" text-anchor="middle" textLength="83.9" lengthAdjust="spacingAndGlyphs">Persistencia</text>
+<text x="670" y="1111.5" font-size="14" text-anchor="middle" textLength="226.8" lengthAdjust="spacingAndGlyphs">(JDBC + driver PostgreSQL 42.7)</text>
+<text x="670" y="1130.5" font-size="11.5" font-style="italic" fill="#1F3A5F" text-anchor="middle" textLength="288.7" lengthAdjust="spacingAndGlyphs">RepositorioPlanesJdbc · RepositorioEvidenciasJdbc</text>
+<text x="670" y="1147.5" font-size="11.5" font-style="italic" fill="#1F3A5F" text-anchor="middle" textLength="170.4" lengthAdjust="spacingAndGlyphs">RepositorioNotificacionesJdbc</text>
+<rect x="1490" y="790" width="215" height="400" fill="#F4F8FD" stroke="#3F5F80" stroke-width="1.2" rx="6" stroke-dasharray="6 4"/>
+<text x="1597.5" y="814" font-size="13" font-weight="bold" fill="#3F5F80" text-anchor="middle" textLength="135.4" lengthAdjust="spacingAndGlyphs">Servicios externos</text>
+<ellipse cx="1440" cy="885" rx="30" ry="17" fill="#FFFFFF" stroke="#333333" stroke-width="1.5"/>
+<text x="1440" y="889.5" font-size="12.5" text-anchor="middle" textLength="33.9" lengthAdjust="spacingAndGlyphs">SMTP</text>
+<path d="M1424.6,911.0 A41,28 0 0 1 1424.6,859.0 L1426.9,864.6 A35,22 0 0 0 1426.9,905.4 Z" fill="#FFFFFF" stroke="#333333" stroke-width="1.3"/>
+<polyline points="1340.0,885.0 1399.0,885.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<polyline points="1470.0,885.0 1510.0,885.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<rect x="1510" y="840" width="180" height="90" fill="#DCE9F7" stroke="#3F5F80" stroke-width="1.4" stroke-dasharray="6 4"/>
+<text x="1600" y="859" font-size="11" font-style="italic" fill="#555555" text-anchor="middle" textLength="102.1" lengthAdjust="spacingAndGlyphs">«servicio externo»</text>
+<text x="1600" y="879" font-size="14" text-anchor="middle" textLength="129.4" lengthAdjust="spacingAndGlyphs">Servidor de correo</text>
+<text x="1600" y="897" font-size="13" text-anchor="middle" textLength="128.7" lengthAdjust="spacingAndGlyphs">(SMTP institucional)</text>
+<text x="1600" y="916" font-size="11" font-style="italic" fill="#555555" text-anchor="middle" textLength="60.8" lengthAdjust="spacingAndGlyphs">puerto 587</text>
+<ellipse cx="1440" cy="1115" rx="30" ry="17" fill="#FFFFFF" stroke="#333333" stroke-width="1.5"/>
+<text x="1440" y="1119.5" font-size="12.5" text-anchor="middle" textLength="30.4" lengthAdjust="spacingAndGlyphs">JDBC</text>
+<path d="M1424.6,1141.0 A41,28 0 0 1 1424.6,1089.0 L1426.9,1094.6 A35,22 0 0 0 1426.9,1135.4 Z" fill="#FFFFFF" stroke="#333333" stroke-width="1.3"/>
+<polyline points="840.0,1115.0 1399.0,1115.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<polyline points="1470.0,1115.0 1520.0,1115.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<path d="M1520,1062 L1520,1170 A80,10 0 0 0 1680,1170 L1680,1062" fill="#DCE9F7" stroke="#3F5F80" stroke-width="1.4"/>
+<ellipse cx="1600" cy="1062" rx="80" ry="10" fill="#DCE9F7" stroke="#3F5F80" stroke-width="1.4"/>
+<text x="1600" y="1092" font-size="11" font-style="italic" fill="#555555" text-anchor="middle" textLength="91.1" lengthAdjust="spacingAndGlyphs">«base de datos»</text>
+<text x="1600" y="1112" font-size="14" text-anchor="middle" textLength="57.1" lengthAdjust="spacingAndGlyphs">BD SGPI</text>
+<text x="1600" y="1130" font-size="13" text-anchor="middle" textLength="105.0" lengthAdjust="spacingAndGlyphs">(PostgreSQL 16)</text>
+<text x="1600" y="1149" font-size="11" font-style="italic" fill="#555555" text-anchor="middle" textLength="67.8" lengthAdjust="spacingAndGlyphs">puerto 5432</text>
+<rect x="50" y="1210" width="1655" height="190" fill="#FFFFFF" stroke="#C7C7C7" stroke-width="1" rx="6"/>
+<text x="66" y="1234" font-size="13" font-weight="bold" fill="#1F3A5F" textLength="537.9" lengthAdjust="spacingAndGlyphs">Interfaces y sus operaciones (según los métodos del diagrama de clases)</text>
+<text x="66" y="1260" font-size="12.5" font-weight="bold" textLength="149.1" lengthAdjust="spacingAndGlyphs">IBusquedaEvidencias</text>
+<text x="238" y="1260" font-size="12.5" textLength="342.8" lengthAdjust="spacingAndGlyphs">buscar(palabraClave, usuario) · filtrar(criterio, usuario)</text>
+<text x="66" y="1280" font-size="12.5" font-weight="bold" textLength="131.3" lengthAdjust="spacingAndGlyphs">IAprobacionPlanes</text>
+<text x="238" y="1280" font-size="12.5" textLength="577.4" lengthAdjust="spacingAndGlyphs">listarPendientes(director) · aprobar(idPlan, director) · devolver(idPlan, director, observacion)</text>
+<text x="66" y="1300" font-size="12.5" font-weight="bold" textLength="140.2" lengthAdjust="spacingAndGlyphs">ISeguimientoPlanes</text>
+<text x="238" y="1300" font-size="12.5" textLength="427.3" lengthAdjust="spacingAndGlyphs">calcularAvance(idPlan) · cambiarEstado(idActividad, nuevo, usuario)</text>
+<text x="238" y="1320" font-size="12.5" textLength="313.0" lengthAdjust="spacingAndGlyphs">registrarSeguimiento(idPlan, comentario, usuario)</text>
+<text x="66" y="1340" font-size="12.5" font-weight="bold" textLength="105.3" lengthAdjust="spacingAndGlyphs">IControlAcceso</text>
+<text x="238" y="1340" font-size="12.5" textLength="185.5" lengthAdjust="spacingAndGlyphs">tienePermiso(usuario, accion)</text>
+<text x="66" y="1360" font-size="12.5" font-weight="bold" textLength="88.3" lengthAdjust="spacingAndGlyphs">INotificacion</text>
+<text x="238" y="1360" font-size="12.5" textLength="185.0" lengthAdjust="spacingAndGlyphs">enviar(destinatario, mensaje)</text>
+<text x="66" y="1380" font-size="12.5" font-weight="bold" textLength="104.3" lengthAdjust="spacingAndGlyphs">IEstructuraOrg</text>
+<text x="238" y="1380" font-size="12.5" textLength="242.5" lengthAdjust="spacingAndGlyphs">consultarAreas() · obtenerArea(idArea)</text>
+<text x="1000" y="1260" font-size="12.5" font-weight="bold" textLength="93.1" lengthAdjust="spacingAndGlyphs">IRepositorios</text>
+<text x="1120" y="1260" font-size="12.5" textLength="267.2" lengthAdjust="spacingAndGlyphs">IRepositorioPlanes · IRepositorioEvidencias</text>
+<text x="1120" y="1280" font-size="12.5" textLength="161.7" lengthAdjust="spacingAndGlyphs">IRepositorioNotificaciones</text>
+<text x="1000" y="1300" font-size="12.5" font-weight="bold" textLength="65.3" lengthAdjust="spacingAndGlyphs">IArchivos</text>
+<text x="1120" y="1300" font-size="12.5" textLength="261.0" lengthAdjust="spacingAndGlyphs">guardarArchivo(archivo) · descargar(ruta)</text>
+<text x="1000" y="1320" font-size="12.5" font-weight="bold" textLength="33.7" lengthAdjust="spacingAndGlyphs">JDBC</text>
+<text x="1120" y="1320" font-size="12.5" textLength="279.5" lengthAdjust="spacingAndGlyphs">consultas SQL a la base de datos (TCP 5432)</text>
+<text x="1000" y="1340" font-size="12.5" font-weight="bold" textLength="39.1" lengthAdjust="spacingAndGlyphs">SMTP</text>
+<text x="1120" y="1340" font-size="12.5" textLength="342.2" lengthAdjust="spacingAndGlyphs">envío de correos al servidor de la institución (TCP 587)</text>
+<rect x="50" y="1415" width="1655" height="56" fill="#FAFAFA" stroke="#C7C7C7" stroke-width="1" rx="6"/>
+<text x="66" y="1448" font-size="12.5" font-weight="bold" fill="#1F3A5F" textLength="102.3" lengthAdjust="spacingAndGlyphs">Convenciones:</text>
+<rect x="180" y="1430" width="34" height="26" fill="#D9D9D9" stroke="#4D4D4D" stroke-width="1"/>
+<rect x="196" y="1434" width="13" height="16" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="192" y="1437" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<rect x="192" y="1443" width="8" height="4" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1.1"/>
+<text x="224" y="1448" font-size="12.5" fill="#1E2A38" textLength="80.2" lengthAdjust="spacingAndGlyphs">Componente</text>
+<rect x="334" y="1430" width="34" height="26" fill="#DCE9F7" stroke="#3F5F80" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="378" y="1448" font-size="12.5" fill="#1E2A38" textLength="101.5" lengthAdjust="spacingAndGlyphs">Servicio externo</text>
+<text x="510" y="1448" font-size="13" textLength="91.9" lengthAdjust="spacingAndGlyphs">(Herramienta)</text>
+<text x="610" y="1448" font-size="12.5" fill="#1E2A38" textLength="136.0" lengthAdjust="spacingAndGlyphs">Con qué se construye</text>
+<rect x="776" y="1431" width="24" height="22" fill="#D9D9D9" stroke="#4D4D4D" stroke-width="1"/>
+<text x="788" y="1446.5" font-size="11.5" fill="#1E2A38" text-anchor="middle" textLength="7.9" lengthAdjust="spacingAndGlyphs">B</text>
+<polyline points="800.0,1442.0 834.0,1442.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<circle cx="846" cy="1442" r="12" fill="#fff" stroke="#333333" stroke-width="1.4"/>
+<text x="846" y="1446.5" font-size="11.5" fill="#1E2A38" text-anchor="middle" textLength="8.0" lengthAdjust="spacingAndGlyphs">C</text>
+<path d="M853.5,1421.3 A22,22 0 0 1 853.5,1462.7 L852.2,1458.9 A18,18 0 0 0 852.2,1425.1 Z" fill="#fff" stroke="#333333" stroke-width="1.2"/>
+<polyline points="868.0,1442.0 896.0,1442.0" fill="none" stroke="#333333" stroke-width="1.4"/>
+<rect x="896" y="1431" width="24" height="22" fill="#D9D9D9" stroke="#4D4D4D" stroke-width="1"/>
+<text x="908" y="1446.5" font-size="11.5" fill="#1E2A38" text-anchor="middle" textLength="7.9" lengthAdjust="spacingAndGlyphs">A</text>
+<text x="934" y="1448" font-size="12.5" fill="#1E2A38" textLength="201.4" lengthAdjust="spacingAndGlyphs">A usa la interfaz C que provee B</text>
+<text x="1165" y="1448" font-size="11.5" font-style="italic" fill="#1F3A5F" textLength="73.6" lengthAdjust="spacingAndGlyphs">Clase · Clase</text>
+<text x="1247" y="1448" font-size="12.5" fill="#1E2A38" textLength="170.1" lengthAdjust="spacingAndGlyphs">Clases que lo implementan</text>
+<text x="1447" y="1448" font-size="11" font-style="italic" fill="#555555" textLength="40.3" lengthAdjust="spacingAndGlyphs">HU-0xx</text>
+<text x="1495" y="1448" font-size="12.5" fill="#1E2A38" textLength="127.0" lengthAdjust="spacingAndGlyphs">Historia que atiende</text>
+</svg>

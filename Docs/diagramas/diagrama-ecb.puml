@@ -1,0 +1,74 @@
+@startuml diagrama-ecb
+' Diagrama de análisis (Entidad - Control - Límite) del SGPI para HU-017, HU-004 y HU-016.
+!theme plain
+skinparam defaultFontName DejaVu Sans
+skinparam shadowing false
+skinparam dpi 150
+skinparam nodesep 30
+skinparam ranksep 90
+left to right direction
+hide stereotype
+
+title Diagrama de análisis (ECB) - HU-017, HU-004 y HU-016
+
+actor "Director de área" as Director
+actor "Coordinador" as Coordinador
+actor "Líder de calidad" as Lider
+
+rectangle "HU-017 · Aprobación y retroalimentación de planes" {
+  boundary "PantallaRevisionPlanes\n«boundary»" as B_Rev
+  boundary "PantallaNotificaciones\n«boundary»" as B_Not
+  control "ControlAprobacionPlanes\n«control»" as C_Apr
+  control "ControlNotificaciones\n«control»" as C_Not
+}
+
+rectangle "HU-004 · Seguimiento de avance" {
+  boundary "PantallaSeguimientoPlan\n«boundary»" as B_Seg
+  boundary "TableroActividades\n«boundary»" as B_Tab
+  control "ControlSeguimientoPlanes\n«control»" as C_Seg
+}
+
+rectangle "HU-016 · Búsqueda y filtrado de evidencias" {
+  boundary "PantallaBusquedaEvidencias\n«boundary»" as B_Bus
+  control "ControlBusquedaEvidencias\n«control»" as C_Bus
+}
+
+entity "PlanAccion\n«entity»" as E_Plan
+entity "Observacion\n«entity»" as E_Obs
+entity "Notificacion\n«entity»" as E_Notif
+entity "HistorialPlan\n«entity»" as E_Hist
+entity "Usuario\n«entity»" as E_Usu
+entity "Actividad\n«entity»" as E_Act
+entity "SeguimientoPlan\n«entity»" as E_SegP
+entity "Evidencia\n«entity»" as E_Evi
+entity "Area\n«entity»" as E_Area
+
+' HU-017
+Director --> B_Rev : revisa planes pendientes
+B_Rev --> C_Apr : aprobar / devolver(observación)
+C_Apr --> E_Usu : valida rol y área
+C_Apr --> E_Plan : cambia estado
+C_Apr --> E_Obs : crea observación
+C_Apr --> E_Hist : registra cambio
+C_Apr --> C_Not : notificar(coordinador)
+Coordinador --> B_Not : consulta avisos
+B_Not --> C_Not : listar avisos
+C_Not --> E_Notif : crea, lee y marca leída
+
+' HU-004
+Director --> B_Seg : consulta avance
+B_Seg --> C_Seg : calcularAvance(plan)
+Coordinador --> B_Tab : mueve actividad
+B_Tab --> C_Seg : cambiarEstado(actividad)
+C_Seg --> E_Plan : lee plan
+C_Seg --> E_Act : actualiza estado
+C_Seg --> E_Evi : valida evidencia
+C_Seg --> E_SegP : guarda corte
+
+' HU-016
+Lider --> B_Bus : palabra clave y filtros
+B_Bus --> C_Bus : buscar / filtrar
+C_Bus --> E_Usu : valida permisos
+C_Bus --> E_Evi : consulta
+C_Bus --> E_Area : filtra por área
+@enduml

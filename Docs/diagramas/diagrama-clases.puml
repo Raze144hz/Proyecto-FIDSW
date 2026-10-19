@@ -1,0 +1,274 @@
+@startuml diagrama-clases
+' Diagrama de clases del SGPI para HU-017, HU-004 y HU-016, con la aplicación de SOLID.
+!theme plain
+skinparam classAttributeIconSize 0
+skinparam defaultFontName DejaVu Sans
+skinparam shadowing false
+skinparam classFontStyle bold
+skinparam dpi 100
+skinparam nodesep 35
+skinparam ranksep 60
+skinparam packageStyle rectangle
+hide circle
+hide empty members
+
+title Diagrama de clases - HU-017, HU-004 y HU-016 (con principios SOLID)
+
+package "Servicios (lógica de negocio)" {
+  interface IAprobacionPlanes <<interface>> {
+    +listarPendientes(director : Usuario) : List<PlanAccion>
+    +aprobar(idPlan : int, director : Usuario) : void
+    +devolver(idPlan : int, director : Usuario, observacion : String) : void
+  }
+  interface ISeguimientoPlanes <<interface>> {
+    +calcularAvance(idPlan : int) : int
+    +cambiarEstado(idActividad : int, nuevo : EstadoActividad, usuario : Usuario) : void
+    +registrarSeguimiento(idPlan : int, comentario : String, usuario : Usuario) : SeguimientoPlan
+  }
+  interface IBusquedaEvidencias <<interface>> {
+    +buscar(palabraClave : String, usuario : Usuario) : List<Evidencia>
+    +filtrar(criterio : CriterioBusqueda, usuario : Usuario) : List<Evidencia>
+  }
+  class ServicioAprobacionPlanes {
+    -repositorio : IRepositorioPlanes
+    -notificadores : List<Notificador>
+    -controlAcceso : IControlAcceso
+    +listarPendientes(director : Usuario) : List<PlanAccion>
+    +aprobar(idPlan : int, director : Usuario) : void
+    +devolver(idPlan : int, director : Usuario, observacion : String) : void
+  }
+  class ServicioSeguimientoPlanes {
+    -repositorio : IRepositorioPlanes
+    -controlAcceso : IControlAcceso
+    +calcularAvance(idPlan : int) : int
+    +cambiarEstado(idActividad : int, nuevo : EstadoActividad, usuario : Usuario) : void
+    +registrarSeguimiento(idPlan : int, comentario : String, usuario : Usuario) : SeguimientoPlan
+  }
+  class ServicioBusquedaEvidencias {
+    -repositorio : IRepositorioEvidencias
+    -controlAcceso : IControlAcceso
+    +buscar(palabraClave : String, usuario : Usuario) : List<Evidencia>
+    +filtrar(criterio : CriterioBusqueda, usuario : Usuario) : List<Evidencia>
+  }
+}
+
+package "Seguridad" {
+  interface IControlAcceso <<interface>> {
+    +tienePermiso(usuario : Usuario, accion : String) : boolean
+  }
+  class ControlAccesoPorRol {
+    +tienePermiso(usuario : Usuario, accion : String) : boolean
+  }
+}
+
+package "Notificaciones" {
+  abstract class Notificador {
+    #formatear(mensaje : String) : String
+    +{abstract} enviar(destinatario : Usuario, mensaje : String) : void
+  }
+  class NotificadorInterno {
+    -repositorio : IRepositorioNotificaciones
+    +enviar(destinatario : Usuario, mensaje : String) : void
+  }
+  class NotificadorCorreo {
+    -servidorSmtp : String
+    +enviar(destinatario : Usuario, mensaje : String) : void
+  }
+}
+
+package "Búsqueda de evidencias" {
+  class CriterioBusqueda {
+    -palabraClave : String
+    +agregarFiltro(filtro : FiltroEvidencia) : void
+    +cumple(evidencia : Evidencia) : boolean
+  }
+  interface FiltroEvidencia <<interface>> {
+    +cumple(evidencia : Evidencia) : boolean
+  }
+  class FiltroPorTipo {
+    -tipoArchivo : String
+    +cumple(evidencia : Evidencia) : boolean
+  }
+  class FiltroPorFechas {
+    -inicio : Date
+    -fin : Date
+    +cumple(evidencia : Evidencia) : boolean
+  }
+  class FiltroPorArea {
+    -area : Area
+    +cumple(evidencia : Evidencia) : boolean
+  }
+  class FiltroPorResponsable {
+    -responsable : Usuario
+    +cumple(evidencia : Evidencia) : boolean
+  }
+}
+
+package "Acceso a datos" {
+  interface IRepositorioPlanes <<interface>> {
+    +buscarPorId(idPlan : int) : PlanAccion
+    +listarPorAreaYEstado(area : Area, estado : EstadoPlan) : List<PlanAccion>
+    +guardar(plan : PlanAccion) : void
+    +registrarHistorial(registro : HistorialPlan) : void
+  }
+  interface IRepositorioEvidencias <<interface>> {
+    +buscarPorPalabraClave(palabraClave : String) : List<Evidencia>
+    +listarPorArea(area : Area) : List<Evidencia>
+  }
+  class RepositorioPlanesJdbc {
+    -conexion : Connection
+    +buscarPorId(idPlan : int) : PlanAccion
+    +listarPorAreaYEstado(area : Area, estado : EstadoPlan) : List<PlanAccion>
+    +guardar(plan : PlanAccion) : void
+    +registrarHistorial(registro : HistorialPlan) : void
+  }
+  interface IRepositorioNotificaciones <<interface>> {
+    +guardar(notificacion : Notificacion) : void
+    +listarPorUsuario(usuario : Usuario) : List<Notificacion>
+  }
+  class RepositorioNotificacionesJdbc {
+    -conexion : Connection
+    +guardar(notificacion : Notificacion) : void
+    +listarPorUsuario(usuario : Usuario) : List<Notificacion>
+  }
+  class RepositorioEvidenciasJdbc {
+    -conexion : Connection
+    +buscarPorPalabraClave(palabraClave : String) : List<Evidencia>
+    +listarPorArea(area : Area) : List<Evidencia>
+  }
+}
+
+package "Dominio" {
+  class Usuario {
+    -idUsuario : int
+    -nombre : String
+    -correo : String
+    -contrasena : String
+    +getRol() : Rol
+    +getArea() : Area
+  }
+  class Rol {
+    -idRol : int
+    -nombre : String
+  }
+  class Area {
+    -idArea : int
+    -nombre : String
+  }
+  class PlanAccion {
+    -idPlan : int
+    -codigo : String
+    -objetivo : String
+    -fechaInicio : Date
+    -fechaFin : Date
+    -estado : EstadoPlan
+    +aprobar() : void
+    +devolver(observacion : Observacion) : void
+    +puedeEjecutarse() : boolean
+    +calcularAvance() : int
+  }
+  class EstadoPlan {
+    -estado : String {BORRADOR, PENDIENTE_REVISION,\n    EN_REVISION, APROBADO,\n    EN_EJECUCION, FINALIZADO}
+    +getEstado() : String
+    +esEditable() : boolean
+  }
+  class Actividad {
+    -idActividad : int
+    -descripcion : String
+    -fechaLimite : Date
+    -estado : EstadoActividad
+    +cambiarEstado(nuevo : EstadoActividad) : void
+    +tieneEvidencia() : boolean
+  }
+  class EstadoActividad {
+    -estado : String {POR_HACER, EN_PROCESO, FINALIZADA}
+    +getEstado() : String
+  }
+  class Observacion {
+    -idObservacion : int
+    -descripcion : String
+    -fecha : Date
+    -atendida : boolean
+    +marcarAtendida() : void
+  }
+  class Notificacion {
+    -idNotificacion : int
+    -mensaje : String
+    -fecha : Date
+    -leida : boolean
+    +marcarLeida() : void
+  }
+  class HistorialPlan {
+    -idHistorial : int
+    -codigoPlan : String
+    -estadoAnterior : EstadoPlan
+    -estadoNuevo : EstadoPlan
+    -fecha : Date
+  }
+  class SeguimientoPlan {
+    -idSeguimiento : int
+    -fecha : Date
+    -avanceCalculado : int
+    -comentario : String
+  }
+  class Evidencia {
+    -idEvidencia : int
+    -nombre : String
+    -tipoArchivo : String
+    -fechaCarga : Date
+    -palabrasClave : String
+    -ruta : String
+    +coincideCon(palabraClave : String) : boolean
+  }
+}
+
+' Realizaciones (ISP, DIP)
+IAprobacionPlanes <|.. ServicioAprobacionPlanes
+ISeguimientoPlanes <|.. ServicioSeguimientoPlanes
+IBusquedaEvidencias <|.. ServicioBusquedaEvidencias
+IControlAcceso <|.. ControlAccesoPorRol
+IRepositorioPlanes <|.. RepositorioPlanesJdbc
+IRepositorioEvidencias <|.. RepositorioEvidenciasJdbc
+IRepositorioNotificaciones <|.. RepositorioNotificacionesJdbc
+FiltroEvidencia <|.. FiltroPorTipo
+FiltroEvidencia <|.. FiltroPorFechas
+FiltroEvidencia <|.. FiltroPorArea
+FiltroEvidencia <|.. FiltroPorResponsable
+
+' Herencia (OCP, LSP)
+Notificador <|-- NotificadorInterno
+Notificador <|-- NotificadorCorreo
+
+' Dependencias de los servicios hacia abstracciones (DIP)
+ServicioAprobacionPlanes --> "1" IRepositorioPlanes
+ServicioAprobacionPlanes --> "1..*" Notificador
+ServicioAprobacionPlanes --> "1" IControlAcceso
+ServicioSeguimientoPlanes --> "1" IRepositorioPlanes
+ServicioSeguimientoPlanes --> "1" IControlAcceso
+ServicioBusquedaEvidencias --> "1" IRepositorioEvidencias
+ServicioBusquedaEvidencias --> "1" IControlAcceso
+ServicioBusquedaEvidencias ..> CriterioBusqueda : <<use>>
+CriterioBusqueda "1" o-- "0..*" FiltroEvidencia : agrega
+NotificadorInterno --> "1" IRepositorioNotificaciones
+NotificadorInterno ..> Notificacion : <<create>>
+
+' Ubicación: la búsqueda debajo del acceso a datos
+RepositorioEvidenciasJdbc -[hidden]down- CriterioBusqueda
+
+' Dominio
+Usuario "0..*" --> "1" Rol : tiene
+Usuario "0..*" --> "1" Area : pertenece
+PlanAccion "0..*" --> "1" Area : área responsable
+Usuario "1" -- "0..*" PlanAccion : coordinador >
+Usuario "0..1" -- "0..*" PlanAccion : director >
+PlanAccion --> "1" EstadoPlan
+PlanAccion "1" *-- "0..*" Observacion : contiene
+PlanAccion "1" *-- "0..*" Actividad : contiene
+PlanAccion "1" *-- "0..*" SeguimientoPlan : tiene
+PlanAccion "1" --> "0..*" HistorialPlan : registra
+Actividad --> "1" EstadoActividad
+Actividad "0..*" --> "1" Usuario : responsable
+Actividad "1" *-- "0..*" Evidencia : soportada por
+Evidencia "0..*" --> "1" Area : clasificada en
+Notificacion "0..*" --> "1" Usuario : destinatario
+@enduml
