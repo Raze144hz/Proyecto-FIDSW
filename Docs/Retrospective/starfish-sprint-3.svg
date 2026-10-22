@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1660" height="1432" viewBox="0 0 1660 1432" font-family="DejaVu Sans, Arial, sans-serif" fill="#1A1A1A">
+<!-- Retrospectiva del Sprint 3 del SGPI con la técnica de estrella de mar (Starfish), con notas por integrante y rol. -->
+<defs><marker id="open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11" fill="none" stroke="#3C4A5C" stroke-width="1.5"/></marker></defs>
+<rect width="1660" height="1432" fill="#FFFFFF"/>
+<text x="830" y="42" font-size="26" font-weight="bold" fill="#1F3A5F" text-anchor="middle" textLength="753.0" lengthAdjust="spacingAndGlyphs">SGPI — Retrospectiva del Sprint 3 (estrella de mar)</text>
+<text x="830" y="72" font-size="15" fill="#555555" text-anchor="middle" textLength="633.3" lengthAdjust="spacingAndGlyphs">8 al 21 de octubre de 2026 · qué debe hacer o mejorar cada integrante según su rol</text>
+<rect x="545" y="100" width="570" height="297" rx="10" fill="#EEF7EE" stroke="#2E7D32" stroke-width="2"/>
+<path d="M545,110 a10,10 0 0 1 10,-10 h550 a10,10 0 0 1 10,10 v36 h-570 Z" fill="#2E7D32"/>
+<text x="565" y="130" font-size="20" font-weight="bold" fill="#FFFFFF" textLength="16.8" lengthAdjust="spacingAndGlyphs">✓</text>
+<text x="595" y="130" font-size="19" font-weight="bold" fill="#FFFFFF" textLength="173.4" lengthAdjust="spacingAndGlyphs">Seguir haciendo</text>
+<rect x="559" y="160" width="542" height="52" rx="5" fill="#FFFFFF" stroke="#D6DAE0" stroke-width="1"/>
+<rect x="559" y="160" width="6" height="52" rx="2" fill="#2E7D32"/>
+<rect x="575" y="174" width="38" height="24" rx="12" fill="#5D4037"/>
+<text x="594" y="190.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="21.8" lengthAdjust="spacingAndGlyphs">MG</text>
+<text x="623" y="181.5" font-size="14" textLength="424.5" lengthAdjust="spacingAndGlyphs">Registrar dailies, Review y Retro con el mismo formato y sus</text>
+<text x="623" y="199.5" font-size="14" textLength="61.0" lengthAdjust="spacingAndGlyphs">métricas</text>
+<rect x="559" y="221" width="542" height="52" rx="5" fill="#FFFFFF" stroke="#D6DAE0" stroke-width="1"/>
+<rect x="559" y="221" width="6" height="52" rx="2" fill="#2E7D32"/>
+<rect x="575" y="235" width="38" height="24" rx="12" fill="#283593"/>
+<text x="594" y="251.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="19.8" lengthAdjust="spacingAndGlyphs">DG</text>
+<text x="623" y="242.5" font-size="14" textLength="451.0" lengthAdjust="spacingAndGlyphs">Revisar y aprobar los PR del equipo antes de unirlos a develop y</text>
+<text x="623" y="260.5" font-size="14" textLength="35.0" lengthAdjust="spacingAndGlyphs">main</text>
+<rect x="559" y="282" width="542" height="52" rx="5" fill="#FFFFFF" stroke="#D6DAE0" stroke-width="1"/>
+<rect x="559" y="282" width="6" height="52" rx="2" fill="#2E7D32"/>
+<rect x="575" y="296" width="38" height="24" rx="12" fill="#7B1FA2"/>
+<text x="594" y="312.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="16.4" lengthAdjust="spacingAndGlyphs">JM</text>
+<text x="623" y="303.5" font-size="14" textLength="418.7" lengthAdjust="spacingAndGlyphs">Mantener la trazabilidad entre requisitos, diseño y casos de</text>
+<text x="623" y="321.5" font-size="14" textLength="49.6" lengthAdjust="spacingAndGlyphs">prueba</text>
+<rect x="559" y="343" width="542" height="40" rx="5" fill="#FFFFFF" stroke="#D6DAE0" stroke-width="1"/>
+<rect x="559" y="343" width="6" height="40" rx="2" fill="#2E7D32"/>
+<rect x="575" y="351" width="38" height="24" rx="12" fill="#455A64"/>
+<text x="594" y="367.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="19.2" lengthAdjust="spacingAndGlyphs">DA</text>
+<text x="623" y="367.5" font-size="14" textLength="431.2" lengthAdjust="spacingAndGlyphs">Reportes y actas con evidencia, y commits que citan su issue</text>
+<rect x="1110" y="440" width="520" height="285" rx="10" fill="#EAF2FC" stroke="#1565C0" stroke-width="2"/>
+<path d="M1110,450 a10,10 0 0 1 10,-10 h500 a10,10 0 0 1 10,10 v36 h-520 Z" fill="#1565C0"/>
+<text x="1130" y="470" font-size="20" font-weight="bold" fill="#FFFFFF" textLength="16.8" lengthAdjust="spacingAndGlyphs">+</text>
+<text x="1160" y="470" font-size="19" font-weight="bold" fill="#FFFFFF" textLength="112.8" lengthAdjust="spacingAndGlyphs">Hacer más</text>
+<rect x="1124" y="500" width="492" height="52" rx="5" fill="#FFFFFF" stroke="#D6DAE0" stroke-width="1"/>
+<rect x="1124" y="500" width="6" height="52" rx="2" fill="#1565C0"/>
+<rect x="1140" y="514" width="38" height="24" rx="12" fill="#5D4037"/>
+<text x="1159" y="530.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="21.8" lengthAdjust="spacingAndGlyphs">MG</text>
+<text x="1188" y="521.5" font-size="14" textLength="351.3" lengthAdjust="spacingAndGlyphs">Seguir el tablero durante el sprint: mover issues y</text>
+<text x="1188" y="539.5" font-size="14" textLength="135.9" lengthAdjust="spacingAndGlyphs">destrabar bloqueos</text>
+<rect x="1124" y="561" width="492" height="52" rx="5" fill="#FFFFFF" stroke="#D6DAE0" stroke-width="1"/>
+<rect x="1124" y="561" width="6" height="52" rx="2" fill="#1565C0"/>
+<rect x="1140" y="575" width="38" height="24" rx="12" fill="#283593"/>
+<text x="1159" y="591.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="19.8" lengthAdjust="spacingAndGlyphs">DG</text>
+<text x="1188" y="582.5" font-size="14" textLength="332.9" lengthAdjust="spacingAndGlyphs">Revisiones con comentarios sobre el código, no</text>
+<text x="1188" y="600.5" font-size="14" textLength="187.6" lengthAdjust="spacingAndGlyphs">aprobaciones en segundos</text>
+<rect x="1124" y="622" width="492" height="40" rx="5" fill="#FFFFFF" stroke="#D6DAE0" stroke-width="1"/>
+<rect x="1124" y="622" width="6" height="40" rx="2" fill="#1565C0"/>
+<rect x="1140" y="630" width="38" height="24" rx="12" fill="#7B1FA2"/>
+<text x="1159" y="646.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="16.4" lengthAdjust="spacingAndGlyphs">JM</text>
+<text x="1188" y="646.5" font-size="14" textLength="400.9" lengthAdjust="spacingAndGlyphs">Subir su propio trabajo por PR, con commits a su nombre</text>
+<rect x="1124" y="671" width="492" height="40" rx="5" fill="#FFFFFF" stroke="#D6DAE0" stroke-width="1"/>
+<rect x="1124" y="671" width="6" height="40" rx="2" fill="#1565C0"/>
+<rect x="1140" y="679" width="38" height="24" rx="12" fill="#455A64"/>
+<text x="1159" y="695.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="19.2" lengthAdjust="spacingAndGlyphs">DA</text>
+<text x="1188" y="695.5" font-size="14" textLength="365.9" lengthAdjust="spacingAndGlyphs">Repartir tareas y pedir la revisión de otro integrante</text>
+<rect x="1020" y="1010" width="570" height="309" rx="10" fill="#E6F6F7" stroke="#00838F" stroke-width="2"/>
+<path d="M1020,1020 a10,10 0 0 1 10,-10 h550 a10,10 0 0 1 10,10 v36 h-570 Z" fill="#00838F"/>
+<text x="1040" y="1040" font-size="20" font-weight="bold" fill="#FFFFFF" textLength="15.4" lengthAdjust="spacingAndGlyphs">▶</text>
+<text x="1070" y="1040" font-size="19" font-weight="bold" fill="#FFFFFF" textLength="178.5" lengthAdjust="spacingAndGlyphs">Empezar a hacer</text>
+<rect x="1034" y="1070" width="542" height="52" rx="5" fill="#FFFFFF" stroke="#D6DAE0" stroke-width="1"/>
+<rect x="1034" y="1070" width="6" height="52" rx="2" fill="#00838F"/>
+<rect x="1050" y="1084" width="38" height="24" rx="12" fill="#5D4037"/>
+<text x="1069" y="1100.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="21.8" lengthAdjust="spacingAndGlyphs">MG</text>
+<text x="1098" y="1091.5" font-size="14" textLength="456.3" lengthAdjust="spacingAndGlyphs">Sprint Planning el primer día, con acta, responsables y milestone</text>
+<text x="1098" y="1109.5" font-size="14" textLength="75.6" lengthAdjust="spacingAndGlyphs">con fechas</text>
+<rect x="1034" y="1131" width="542" height="52" rx="5" fill="#FFFFFF" stroke="#D6DAE0" stroke-width="1"/>
+<rect x="1034" y="1131" width="6" height="52" rx="2" fill="#00838F"/>
+<rect x="1050" y="1145" width="38" height="24" rx="12" fill="#283593"/>
+<text x="1069" y="1161.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="19.8" lengthAdjust="spacingAndGlyphs">DG</text>
+<text x="1098" y="1152.5" font-size="14" textLength="424.9" lengthAdjust="spacingAndGlyphs">Programar HU-008 y proteger main y develop contra el push</text>
+<text x="1098" y="1170.5" font-size="14" textLength="48.6" lengthAdjust="spacingAndGlyphs">directo</text>
+<rect x="1034" y="1192" width="542" height="52" rx="5" fill="#FFFFFF" stroke="#D6DAE0" stroke-width="1"/>
+<rect x="1034" y="1192" width="6" height="52" rx="2" fill="#00838F"/>
+<rect x="1050" y="1206" width="38" height="24" rx="12" fill="#7B1FA2"/>
+<text x="1069" y="1222.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="16.4" lengthAdjust="spacingAndGlyphs">JM</text>
+<text x="1098" y="1213.5" font-size="14" textLength="461.9" lengthAdjust="spacingAndGlyphs">Programar HU-001 y HU-010 en su rama feature desde la primera</text>
+<text x="1098" y="1231.5" font-size="14" textLength="55.6" lengthAdjust="spacingAndGlyphs">semana</text>
+<rect x="1034" y="1253" width="542" height="52" rx="5" fill="#FFFFFF" stroke="#D6DAE0" stroke-width="1"/>
+<rect x="1034" y="1253" width="6" height="52" rx="2" fill="#00838F"/>
+<rect x="1050" y="1267" width="38" height="24" rx="12" fill="#455A64"/>
+<text x="1069" y="1283.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="19.2" lengthAdjust="spacingAndGlyphs">DA</text>
+<text x="1098" y="1274.5" font-size="14" textLength="461.9" lengthAdjust="spacingAndGlyphs">Programar HU-018 y HU-006 en su rama feature desde la primera</text>
+<text x="1098" y="1292.5" font-size="14" textLength="55.6" lengthAdjust="spacingAndGlyphs">semana</text>
+<rect x="70" y="1010" width="570" height="273" rx="10" fill="#FDEDED" stroke="#C62828" stroke-width="2"/>
+<path d="M70,1020 a10,10 0 0 1 10,-10 h550 a10,10 0 0 1 10,10 v36 h-570 Z" fill="#C62828"/>
+<text x="90" y="1040" font-size="20" font-weight="bold" fill="#FFFFFF" textLength="16.8" lengthAdjust="spacingAndGlyphs">✕</text>
+<text x="120" y="1040" font-size="19" font-weight="bold" fill="#FFFFFF" textLength="157.0" lengthAdjust="spacingAndGlyphs">Dejar de hacer</text>
+<rect x="84" y="1070" width="542" height="40" rx="5" fill="#FFFFFF" stroke="#D6DAE0" stroke-width="1"/>
+<rect x="84" y="1070" width="6" height="40" rx="2" fill="#C62828"/>
+<rect x="100" y="1078" width="38" height="24" rx="12" fill="#5D4037"/>
+<text x="119" y="1094.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="21.8" lengthAdjust="spacingAndGlyphs">MG</text>
+<text x="148" y="1094.5" font-size="14" textLength="372.5" lengthAdjust="spacingAndGlyphs">Subir dailies, Review y Retro con push directo a main</text>
+<rect x="84" y="1119" width="542" height="40" rx="5" fill="#FFFFFF" stroke="#D6DAE0" stroke-width="1"/>
+<rect x="84" y="1119" width="6" height="40" rx="2" fill="#C62828"/>
+<rect x="100" y="1127" width="38" height="24" rx="12" fill="#283593"/>
+<text x="119" y="1143.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="19.8" lengthAdjust="spacingAndGlyphs">DG</text>
+<text x="148" y="1143.5" font-size="14" textLength="418.9" lengthAdjust="spacingAndGlyphs">Fusionar PR con una revisión de comentario, sin aprobación</text>
+<rect x="84" y="1168" width="542" height="52" rx="5" fill="#FFFFFF" stroke="#D6DAE0" stroke-width="1"/>
+<rect x="84" y="1168" width="6" height="52" rx="2" fill="#C62828"/>
+<rect x="100" y="1182" width="38" height="24" rx="12" fill="#7B1FA2"/>
+<text x="119" y="1198.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="16.4" lengthAdjust="spacingAndGlyphs">JM</text>
+<text x="148" y="1189.5" font-size="14" textLength="409.9" lengthAdjust="spacingAndGlyphs">Dejar abierta la decisión del plan devuelto: EN REVISION o</text>
+<text x="148" y="1207.5" font-size="14" textLength="80.4" lengthAdjust="spacingAndGlyphs">BORRADOR</text>
+<rect x="84" y="1229" width="542" height="40" rx="5" fill="#FFFFFF" stroke="#D6DAE0" stroke-width="1"/>
+<rect x="84" y="1229" width="6" height="40" rx="2" fill="#C62828"/>
+<rect x="100" y="1237" width="38" height="24" rx="12" fill="#455A64"/>
+<text x="119" y="1253.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="19.2" lengthAdjust="spacingAndGlyphs">DA</text>
+<text x="148" y="1253.5" font-size="14" textLength="368.0" lengthAdjust="spacingAndGlyphs">Unir sus propios PR sin la revisión de otro integrante</text>
+<rect x="30" y="440" width="520" height="309" rx="10" fill="#FEF2E8" stroke="#E65100" stroke-width="2"/>
+<path d="M30,450 a10,10 0 0 1 10,-10 h500 a10,10 0 0 1 10,10 v36 h-520 Z" fill="#E65100"/>
+<text x="50" y="470" font-size="20" font-weight="bold" fill="#FFFFFF" textLength="16.8" lengthAdjust="spacingAndGlyphs">−</text>
+<text x="80" y="470" font-size="19" font-weight="bold" fill="#FFFFFF" textLength="139.5" lengthAdjust="spacingAndGlyphs">Hacer menos</text>
+<rect x="44" y="500" width="492" height="52" rx="5" fill="#FFFFFF" stroke="#D6DAE0" stroke-width="1"/>
+<rect x="44" y="500" width="6" height="52" rx="2" fill="#E65100"/>
+<rect x="60" y="514" width="38" height="24" rx="12" fill="#5D4037"/>
+<text x="79" y="530.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="21.8" lengthAdjust="spacingAndGlyphs">MG</text>
+<text x="108" y="521.5" font-size="14" textLength="402.0" lengthAdjust="spacingAndGlyphs">Registros hechos días después: la Retro del Sprint 2 llegó</text>
+<text x="108" y="539.5" font-size="14" textLength="92.4" lengthAdjust="spacingAndGlyphs">12 días tarde</text>
+<rect x="44" y="561" width="492" height="52" rx="5" fill="#FFFFFF" stroke="#D6DAE0" stroke-width="1"/>
+<rect x="44" y="561" width="6" height="52" rx="2" fill="#E65100"/>
+<rect x="60" y="575" width="38" height="24" rx="12" fill="#283593"/>
+<text x="79" y="591.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="19.8" lengthAdjust="spacingAndGlyphs">DG</text>
+<text x="108" y="582.5" font-size="14" textLength="383.1" lengthAdjust="spacingAndGlyphs">Tiempo en diagramas a costa de programar las HU del</text>
+<text x="108" y="600.5" font-size="14" textLength="40.2" lengthAdjust="spacingAndGlyphs">sprint</text>
+<rect x="44" y="622" width="492" height="52" rx="5" fill="#FFFFFF" stroke="#D6DAE0" stroke-width="1"/>
+<rect x="44" y="622" width="6" height="52" rx="2" fill="#E65100"/>
+<rect x="60" y="636" width="38" height="24" rx="12" fill="#7B1FA2"/>
+<text x="79" y="652.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="16.4" lengthAdjust="spacingAndGlyphs">JM</text>
+<text x="108" y="643.5" font-size="14" textLength="361.4" lengthAdjust="spacingAndGlyphs">Contradicciones entre casos de uso e historias, que</text>
+<text x="108" y="661.5" font-size="14" textLength="201.2" lengthAdjust="spacingAndGlyphs">obligan a rehacer diagramas</text>
+<rect x="44" y="683" width="492" height="52" rx="5" fill="#FFFFFF" stroke="#D6DAE0" stroke-width="1"/>
+<rect x="44" y="683" width="6" height="52" rx="2" fill="#E65100"/>
+<rect x="60" y="697" width="38" height="24" rx="12" fill="#455A64"/>
+<text x="79" y="713.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="19.2" lengthAdjust="spacingAndGlyphs">DA</text>
+<text x="108" y="704.5" font-size="14" textLength="408.7" lengthAdjust="spacingAndGlyphs">Pull requests de sincronización y documentos acumulados</text>
+<text x="108" y="722.5" font-size="14" textLength="47.1" lengthAdjust="spacingAndGlyphs">al final</text>
+<polyline points="830.0,531.0 830.0,397.0" fill="none" stroke="#2E7D32" stroke-width="2" stroke-dasharray="6 5"/>
+<polyline points="1030.7,676.8 1110.0,676.8" fill="none" stroke="#1565C0" stroke-width="2" stroke-dasharray="6 5"/>
+<polyline points="954.0,912.7 1060.0,1010.0" fill="none" stroke="#00838F" stroke-width="2" stroke-dasharray="6 5"/>
+<polyline points="706.0,912.7 600.0,1010.0" fill="none" stroke="#C62828" stroke-width="2" stroke-dasharray="6 5"/>
+<polyline points="629.3,676.8 550.0,676.8" fill="none" stroke="#E65100" stroke-width="2" stroke-dasharray="6 5"/>
+<polygon points="830.0,742.0 777.1,669.2 830.0,537.0 882.9,669.2" fill="#2E7D32" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round"/>
+<text x="830" y="602" font-size="28" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="23.5" lengthAdjust="spacingAndGlyphs">✓</text>
+<polygon points="830.0,742.0 882.9,669.2 1025.0,678.7 915.6,769.8" fill="#1565C0" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round"/>
+<text x="972.658" y="705.647" font-size="28" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="23.5" lengthAdjust="spacingAndGlyphs">+</text>
+<polygon points="830.0,742.0 915.6,769.8 950.5,907.8 830.0,832.0" fill="#00838F" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round"/>
+<text x="918.168" y="873.353" font-size="28" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="21.5" lengthAdjust="spacingAndGlyphs">▶</text>
+<polygon points="830.0,742.0 830.0,832.0 709.5,907.8 744.4,769.8" fill="#C62828" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round"/>
+<text x="741.832" y="873.353" font-size="28" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="23.5" lengthAdjust="spacingAndGlyphs">✕</text>
+<polygon points="830.0,742.0 744.4,769.8 635.0,678.7 777.1,669.2" fill="#E65100" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round"/>
+<text x="687.342" y="705.647" font-size="28" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="23.5" lengthAdjust="spacingAndGlyphs">−</text>
+<circle cx="830" cy="742" r="80" fill="#1F3A5F" stroke="#FFFFFF" stroke-width="4"/>
+<text x="830" y="734" font-size="24" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="108.2" lengthAdjust="spacingAndGlyphs">Sprint 3</text>
+<text x="830" y="760" font-size="14" fill="#DCE6F2" text-anchor="middle" textLength="95.9" lengthAdjust="spacingAndGlyphs">Retrospectiva</text>
+<rect x="30" y="1340" width="1600" height="52" rx="8" fill="#FAFAFA" stroke="#D6DAE0" stroke-width="1"/>
+<text x="48" y="1371" font-size="14" font-weight="bold" fill="#1F3A5F" textLength="97.8" lengthAdjust="spacingAndGlyphs">Integrantes:</text>
+<rect x="160" y="1354" width="38" height="24" rx="12" fill="#5D4037"/>
+<text x="179" y="1370.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="21.8" lengthAdjust="spacingAndGlyphs">MG</text>
+<text x="206" y="1371" font-size="13.5" textLength="245.4" lengthAdjust="spacingAndGlyphs">Miguel Ángel Gómez · Scrum Master</text>
+<rect x="485.422" y="1354" width="38" height="24" rx="12" fill="#283593"/>
+<text x="504.422" y="1370.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="19.8" lengthAdjust="spacingAndGlyphs">DG</text>
+<text x="531.422" y="1371" font-size="13.5" textLength="246.0" lengthAdjust="spacingAndGlyphs">David Andrés Galindo · Líder técnico</text>
+<rect x="811.453" y="1354" width="38" height="24" rx="12" fill="#7B1FA2"/>
+<text x="830.453" y="1370.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="16.4" lengthAdjust="spacingAndGlyphs">JM</text>
+<text x="857.453" y="1371" font-size="13.5" textLength="330.0" lengthAdjust="spacingAndGlyphs">Juan Sebastián Martínez · Requisitos y propuesta</text>
+<rect x="1221.41" y="1354" width="38" height="24" rx="12" fill="#455A64"/>
+<text x="1240.41" y="1370.5" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle" textLength="19.2" lengthAdjust="spacingAndGlyphs">DA</text>
+<text x="1267.41" y="1371" font-size="13.5" textLength="230.9" lengthAdjust="spacingAndGlyphs">David Álvarez · Gestión y reportes</text>
+<text x="830" y="1424" font-size="12.5" fill="#555555" text-anchor="middle" textLength="445.8" lengthAdjust="spacingAndGlyphs">Detalle y evidencia de cada nota: Docs/Retrospective/retro-sprint-3.md</text>
+</svg>
