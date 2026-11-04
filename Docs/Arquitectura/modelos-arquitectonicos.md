@@ -3,7 +3,7 @@
 | Campo | Detalle |
 |---|---|
 | Alcance | Los dos modelos arquitectónicos del proyecto: el **monolítico de escritorio**, que es el prototipo implementado, y el **cliente-servidor de tres niveles**, que es la arquitectura objetivo |
-| Fuentes | Código de `main`: [`Main.java`](../../src/main/java/com/sgpi/Main.java), [`AprobacionPlanesTest.java`](../../src/test/java/com/sgpi/AprobacionPlanesTest.java), [`pom.xml`](../../pom.xml) y [`Database`](../../Database). Diagramas de [`Docs/diagramas`](../diagramas) y decisiones de [`arquitectura.md`](arquitectura.md) |
+| Fuentes | Código de `main`: [`Main.java`](../../src/main/java/com/sgpi/Main.java), [`DataService.java`](../../src/main/java/com/sgpi/data/DataService.java), [pruebas](../../src/test/java/com/sgpi/data), [`pom.xml`](../../pom.xml) y [`Database`](../../Database). Diagramas de [`Docs/diagramas`](../diagramas) y decisiones de [`arquitectura.md`](arquitectura.md) |
 | Fecha | 20 de octubre de 2026 |
 
 ## Resumen
@@ -34,7 +34,16 @@
 
 El prototipo es una aplicación de escritorio **autónoma** (*standalone*). La interfaz, las reglas de negocio, el acceso a datos y el motor de base de datos corren en **un solo proceso de la JVM** en el PC del usuario. No hay red ni servidor: la base de datos H2 corre en **modo embebido**, es decir, el motor es una librería cargada en la misma JVM que lee y escribe un archivo local.
 
-Toda la aplicación está en un solo archivo fuente, `src/main/java/com/sgpi/Main.java`, de 2.990 líneas. Dentro de ese archivo hay una separación lógica en capas por medio de clases anidadas, pero no hay módulos, paquetes ni interfaces separadas: es un **monolito con capas lógicas**.
+El código está separado en paquetes por capa, pero se compila y se ejecuta como un solo programa: es un **monolito con capas**.
+
+| Paquete | Contenido |
+|---|---|
+| `com.sgpi` | `Main`: arranque de JavaFX, inicio de sesión, tablero, formulario de planes y vista del director |
+| `com.sgpi.ui` | `VistaActividades`: ventana de actividades y avance del plan (HU-002 y HU-004) |
+| `com.sgpi.data` | `DataService`: reglas de negocio, transacciones y SQL con JDBC |
+| `com.sgpi.model` | *Records* `User`, `Plan`, `Actividad`, `Observacion`, `Notificacion`, `RegistroHistorial`, `ResultadoLogin` y constantes `Rol`, `EstadoPlan`, `EstadoActividad` |
+
+> Hasta la Entrega 2 todo estaba en un solo archivo, `Main.java`, de 2.990 líneas, con estas capas como clases anidadas. La separación en paquetes no cambió el comportamiento: las 12 pruebas de HU-017 siguen pasando.
 
 ### 2.2 Tecnologías y construcción
 
@@ -44,7 +53,7 @@ Toda la aplicación está en un solo archivo fuente, `src/main/java/com/sgpi/Mai
 | Interfaz | `org.openjfx:javafx-controls` 17.0.10 | Controles JavaFX; trae `javafx-graphics` y `javafx-base` como dependencias transitivas |
 | Base de datos | `com.h2database:h2` 2.2.224 | Motor SQL embebido y driver JDBC en el mismo JAR |
 | Seguridad | `org.mindrot:jbcrypt` 0.4 | Hash de contraseñas con BCrypt (RNF-03) |
-| Pruebas | `org.junit.jupiter:junit-jupiter` 5.10.1 (`test`) | 12 pruebas de las reglas de HU-017 |
+| Pruebas | `org.junit.jupiter:junit-jupiter` 5.10.1 (`test`) | 37 pruebas de las reglas de HU-001, HU-002, HU-004 y HU-017 |
 | Compilación | `maven-compiler-plugin` 3.13.0, `maven-surefire-plugin` 3.2.5 | Compila con `--release 17` y ejecuta JUnit 5 |
 | Ejecución | `javafx-maven-plugin` 0.0.8, `mainClass` `com.sgpi.Main` | `mvnw javafx:run -Djavafx.platform=win\|linux\|mac` |
 | Herramienta | Maven Wrapper con Maven 3.9.16 | No hace falta instalar Maven |
@@ -57,11 +66,11 @@ El empaquetado es el de Maven por defecto (`jar`) y no se arma un JAR ejecutable
 flowchart TB
     subgraph PC["PC del usuario · una JVM"]
         direction TB
-        subgraph APP["Main.java"]
+        subgraph APP["Aplicación SGPI (paquetes com.sgpi.*)"]
             direction TB
-            UI["Capa de presentación<br/>Main extends javafx.application.Application<br/>mostrarLogin · mostrarDashboard · crearVistaRevision · crearFormularioCrud"]
-            DS["Capa de lógica y acceso a datos<br/>clase anidada Main.DataService<br/>reglas de HU-017 · SQL con JDBC · transacciones"]
-            MOD["Modelo de datos<br/>records User, Plan, Observacion, Notificacion, RegistroHistorial<br/>constantes Rol y EstadoPlan"]
+            UI["Capa de presentación · com.sgpi y com.sgpi.ui<br/>Main extends Application · VistaActividades<br/>mostrarLogin · mostrarDashboard · crearVistaRevision · crearFormularioCrud"]
+            DS["Capa de lógica y acceso a datos · com.sgpi.data<br/>DataService<br/>reglas de HU-001, HU-004 y HU-017 · SQL con JDBC · transacciones"]
+            MOD["Modelo de datos · com.sgpi.model<br/>records User, Plan, Actividad, Observacion, Notificacion, RegistroHistorial, ResultadoLogin<br/>constantes Rol, EstadoPlan y EstadoActividad"]
             UI -->|"llamadas a métodos en memoria"| DS
             UI -.->|"usa"| MOD
             DS -.->|"crea"| MOD
@@ -71,12 +80,12 @@ flowchart TB
     end
 ```
 
-| Capa lógica | Elementos de `Main.java` | Responsabilidad |
+| Capa lógica | Elementos | Responsabilidad |
 |---|---|---|
-| Presentación | `Main` (extiende `Application`): `start(Stage)`, `mostrarLogin()`, `mostrarDashboard(User)`, `crearTablaPlanes()`, `crearFormularioCrud(...)`, `crearVistaRevision(User)`, `mostrarNotificaciones(User)`, `mostrarHistorial(Plan)`, `validarPlan(...)`, `mostrarAlerta(...)` | Construye las pantallas, valida los campos del formulario y muestra los mensajes al usuario |
-| Lógica de negocio y acceso a datos | `static class DataService`: `authenticate`, `createPlan`, `updatePlan`, `deletePlan`, `listPlans`, `enviarARevision`, `aprobarPlan`, `devolverPlan`, `marcarObservacionAtendida`, `puedeEjecutarse`, `iniciarEjecucion`, `finalizarPlan`, `listarPendientesRevision`, `listarPlanesArea`, `listarObservaciones`, `listarNotificaciones`, `listarHistorial` | Aplica las reglas de HU-017, controla permisos y ejecuta las sentencias SQL |
-| Modelo de datos | `record User`, `Plan`, `Observacion`, `Notificacion`, `RegistroHistorial` y el `record PlanInfo` privado de `DataService`; clases de constantes `Rol` y `EstadoPlan` | Transportan datos inmutables entre las capas |
-| Persistencia | H2 embebida, esquema creado por `DataService.init()` | Guarda usuarios, planes, observaciones, notificaciones e historial |
+| Presentación | `Main` (extiende `Application`): `start(Stage)`, `mostrarLogin()`, `mostrarDashboard(User)`, `crearTablaPlanes()`, `crearFormularioCrud(...)`, `crearVistaRevision(User)`, `mostrarNotificaciones(User)`, `mostrarHistorial(Plan)`, `validarPlan(...)`, `mostrarAlerta(...)`; `ui.VistaActividades` | Construye las pantallas, valida los campos del formulario y muestra los mensajes al usuario |
+| Lógica de negocio y acceso a datos | `data.DataService`: `iniciarSesion`, `authenticate`, `desbloquearUsuario`, `createPlan`, `updatePlan`, `deletePlan`, `listPlans`, `enviarARevision`, `aprobarPlan`, `devolverPlan`, `marcarObservacionAtendida`, `puedeEjecutarse`, `iniciarEjecucion`, `finalizarPlan`, `listarPendientesRevision`, `listarPlanesArea`, `listarObservaciones`, `listarNotificaciones`, `listarHistorial`, `agregarActividad`, `eliminarActividad`, `cambiarEstadoActividad`, `listarActividades`, `calcularAvance`, `listarResponsables` | Aplica las reglas de HU-001, HU-002, HU-004 y HU-017, controla permisos y ejecuta las sentencias SQL |
+| Modelo de datos | Paquete `model`: *records* `User`, `Plan`, `Actividad`, `Observacion`, `Notificacion`, `RegistroHistorial`, `ResultadoLogin` y el `record PlanInfo` privado de `DataService`; clases de constantes `Rol`, `EstadoPlan` y `EstadoActividad` | Transportan datos inmutables entre las capas |
+| Persistencia | H2 embebida, esquema creado por `DataService.init()` | Guarda usuarios, planes, actividades, observaciones, notificaciones e historial |
 
 Dependencias entre capas: la vista crea su servicio con `private final DataService database = new DataService();`. Depende de una clase concreta, no de una interfaz, y `DataService` mezcla reglas de negocio con SQL. Por eso las capas existen en el código, pero no están desacopladas.
 
@@ -99,7 +108,7 @@ Las operaciones de base de datos se ejecutan de forma síncrona en el hilo de Ja
 
 1. Crea la carpeta `data/` con `Files.createDirectories` cuando la URL es la de archivo local.
 2. Crea las tablas con `CREATE TABLE IF NOT EXISTS`.
-3. Ejecuta `crearTablasRevision`, que agrega lo que trajo HU-017 con `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` y `CREATE TABLE IF NOT EXISTS`.
+3. Agrega lo que trajeron HU-017, HU-001 y HU-004 con `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` y `CREATE TABLE IF NOT EXISTS` (método `crearTablas`).
 4. Siembra los cuatro usuarios de prueba con `seedUser`, que primero busca el correo y solo inserta si no existe.
 
 Todas las sentencias son **idempotentes**: se pueden ejecutar en cada arranque. Así una base creada con la versión anterior se actualiza sola sin perder datos, sin una herramienta de migraciones como Flyway o Liquibase.
@@ -110,7 +119,7 @@ Todas las sentencias son **idempotentes**: se pueden ejecutar en cada arranque. 
 - En modo embebido, H2 cierra la base cuando se cierra la última conexión, que es el comportamiento por defecto. Por eso cada operación vuelve a abrir el archivo. Es un costo aceptable en un prototipo de un solo usuario.
 - Las operaciones del flujo usan el método `enTransaccion(OperacionBD)`, un patrón *execute-around*: desactiva el *auto-commit*, ejecuta la operación recibida como *lambda*, hace `commit()` y, ante una `SQLException` o una `RuntimeException`, hace `rollback()` y relanza la excepción. `OperacionBD` es una `@FunctionalInterface` con el método `ejecutar(Connection)`.
 - Gracias a eso, cada caso de uso es **atómico**. Por ejemplo, al devolver un plan se guardan en una sola transacción la observación, el cambio de estado, el registro del historial y la notificación al coordinador; si cualquiera falla, no queda ninguno.
-- `createPlan` maneja su propia transacción: inserta el plan con `RETURN_GENERATED_KEYS`, lee el identificador generado y con él arma el código `PA-<año>-<id con 4 dígitos>`, por ejemplo `PA-2026-0007`, antes del `commit()`.
+- `enTransaccion` devuelve el resultado de la operación, así que `createPlan` y `agregarActividad` también lo usan: `createPlan` inserta el plan con `RETURN_GENERATED_KEYS`, lee el identificador generado y con él arma el código `PA-<año>-<id con 4 dígitos>`, por ejemplo `PA-2026-0007`, antes del `commit()`.
 
 #### Lógica de negocio: *Transaction Script* y máquina de estados
 
@@ -162,22 +171,23 @@ El servicio comunica las violaciones de reglas con excepciones no verificadas: `
 
 #### Pruebas
 
-- `DataService` tiene dos constructores. El de la aplicación usa `jdbc:h2:./data/sgpi` y el de las pruebas recibe la URL. Ese segundo constructor es el punto de inyección que permite probar las reglas sin interfaz gráfica.
-- `AprobacionPlanesTest` crea en cada prueba una base en memoria distinta, `jdbc:h2:mem:sgpi-<UUID>;DB_CLOSE_DELAY=-1`. `DB_CLOSE_DELAY=-1` mantiene viva la base en memoria entre conexiones, porque `DataService` abre y cierra una conexión por operación.
-- Son 12 pruebas JUnit 5, entre ellas los casos CP-HU017-01 a CP-HU017-04, y se ejecutan con `mvnw clean test`.
+- `DataService` tiene tres constructores. El de la aplicación usa `jdbc:h2:./data/sgpi`; el de las pruebas recibe la URL, y otro recibe además un `Clock`, para probar el bloqueo de 15 minutos de HU-001 sin esperar. Son los puntos de inyección que permiten probar las reglas sin interfaz gráfica.
+- Las pruebas (`AprobacionPlanesTest`, `InicioSesionTest`, `ActividadesPlanTest` y `GestionPlanesTest`, en `src/test/java/com/sgpi/data`) crean en cada prueba una base en memoria distinta, `jdbc:h2:mem:sgpi-<UUID>;DB_CLOSE_DELAY=-1`. `DB_CLOSE_DELAY=-1` mantiene viva la base en memoria entre conexiones, porque `DataService` abre y cierra una conexión por operación.
+- Son 37 pruebas JUnit 5, entre ellas los casos CP-HU017-01 a CP-HU017-04, el bloqueo de HU-001 y el cálculo de avance de HU-004, y se ejecutan con `mvnw clean test`.
 - La interfaz se prueba con el recorrido automático `Evidencias.java`, que corre la aplicación real en una pantalla virtual (Xvfb) y guarda una captura de cada paso.
 
 ### 2.5 Modelo de datos del prototipo (H2)
 
-Cinco tablas, documentadas en [`Database/prototipo-h2.sql`](../../Database/prototipo-h2.sql). Las llaves primarias son `BIGINT GENERATED BY DEFAULT AS IDENTITY`.
+Seis tablas, documentadas en [`Database/prototipo-h2.sql`](../../Database/prototipo-h2.sql). Las llaves primarias son `BIGINT GENERATED BY DEFAULT AS IDENTITY`.
 
 | Tabla | Columnas principales | Relaciones e integridad |
 |---|---|---|
-| `usuarios` | `nombre`, `correo` (único), `password_hash`, `rol`, `area`, `activo` | El rol y el área son texto, no tablas |
+| `usuarios` | `nombre`, `correo` (único), `password_hash`, `rol`, `area`, `activo`, `intentos_fallidos`, `bloqueado_hasta` | El rol y el área son texto, no tablas; las dos últimas columnas controlan el bloqueo de HU-001 |
 | `planes` | `codigo` (único), `objetivo`, `area`, `fecha_inicio`, `fecha_fin`, `estado`, `creado_por`, `fecha_envio`, `revisado_por`, `fecha_revision` | `creado_por` → `usuarios.id` |
 | `observaciones` | `plan_id`, `autor_id`, `descripcion`, `fecha`, `atendida`, `fecha_atencion` | `plan_id` → `planes.id` con `ON DELETE CASCADE`; `autor_id` → `usuarios.id` |
 | `notificaciones` | `usuario_id`, `plan_id`, `mensaje`, `fecha`, `leida` | `usuario_id` → `usuarios.id`; `plan_id` → `planes.id` con `ON DELETE CASCADE` |
 | `historial_planes` | `plan_id`, `codigo_plan`, `usuario_id`, `accion`, `estado_anterior`, `estado_nuevo`, `detalle`, `fecha` | **Sin llave foránea a `planes`**: el historial se conserva aunque el plan se elimine (RNF-10, RN-06) |
+| `actividades` | `plan_id`, `descripcion`, `responsable_id`, `fecha_limite`, `estado` | `plan_id` → `planes.id` con `ON DELETE CASCADE`; `responsable_id` → `usuarios.id` (opcional) |
 
 ### 2.6 Secuencia de un caso de uso: devolver un plan
 
