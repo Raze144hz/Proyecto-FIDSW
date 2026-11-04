@@ -22,6 +22,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import com.sgpi.data.DataService;
+import com.sgpi.model.Actividad;
 import com.sgpi.model.EstadoPlan;
 import com.sgpi.model.Notificacion;
 import com.sgpi.model.Observacion;
@@ -1451,12 +1452,20 @@ public class Main extends Application {
         return respuesta.isPresent() && respuesta.get() == ButtonType.OK;
     }
 
-    private static String formatearDetalle(Plan plan) {
+    private String formatearDetalle(Plan plan) {
+        List<Actividad> actividades = database.listarActividades(plan.id());
+        long finalizadas = actividades.stream().filter(Actividad::finalizada).count();
+        String avance = actividades.isEmpty()
+                ? "0 % (sin actividades registradas)"
+                : database.calcularAvance(plan.id()) + " % (" + finalizadas + " de " + actividades.size()
+                        + " actividades finalizadas)";
+
         return "Código: " + plan.codigo()
                 + "\nObjetivo: " + plan.objetivo()
                 + "\nÁrea: " + plan.area()
                 + "\nFechas: " + plan.fechaInicio() + " a " + plan.fechaFin()
-                + "\nEstado: " + plan.estado();
+                + "\nEstado: " + plan.estado()
+                + "\nAvance: " + avance;
     }
 
     private static String formatearObservacion(Observacion observacion) {

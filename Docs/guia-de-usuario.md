@@ -54,7 +54,7 @@ La vista del director tiene dos pestañas:
 - **Pendientes de revisión:** los planes de su área que esperan su decisión.
 - **Planes del área:** todos los planes de su área con su estado.
 
-Al seleccionar un plan pendiente se ven el **Detalle del plan** y las **Observaciones anteriores**, si las hay. Luego:
+Al seleccionar un plan se ven el **Detalle del plan**, con su avance (por ejemplo, "Avance: 25 % (1 de 4 actividades finalizadas)"), y las **Observaciones anteriores**, si las hay. Para un plan pendiente:
 
 - **Aprobar plan:** después de confirmar, el plan queda **APROBADO**.
 - **Devolver con observaciones:** escriba en **Observaciones para el coordinador** qué debe corregir y confirme. El plan queda **EN REVISION**. Si el campo está vacío, la aplicación muestra "Debe escribir las observaciones para devolver el plan." junto al campo y no devuelve el plan.

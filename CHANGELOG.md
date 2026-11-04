@@ -23,10 +23,15 @@
 - La capa de datos valida objetivo, área, longitud de los campos y que la fecha de fin no sea anterior a la de inicio; antes solo lo validaba el formulario.
 - Un plan con actividades pendientes no se puede finalizar.
 - Al enviar un plan a revisión, el director del área recibe una notificación.
+- El detalle del plan que ve el director muestra el avance ("Avance: 25 % (1 de 4 actividades finalizadas)"); antes solo aparecía en la columna de la tabla.
 
 ### Pruebas
 
 - De 12 a 37 pruebas JUnit: `InicioSesionTest` (8), `ActividadesPlanTest` (10) y `GestionPlanesTest` (7), además de `AprobacionPlanesTest` (12).
+
+### Pruebas en la interfaz
+
+- [Acta de pruebas del Sprint 4](Docs/Calidad/actas/acta-pruebas-sprint-4.md): CP-HU004-01, 02 y 04 pasan; capturas en `Graficas/sprint-4`.
 
 ### Documentación
 

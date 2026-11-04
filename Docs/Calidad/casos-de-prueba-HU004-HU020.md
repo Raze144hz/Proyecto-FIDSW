@@ -2,7 +2,9 @@
 
 Casos diseñados a partir de los criterios de aceptación del issue [#4](https://github.com/Raze144hz/Proyecto-FIDSW/issues/4) (HU-004), del issue [#28](https://github.com/Raze144hz/Proyecto-FIDSW/issues/28) (HU-020) y de las [reglas de negocio precisadas el 18 de octubre](../propuesta-y-requisitos.md#23-reglas-de-negocio-precisadas-18-de-octubre-de-2026) (RN-01 a RN-05). Siguen el [formato de caso de prueba](formato-caso-de-prueba.md).
 
-> **Estado: diseñados, no ejecutados.** El prototipo actual no tiene actividades, cálculo de avance ni evaluación de cierre, así que estos casos no se pueden ejecutar todavía. La sección **Ejecución** se llena cuando HU-004 y HU-020 estén programadas (Sprint 4 y Sprint 5 del [cronograma](../Planning/cronograma-desarrollo.md)).
+> **Estado:** los casos CP-HU004-01, 02 y 04 se ejecutaron el 4 de noviembre de 2026 y pasan; los resultados están en el [acta de pruebas del Sprint 4](actas/acta-pruebas-sprint-4.md). CP-HU004-03 y 05 esperan la carga de evidencias (HU-003) y los cortes de seguimiento. Los casos de HU-020 se ejecutan cuando se programe (Sprint 5 del [cronograma](../Planning/cronograma-desarrollo.md)).
+>
+> En la aplicación los estados de actividad se llaman PENDIENTE, EN PROGRESO y FINALIZADA; en estos casos, POR_HACER equivale a PENDIENTE y EN_PROCESO a EN PROGRESO.
 
 Datos comunes: un plan "Auditoría interna de procesos 2026" del área Calidad, en estado EN EJECUCION, con el coordinador `coordinador@sgpi.local`, la directora del área `director@sgpi.local` y el responsable `responsable@sgpi.local`.
 
