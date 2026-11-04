@@ -12,13 +12,13 @@
 | Versión probada | Rama `mejoras/refactor-hu001-hu004` (PR #76), commit `7f7697b` más el ajuste del detalle del plan que se sube junto con esta acta |
 | Entorno | Windows Server 2022, JDK 17.0.21, Maven 3.9.9, JavaFX 17.0.10, H2 2.2.224 (versiones del `pom.xml`) |
 | Forma de ejecución | Manual sobre la interfaz (`mvn javafx:run -Djavafx.platform=win`), con una captura por paso, y pruebas JUnit (`mvn clean test`) |
-| Responsable del acta | Juan Sebastián Martínez |
+| Responsable del acta | |
 
 ## 2. Participantes
 
 | Nombre | Rol en las pruebas |
 |---|---|
-| Juan Sebastián Martínez | Preparó los datos, ejecutó los casos y registra el acta |
+| | Preparó los datos, ejecutó los casos y registra el acta |
 | David Álvarez Rodríguez | Revisa el PR #76 y valida los resultados (pendiente) |
 | Miguel Ángel Gómez López | Aprueba el acta como Scrum Master (pendiente) |
 
@@ -60,10 +60,10 @@ No están en el documento de casos.
 
 | Caso | HU | Estado | Ejecutado por | Evidencia | Defecto |
 |---|---|---|---|---|---|
-| CP-HU004-01 | HU-004 | Pasa | Juan Sebastián Martínez | [coordinador](../../../Graficas/sprint-4/cp-hu004-01-avance-25.png), [director](../../../Graficas/sprint-4/cp-hu004-01-director-25.png) | D-01 (corregido) |
-| CP-HU004-02 | HU-004 | Pasa con observación | Juan Sebastián Martínez | [avance 50 %](../../../Graficas/sprint-4/cp-hu004-02-avance-50.png), [historial](../../../Graficas/sprint-4/cp-hu004-02-historial.png) | D-02 |
+| CP-HU004-01 | HU-004 | Pasa | | [coordinador](../../../Graficas/sprint-4/cp-hu004-01-avance-25.png), [director](../../../Graficas/sprint-4/cp-hu004-01-director-25.png) | D-01 (corregido) |
+| CP-HU004-02 | HU-004 | Pasa con observación | | [avance 50 %](../../../Graficas/sprint-4/cp-hu004-02-avance-50.png), [historial](../../../Graficas/sprint-4/cp-hu004-02-historial.png) | D-02 |
 | CP-HU004-03 | HU-004 | No ejecutado | — | Necesita la carga de evidencias (HU-003), que no está programada | D-02 |
-| CP-HU004-04 | HU-004 | Pasa | Juan Sebastián Martínez | [sin actividades](../../../Graficas/sprint-4/cp-hu004-04-sin-actividades-0.png) | — |
+| CP-HU004-04 | HU-004 | Pasa | | [sin actividades](../../../Graficas/sprint-4/cp-hu004-04-sin-actividades-0.png) | — |
 | CP-HU004-05 | HU-004 | No ejecutado | — | Los cortes de seguimiento con comentario (RN-04) no están programados | D-03 |
 | CP-HU020-01 | HU-020 | No ejecutado | — | HU no programada (Sprint 5) | — |
 | CP-HU020-02 | HU-020 | No ejecutado | — | HU no programada (Sprint 5) | — |
@@ -104,10 +104,10 @@ No están en el documento de casos.
 
 | Defecto | Issue | Descripción | Severidad | Responsable | Estado |
 |---|---|---|---|---|---|
-| D-01 | PR #76 | El detalle del plan del director no mostraba el porcentaje de avance; solo aparecía en la columna de la tabla. CP-HU004-01 pide verlo en el detalle. | Baja | Juan Sebastián Martínez | Corregido en el PR #76: el detalle muestra "Avance: N % (x de y actividades finalizadas)" |
+| D-01 | PR #76 | El detalle del plan del director no mostraba el porcentaje de avance; solo aparecía en la columna de la tabla. CP-HU004-01 pide verlo en el detalle. | Baja | | Corregido en el PR #76: el detalle muestra "Avance: N % (x de y actividades finalizadas)" |
 | D-02 | #4 | Una actividad pasa a FINALIZADA sin evidencias. La regla RN-03 pide al menos una, pero depende de HU-003. | Media | Responsable de HU-003 | Abierto |
 | D-03 | #4 | No existen los cortes de seguimiento con comentario (RN-04). | Media | Por asignar | Abierto |
-| D-04 | — | El documento de casos usa los estados POR_HACER y EN_PROCESO; la aplicación usa PENDIENTE y EN PROGRESO. | Baja | Juan Sebastián Martínez | Abierto |
+| D-04 | — | El documento de casos usa los estados POR_HACER y EN_PROCESO; la aplicación usa PENDIENTE y EN PROGRESO. | Baja | | Abierto |
 
 ## 8. Decisión
 
@@ -126,14 +126,14 @@ Son propuestas; quedan firmes cuando el equipo apruebe el acta.
 | Acción | Responsable | Fecha límite |
 |---|---|---|
 | Revisar el PR #76 y dejar los comentarios | David Álvarez Rodríguez | Planning del Sprint 5 |
-| Cambiar POR_HACER y EN_PROCESO por PENDIENTE y EN PROGRESO en los casos de HU-004 (D-04) | Juan Sebastián Martínez | Planning del Sprint 5 |
+| Cambiar POR_HACER y EN_PROCESO por PENDIENTE y EN PROGRESO en los casos de HU-004 (D-04) | | Planning del Sprint 5 |
 | Programar la carga de evidencias (HU-003) y conectarla con el paso a FINALIZADA (D-02) | Responsable de HU-003 | Sprint 5 |
-| Ejecutar CP-HU004-03 y CP-HU004-05 cuando existan las evidencias y los cortes de seguimiento | Juan Sebastián Martínez | Sprint 5 |
+| Ejecutar CP-HU004-03 y CP-HU004-05 cuando existan las evidencias y los cortes de seguimiento | | Sprint 5 |
 
 ## 10. Aprobación
 
 | Nombre | Rol | Fecha |
 |---|---|---|
-| Juan Sebastián Martínez | Ejecutó las pruebas | |
+| | Ejecutó las pruebas | |
 | David Álvarez Rodríguez | Revisor del PR #76 | |
 | Miguel Ángel Gómez López | Scrum Master | |
