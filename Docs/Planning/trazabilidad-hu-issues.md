@@ -1,7 +1,7 @@
 # Trazabilidad: historias de usuario ↔ issues ↔ estado real
 
 **Responsable:** David Álvarez Rodríguez (Gestión y Reportes)
-**Corte:** 18 de octubre de 2026, rama `main` en `56b1eb7`
+**Corte:** 18 de octubre de 2026, rama `main` en `56b1eb7`. Actualizado el 3 de noviembre de 2026 con la rama `mejoras/refactor-hu001-hu004` (filas HU-001, HU-002, HU-004 y HU-013).
 
 Hasta esta fecha varias HU tenían más de un issue, con títulos, códigos o prioridades distintos a los de la [propuesta](../propuesta-y-requisitos.md), y muchos issues estaban cerrados aunque la HU no se había programado. Esta tabla define **un issue canónico por HU**: el trabajo, los PR y el tablero se vinculan a ese issue. Los repetidos se cerraron como *duplicate* con un comentario que apunta al canónico, y los 22 issues canónicos quedaron abiertos y con la prioridad de la propuesta.
 
@@ -11,10 +11,10 @@ Hasta esta fecha varias HU tenían más de un issue, con títulos, códigos o pr
 
 | HU | Historia (propuesta) | Issue canónico | Issues cerrados que apuntan a él | Prioridad | Estado real | Sprint del cronograma |
 |---|---|---|---|---|---|---|
-| HU-001 | Login en el sistema | [#1](https://github.com/Raze144hz/Proyecto-FIDSW/issues/1) | — | Alta | Avance en el prototipo: inicio de sesión con BCrypt. Falta el bloqueo tras 3 intentos fallidos del criterio de aceptación. | 3 |
-| HU-002 | Registro de un nuevo plan de acción | [#19](https://github.com/Raze144hz/Proyecto-FIDSW/issues/19) | #2 | Media | Avance en el prototipo: crear, editar, eliminar y consultar planes. El formulario pide objetivo, área y fechas; el issue pide nombre, responsable y periodo. | 3 |
+| HU-001 | Login en el sistema | [#1](https://github.com/Raze144hz/Proyecto-FIDSW/issues/1) | — | Alta | Implementado en el prototipo: inicio de sesión con BCrypt y bloqueo de 15 minutos tras 3 intentos fallidos seguidos; el administrador puede desbloquear desde la capa de datos. 8 pruebas JUnit (`InicioSesionTest`). Falta revisión del PR por otro integrante. | 3 |
+| HU-002 | Registro de un nuevo plan de acción | [#19](https://github.com/Raze144hz/Proyecto-FIDSW/issues/19) | #2 | Media | Avance en el prototipo: crear, editar, eliminar y consultar planes, con validaciones también en la capa de datos, y actividades con responsable y fecha límite. El formulario pide objetivo, área y fechas; el issue pide nombre, responsable y periodo. Pruebas en `GestionPlanesTest`. | 3 |
 | HU-003 | Carga de evidencias documentales | [#18](https://github.com/Raze144hz/Proyecto-FIDSW/issues/18) | #3 | Media | Sin iniciar. Diseñada en el modelo: cada evidencia pertenece a una actividad (RN-03). El issue y el CU-02 no coinciden en el actor ni en el tamaño máximo (10 MB frente a 20 MB). | 4 |
-| HU-004 | Seguimiento de avance de actividades | [#4](https://github.com/Raze144hz/Proyecto-FIDSW/issues/4) | — | Media | Diseñada el 18 oct (avance = actividades finalizadas / total, RN-01) en los diagramas, el modelo objetivo y los [casos de prueba](../Calidad/casos-de-prueba-HU004-HU020.md). Sin programar. | 4 |
+| HU-004 | Seguimiento de avance de actividades | [#4](https://github.com/Raze144hz/Proyecto-FIDSW/issues/4) | — | Media | Implementado en el prototipo: actividades con estados PENDIENTE, EN PROGRESO y FINALIZADA; avance = actividades finalizadas / total (RN-01), visible en la tabla y en la ventana de actividades; un plan con actividades solo se finaliza al 100 %. 10 pruebas JUnit (`ActividadesPlanTest`). Falta ejecutar los [casos de prueba](../Calidad/casos-de-prueba-HU004-HU020.md) en la interfaz. | 4 |
 | HU-005 | Notificaciones de vencimiento de actividades | [#20](https://github.com/Raze144hz/Proyecto-FIDSW/issues/20) | — | Alta | Sin iniciar. Las notificaciones internas de HU-017 sirven de base. | 5 |
 | HU-006 | Autenticación y control de roles | [#6](https://github.com/Raze144hz/Proyecto-FIDSW/issues/6) | — | Media | Avance en el prototipo: roles ADMIN, COORDINADOR, RESPONSABLE y DIRECTOR. El issue nombra administrador, coordinador, directivo y consulta. | 3 |
 | HU-007 | Pruebas de validación del módulo de informes | [#7](https://github.com/Raze144hz/Proyecto-FIDSW/issues/7) | — | Media | Sin iniciar; depende de HU-014a. | Cierre |
@@ -24,7 +24,7 @@ Hasta esta fecha varias HU tenían más de un issue, con títulos, códigos o pr
 | HU-011 | Exportación de planes de acción a PDF y Excel | [#22](https://github.com/Raze144hz/Proyecto-FIDSW/issues/22) | #11, #21 | Baja | Sin iniciar. | Cierre |
 | HU-012a | Visualización del tablero Kanban | [#56](https://github.com/Raze144hz/Proyecto-FIDSW/issues/56) | #12 (dividida) | Alta | Sin iniciar. Las columnas son los estados de actividad de RN-02. | 4 |
 | HU-012b | Actualización de estado por arrastre en el Kanban | [#57](https://github.com/Raze144hz/Proyecto-FIDSW/issues/57) | #12 (dividida) | Media | Sin iniciar. | 4 |
-| HU-013 | Historial de auditoría y trazabilidad de cambios | [#23](https://github.com/Raze144hz/Proyecto-FIDSW/issues/23) | #13 | Media | Parcial: el prototipo registra los cambios de **estado** del plan. Falta auditar los cambios de actividades y evidencias con valor anterior y nuevo, como piden el issue y RNF-10. | 5 |
+| HU-013 | Historial de auditoría y trazabilidad de cambios | [#23](https://github.com/Raze144hz/Proyecto-FIDSW/issues/23) | #13 | Media | Parcial: el prototipo registra los cambios de estado, la edición y la eliminación del plan, y los cambios de actividades. Falta guardar el valor anterior y nuevo de cada campo editado y auditar las evidencias, como piden el issue y RNF-10. | 5 |
 | HU-014a | Informe consolidado de cumplimiento | [#58](https://github.com/Raze144hz/Proyecto-FIDSW/issues/58) | #14 (dividida), #5 | Media | Sin iniciar. Falta definir qué estado es "publicado" en la regla de negocio. | 5 |
 | HU-014b | Drill-down del informe gerencial | [#59](https://github.com/Raze144hz/Proyecto-FIDSW/issues/59) | #14 (dividida) | Baja | Sin iniciar. | Cierre |
 | HU-015 | Notificaciones por correo electrónico y alertas | [#15](https://github.com/Raze144hz/Proyecto-FIDSW/issues/15) | — | Baja | Sin iniciar. | Cierre |

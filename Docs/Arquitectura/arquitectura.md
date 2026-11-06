@@ -15,12 +15,12 @@ Los diagramas describen la **arquitectura objetivo** (propuesta) del SGPI. El **
 
 | Aspecto | Arquitectura objetivo (diagramas) | Prototipo implementado (`main`) |
 |---|---|---|
-| Cliente | Aplicación JavaFX que llama a una API por HTTPS | Aplicación JavaFX de escritorio que hace todo en un solo programa (`Main.java`) |
+| Cliente | Aplicación JavaFX que llama a una API por HTTPS | Aplicación JavaFX de escritorio que hace todo en un solo programa, organizado en los paquetes `com.sgpi` (vista), `com.sgpi.ui`, `com.sgpi.data` y `com.sgpi.model` |
 | Servidor de aplicaciones | API SGPI en Java 17 con los componentes del diagrama | No existe |
 | Base de datos | PostgreSQL 16 en un servidor aparte, con el [modelo relacional](#2-modelo-relacional-de-la-base-de-datos) | H2 local en la carpeta `data/`, con el esquema de [`Database/prototipo-h2.sql`](../../Database/prototipo-h2.sql) |
 | Archivos de evidencia | Carpeta `evidencias/` del servidor, a cargo del Gestor de Archivos | No implementado |
-| Historias cubiertas | HU-016, HU-017, HU-004 y HU-020 | HU-017 completa; partes de HU-001, HU-002 y HU-006 |
-| Seguimiento por actividades (HU-004) y cierre con evaluación (HU-020) | Diseñados en los diagramas de clases, modelo relacional, componentes y procesos | No implementados: el prototipo no tiene actividades, avance ni evaluación; su botón **Finalizar** deja el plan en FINALIZADO sin esas reglas |
+| Historias cubiertas | HU-016, HU-017, HU-004 y HU-020 | HU-017, HU-001 y HU-004 implementadas; partes de HU-002 y HU-006 |
+| Seguimiento por actividades (HU-004) y cierre con evaluación (HU-020) | Diseñados en los diagramas de clases, modelo relacional, componentes y procesos | HU-004 implementada: actividades con estado y avance = finalizadas / total; un plan con actividades solo se finaliza al 100 %. HU-020 no: **Finalizar** no pide la evaluación del director |
 
 El diagrama de secuencia (punto 6) muestra HU-017, que el prototipo sí implementa, pero con los componentes de la arquitectura objetivo.
 
@@ -74,7 +74,7 @@ El script equivalente para PostgreSQL está en [`Database/modelo-objetivo-postgr
 - `SEGUIMIENTO_PLAN` referencia al plan y al usuario que registró el seguimiento; `avance_calculado` es el avance del plan en esa fecha.
 - Las fechas con hora son `TIMESTAMP`, el tipo de PostgreSQL, que es la base de datos del diagrama de despliegue.
 
-El prototipo implementa la parte de HU-017 de este modelo en H2, con cinco tablas: el rol y el área quedan como texto en `usuarios`, y no hay tablas de evidencias, actividades ni seguimiento porque HU-016, HU-003 y HU-004 no están programadas. Ver [`Database/prototipo-h2.sql`](../../Database/prototipo-h2.sql).
+El prototipo implementa la parte de HU-017, HU-001 y HU-004 de este modelo en H2, con seis tablas: el rol y el área quedan como texto en `usuarios`, el avance se calcula desde la tabla `actividades` sin una tabla de seguimiento, y no hay tablas de evidencias porque HU-016 y HU-003 no están programadas. Ver [`Database/prototipo-h2.sql`](../../Database/prototipo-h2.sql).
 
 ### Cambios frente a la primera versión
 

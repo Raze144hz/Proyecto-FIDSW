@@ -37,16 +37,17 @@ A nivel de seguridad, el sistema contempla autenticación de usuarios y control 
 
 ## 🧪 Estado actual del prototipo
 
-Corte: 18 de octubre de 2026, rama `main`.
+Corte: 3 de noviembre de 2026, rama `mejoras/refactor-hu001-hu004`.
 
 | Funcionalidad | Historias | Estado |
 |---|---|---|
-| Inicio de sesión con contraseñas cifradas (BCrypt) | HU-001 | Implementado en parte (sin bloqueo tras intentos fallidos) |
+| Inicio de sesión con contraseñas cifradas (BCrypt) y bloqueo de 15 minutos tras 3 intentos fallidos | HU-001 | Implementado, con 8 pruebas JUnit |
 | Roles ADMIN, COORDINADOR, RESPONSABLE y DIRECTOR con permisos distintos | HU-006 | Implementado en parte |
-| Registro, edición, consulta y eliminación de planes con código único | HU-002 | Implementado en parte (sin actividades ni responsables por actividad) |
-| Envío a revisión, aprobación o devolución con observaciones, notificaciones internas e historial de estados | HU-017 | Implementado, con 12 pruebas JUnit; pendiente la revisión del PR por otro integrante |
-| Seguimiento del avance por actividades y tablero Kanban | HU-004, HU-012a, HU-012b | Diseñado (diagramas y modelo de datos); sin programar |
-| Cierre del plan con evaluación del director | HU-020 | Diseñado; sin programar. El botón **Finalizar** del prototipo no pide evaluación |
+| Registro, edición, consulta y eliminación de planes con código único y actividades con responsable y fecha límite | HU-002 | Implementado en parte, con 7 pruebas JUnit (el formulario no pide nombre ni responsable del plan) |
+| Seguimiento del avance: actividades finalizadas sobre el total, visible en la tabla de planes | HU-004 | Implementado, con 10 pruebas JUnit |
+| Envío a revisión, aprobación o devolución con observaciones, notificaciones internas (al coordinador y al director) e historial | HU-017 | Implementado, con 12 pruebas JUnit; pendiente la revisión del PR por otro integrante |
+| Tablero Kanban | HU-012a, HU-012b | Diseñado (diagramas y modelo de datos); sin programar |
+| Cierre del plan con evaluación del director | HU-020 | Diseñado; sin programar. **Finalizar** exige el 100 % de avance pero no pide evaluación |
 | Carga, versiones, búsqueda y filtrado de evidencias | HU-003, HU-019, HU-016 | Sin programar |
 | Alertas de vencimiento y correo | HU-005, HU-015 | Sin programar |
 | Reportes, informes y exportación a PDF y Excel | HU-011, HU-014a, HU-014b | Sin programar |
@@ -66,7 +67,7 @@ El mapeo completo entre historias, issues y estado real está en [`Docs/Planning
 *   **Interfaz:** JavaFX (aplicación de escritorio)
 *   **Base de Datos:** H2 con JDBC en el prototipo
 *   **Seguridad:** contraseñas con hash BCrypt
-*   **Construcción y pruebas:** Maven (con Maven Wrapper) y JUnit 5. Las pruebas se corren localmente con `mvnw clean test` (ver [`README-PROTOTIPO.md`](README-PROTOTIPO.md#pruebas-automáticas)).
+*   **Construcción y pruebas:** Maven (con Maven Wrapper) y JUnit 5. Las 37 pruebas se corren localmente con `mvnw clean test` (ver [`README-PROTOTIPO.md`](README-PROTOTIPO.md#pruebas-automáticas)).
 *   **Herramientas:** GitHub Projects, Git
 
 ## ▶️ Cómo ejecutar el prototipo
@@ -99,7 +100,11 @@ Requisitos, usuarios de prueba y pruebas automáticas: [`README-PROTOTIPO.md`](R
 El repositorio está organizado de la siguiente manera para mantener el orden y la escalabilidad:
 
 *   `/Docs`: Documentación formal (propuesta, requisitos, historias de usuario, actas, reportes, calidad, arquitectura y registros Scrum).
-*   `/src`: Código fuente del prototipo (`src/main/java`) y pruebas automáticas (`src/test/java`).
+*   `/src`: Código fuente del prototipo (`src/main/java`) y pruebas automáticas (`src/test/java`). El código está separado por capas:
+    *   `com.sgpi.Main`: arranque de la aplicación JavaFX y pantallas principales.
+    *   `com.sgpi.ui`: ventanas adicionales (actividades y avance del plan).
+    *   `com.sgpi.data`: `DataService`, con las reglas de negocio y el acceso a la base H2.
+    *   `com.sgpi.model`: entidades (`Plan`, `Actividad`, `User`…) y constantes de roles y estados.
 *   `/Database`: Modelos de base de datos y scripts DDL/DML.
 *   `/Script`: Scripts de ejecución, configuración y pruebas.
 *   `/Graficas`: Recursos visuales, capturas de pantalla, diagramas y organigramas; `/Graficas/fuentes` tiene las fuentes PlantUML de los diagramas.
