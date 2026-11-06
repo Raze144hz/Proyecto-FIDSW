@@ -1,0 +1,22 @@
+coverage=40.4
+reliability_rating=1.0
+code_smells=0
+duplicated_lines_density=0.0
+security_rating=1.0
+software_quality_security_issues=0
+security_hotspots=0
+sqale_index=0
+sqale_rating=1.0
+alert_status=OK
+bugs=0
+software_quality_reliability_issues=0
+ncloc=2509
+software_quality_maintainability_issues=0
+vulnerabilities=0
+QG=OK
+  cond new_coverage OK actual=91.8 umbral=80
+  cond new_duplicated_lines_density OK actual=0.0 umbral=3
+  cond new_security_hotspots_reviewed OK actual= umbral=100
+  cond new_violations OK actual=0 umbral=0
+ISSUES total=0
+ERROR The remote server returned an error: (403) Forbidden.

@@ -5,3 +5,6 @@ target/
 
 data/*.mv.db
 data/*.trace.db
+
+.scannerwork/
+data/*.clave
