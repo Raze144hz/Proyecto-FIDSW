@@ -70,6 +70,15 @@ public class DataService {
 
     private static final SecureRandom ALEATORIO = new SecureRandom();
 
+    private static final String SELECT_PLANES =
+            "SELECT id, codigo, objetivo, area, fecha_inicio, fecha_fin, estado FROM planes ";
+    private static final String SQL_TODOS_LOS_PLANES = SELECT_PLANES + "ORDER BY id DESC";
+    private static final String SQL_PLANES_PENDIENTES = SELECT_PLANES + "WHERE estado=? ORDER BY id DESC";
+    private static final String SQL_PLANES_PENDIENTES_AREA = SELECT_PLANES
+            + "WHERE estado=? AND LOWER(TRIM(area))=LOWER(TRIM(?)) ORDER BY id DESC";
+    private static final String SQL_PLANES_AREA = SELECT_PLANES
+            + "WHERE LOWER(TRIM(area))=LOWER(TRIM(?)) ORDER BY id DESC";
+
     private final String url;
     private final Clock reloj;
 
@@ -495,7 +504,7 @@ public class DataService {
     }
 
     public List<Plan> listPlans() {
-        return consultarPlanes("1=1");
+        return consultarPlanes(SQL_TODOS_LOS_PLANES);
     }
 
     /** Valida los datos del plan también en el servidor, no solo en el formulario. */
@@ -738,10 +747,10 @@ public class DataService {
         validarDirector(director);
 
         if (director.area() == null) {
-            return consultarPlanes("estado=?", EstadoPlan.PENDIENTE_REVISION);
+            return consultarPlanes(SQL_PLANES_PENDIENTES, EstadoPlan.PENDIENTE_REVISION);
         }
 
-        return consultarPlanes("estado=? AND LOWER(TRIM(area))=LOWER(TRIM(?))", EstadoPlan.PENDIENTE_REVISION,
+        return consultarPlanes(SQL_PLANES_PENDIENTES_AREA, EstadoPlan.PENDIENTE_REVISION,
                 director.area());
     }
 
@@ -749,10 +758,10 @@ public class DataService {
         validarDirector(director);
 
         if (director.area() == null) {
-            return consultarPlanes("1=1");
+            return consultarPlanes(SQL_TODOS_LOS_PLANES);
         }
 
-        return consultarPlanes("LOWER(TRIM(area))=LOWER(TRIM(?))", director.area());
+        return consultarPlanes(SQL_PLANES_AREA, director.area());
     }
 
     public List<Observacion> listarObservaciones(long planId) {
@@ -1129,10 +1138,7 @@ public class DataService {
         }
     }
 
-    private List<Plan> consultarPlanes(String condicion, Object... parametros) {
-        String sql = "SELECT id, codigo, objetivo, area, fecha_inicio, fecha_fin, estado FROM planes WHERE "
-                + condicion + " ORDER BY id DESC";
-
+        private List<Plan> consultarPlanes(String sql, Object... parametros) {
         return consultar(sql, result -> new Plan(
                 result.getLong("id"),
                 result.getString("codigo"),
