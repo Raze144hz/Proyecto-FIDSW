@@ -10,6 +10,8 @@ import com.sgpi.model.RegistroHistorial;
 import com.sgpi.model.ResultadoLogin;
 import com.sgpi.model.Rol;
 import com.sgpi.model.User;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -23,9 +25,12 @@ import java.sql.Timestamp;
 import java.sql.Types;
 import java.time.Clock;
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -51,11 +56,25 @@ public class DataService {
     public static final int MAX_DESCRIPCION_ACTIVIDAD = 300;
 
     private static final String URL_POR_DEFECTO = "jdbc:h2:./data/sgpi";
+    private static final String PREFIJO_BASE_LOCAL = "jdbc:h2:./data/";
     private static final String USER = "sa";
-    private static final String PASSWORD = "";
+
+    /** Variable de entorno con la contraseña de la base; si no existe se usa la del archivo local. */
+    static final String VARIABLE_CLAVE = "SGPI_DB_PASSWORD";
+
+    /**
+     * Contraseña de las bases creadas por versiones anteriores del prototipo, que no tenían. Solo se usa
+     * una vez, para asignarles la contraseña nueva (ver {@link #prepararClave()}).
+     */
+    private static final String CLAVE_VERSION_ANTERIOR = "";
+
+    private static final SecureRandom ALEATORIO = new SecureRandom();
 
     private final String url;
     private final Clock reloj;
+
+    /** Contraseña de la base. Las bases en memoria usan una aleatoria, distinta en cada instancia. */
+    private String claveBaseDatos = generarClave();
 
     public DataService() {
         this(URL_POR_DEFECTO);
@@ -76,9 +95,10 @@ public class DataService {
 
     public void init() {
         try {
-            if (url.startsWith("jdbc:h2:./data/")) {
+            if (url.startsWith(PREFIJO_BASE_LOCAL)) {
                 Files.createDirectories(Path.of("data"));
             }
+            claveBaseDatos = prepararClave();
 
             try (Connection connection = connect(); Statement statement = connection.createStatement()) {
                 crearTablas(statement);
@@ -94,7 +114,57 @@ public class DataService {
     }
 
     private Connection connect() throws SQLException {
-        return DriverManager.getConnection(url, USER, PASSWORD);
+        return DriverManager.getConnection(url, USER, claveBaseDatos);
+    }
+
+    /**
+     * Define la contraseña de la base (regla java:S2115: una base de datos no debe quedar sin
+     * contraseña).
+     *
+     * <ol>
+     *   <li>Si existe la variable de entorno {@value #VARIABLE_CLAVE}, se usa esa.</li>
+     *   <li>En la base local ({@code data/}), la contraseña se genera al azar la primera vez y se guarda
+     *       en {@code data/sgpi.clave}, que no se sube al repositorio.</li>
+     *   <li>Si la base local la creó una versión anterior, sin contraseña, se le asigna la nueva sin
+     *       perder los datos.</li>
+     * </ol>
+     */
+    private String prepararClave() throws IOException, SQLException {
+        String desdeEntorno = System.getenv(VARIABLE_CLAVE);
+        if (desdeEntorno != null && !desdeEntorno.isBlank()) {
+            return desdeEntorno;
+        }
+
+        if (!url.startsWith(PREFIJO_BASE_LOCAL)) {
+            return claveBaseDatos;
+        }
+
+        String base = url.substring("jdbc:h2:".length()).split(";")[0];
+        Path archivoClave = Path.of(base + ".clave");
+        if (Files.exists(archivoClave)) {
+            return Files.readString(archivoClave, StandardCharsets.UTF_8).trim();
+        }
+
+        String nueva = generarClave();
+        if (Files.exists(Path.of(base + ".mv.db"))) {
+            asignarClaveABaseAnterior(nueva);
+        }
+        Files.writeString(archivoClave, nueva, StandardCharsets.UTF_8);
+        return nueva;
+    }
+
+    private void asignarClaveABaseAnterior(String nueva) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(url, USER, CLAVE_VERSION_ANTERIOR);
+                PreparedStatement statement = connection.prepareStatement("ALTER USER SA SET PASSWORD ?")) {
+            statement.setString(1, nueva);
+            statement.execute();
+        }
+    }
+
+    private static String generarClave() {
+        byte[] bytes = new byte[24];
+        ALEATORIO.nextBytes(bytes);
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
     }
 
     /**
@@ -253,11 +323,13 @@ public class DataService {
                 }
 
                 long id = result.getLong("id");
-                LocalDateTime ahora = LocalDateTime.now(reloj);
+                // Se compara con instantes (Instant) y no con horas locales, para que un cambio de hora
+                // o de zona horaria no alargue ni acorte el bloqueo (regla java:S8700).
+                Instant ahora = reloj.instant();
                 Timestamp bloqueadoHasta = result.getTimestamp("bloqueado_hasta");
 
-                if (bloqueadoHasta != null && bloqueadoHasta.toLocalDateTime().isAfter(ahora)) {
-                    long segundos = Duration.between(ahora, bloqueadoHasta.toLocalDateTime()).toSeconds();
+                if (bloqueadoHasta != null && bloqueadoHasta.toInstant().isAfter(ahora)) {
+                    long segundos = Duration.between(ahora, bloqueadoHasta.toInstant()).toSeconds();
                     return ResultadoLogin.bloqueado(Math.max(1, (segundos + 59) / 60));
                 }
 
@@ -306,12 +378,12 @@ public class DataService {
         }
     }
 
-    private void actualizarIntentos(Connection connection, long usuarioId, int intentos, LocalDateTime hasta)
+    private void actualizarIntentos(Connection connection, long usuarioId, int intentos, Instant hasta)
             throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(
                 "UPDATE usuarios SET intentos_fallidos=?, bloqueado_hasta=? WHERE id=?")) {
             statement.setInt(1, intentos);
-            statement.setTimestamp(2, hasta == null ? null : Timestamp.valueOf(hasta));
+            statement.setTimestamp(2, hasta == null ? null : Timestamp.from(hasta));
             statement.setLong(3, usuarioId);
             statement.executeUpdate();
         }
