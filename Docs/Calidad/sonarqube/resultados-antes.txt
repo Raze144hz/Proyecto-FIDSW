@@ -17,4 +17,3 @@ QG=OK
 ISSUES total=2
 java:S2115|BLOCKER|VULNERABILITY|src/main/java/com/sgpi/data/DataService.java|97|Add password protection to this database.
 java:S8700|MAJOR|BUG|src/main/java/com/sgpi/data/DataService.java|260|Convert these arguments to time zone-aware types before computing a duration between them.
-ERROR The remote server returned an error: (403) Forbidden.
