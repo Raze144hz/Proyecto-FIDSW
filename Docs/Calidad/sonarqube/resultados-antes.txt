@@ -1,0 +1,19 @@
+coverage=0.0
+reliability_rating=3.0
+code_smells=0
+duplicated_lines_density=0.0
+security_rating=5.0
+software_quality_security_issues=1
+security_hotspots=0
+sqale_index=0
+sqale_rating=1.0
+alert_status=OK
+bugs=1
+software_quality_reliability_issues=1
+ncloc=2447
+software_quality_maintainability_issues=0
+vulnerabilities=1
+QG=OK
+ISSUES total=2
+java:S2115|BLOCKER|VULNERABILITY|src/main/java/com/sgpi/data/DataService.java|97|Add password protection to this database.
+java:S8700|MAJOR|BUG|src/main/java/com/sgpi/data/DataService.java|260|Convert these arguments to time zone-aware types before computing a duration between them.

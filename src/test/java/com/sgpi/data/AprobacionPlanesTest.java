@@ -1,16 +1,16 @@
-package com.sgpi;
+package com.sgpi.data;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.sgpi.Main.EstadoPlan;
-import com.sgpi.Main.Notificacion;
-import com.sgpi.Main.Observacion;
-import com.sgpi.Main.Plan;
-import com.sgpi.Main.RegistroHistorial;
-import com.sgpi.Main.User;
+import com.sgpi.model.EstadoPlan;
+import com.sgpi.model.Notificacion;
+import com.sgpi.model.Observacion;
+import com.sgpi.model.Plan;
+import com.sgpi.model.RegistroHistorial;
+import com.sgpi.model.User;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -24,14 +24,14 @@ import org.junit.jupiter.api.Test;
  */
 class AprobacionPlanesTest {
 
-    private Main.DataService database;
+    private DataService database;
     private User coordinador;
     private User director;
     private User responsable;
 
     @BeforeEach
     void prepararBaseDeDatos() {
-        database = new Main.DataService("jdbc:h2:mem:sgpi-" + UUID.randomUUID() + ";DB_CLOSE_DELAY=-1");
+        database = new DataService("jdbc:h2:mem:sgpi-" + UUID.randomUUID() + ";DB_CLOSE_DELAY=-1");
         database.init();
 
         coordinador = database.authenticate("coordinador@sgpi.local", "Coord123*").orElseThrow();
