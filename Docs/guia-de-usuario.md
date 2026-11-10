@@ -11,7 +11,7 @@ Cómo se usa el prototipo de escritorio del SGPI. Para instalarlo y ejecutarlo, 
 
 Los usuarios de prueba están en [`README-PROTOTIPO.md`](../README-PROTOTIPO.md#usuarios-de-prueba).
 
-En la barra superior están el botón **Notificaciones (n)**, con el número de notificaciones sin leer, y **Cerrar sesión**.
+En la barra superior están el botón **Notificaciones (n)**, con el número de notificaciones sin leer, **Preferencias** y **Cerrar sesión**. Además de la notificación en el sistema, cada aviso llega por correo según la preferencia de cada usuario (ver la sección 10).
 
 ## 2. Qué puede hacer cada rol
 
@@ -97,6 +97,41 @@ El botón **Áreas** de la barra superior, que solo ve el administrador, abre la
 - **Eliminar:** solo se puede eliminar un área sin planes ni usuarios activos. Si tiene alguno, la aplicación lo indica y sugiere desactivarla.
 
 Una base nueva trae las áreas Calidad (CAL), Sistemas (SIS), Planeación (PLA) y Talento Humano (THU). Al abrir una base de una versión anterior, las áreas que ya usaban los planes y los directores se registran solas.
+
+## 10. Notificaciones por correo y preferencias (todos los roles)
+
+Cada notificación del sistema también se envía por correo al usuario (HU-015). Generan notificación y correo:
+
+- La asignación de una actividad: le llega al responsable, con la actividad, el plan, el área y la fecha límite.
+- El envío de un plan a revisión: le llega al director del área.
+- La aprobación o la devolución de un plan: le llega al coordinador que lo creó.
+
+El correo trae el resumen y el código del plan. Si está configurada la dirección web del SGPI (variable `SGPI_URL_BASE`), trae también el enlace al plan.
+
+**Preferencias** permite elegir la frecuencia de los correos:
+
+| Frecuencia | Qué pasa |
+|---|---|
+| Inmediata (por defecto) | Un correo por cada notificación, apenas ocurre |
+| Resumen diario | Un solo correo a las 7:00 del día siguiente con todas las notificaciones |
+| Desactivada | No llegan correos; las notificaciones del sistema siguen llegando |
+
+En la misma ventana está la lista de los correos generados para el usuario, con su estado (enviado, pendiente, en el resumen del día o con error). Si el servidor de correo falla, la acción del usuario se completa igual y el correo se reintenta hasta 3 veces.
+
+### Configurar el servidor de correo
+
+El prototipo envía los correos por SMTP. Los datos del servidor se leen de variables de entorno, para no dejar contraseñas en el código:
+
+| Variable | Para qué sirve |
+|---|---|
+| `SGPI_SMTP_HOST` | Servidor SMTP. Si no existe, los correos quedan pendientes en la lista y no se envían |
+| `SGPI_SMTP_PUERTO` | Puerto (587 por defecto) |
+| `SGPI_SMTP_USUARIO` y `SGPI_SMTP_CLAVE` | Credenciales, si el servidor las pide |
+| `SGPI_SMTP_REMITENTE` | Dirección que aparece como remitente (por defecto el usuario) |
+| `SGPI_SMTP_TLS` | `false` para no usar STARTTLS (por defecto se usa) |
+| `SGPI_URL_BASE` | Dirección web del SGPI, para poner el enlace del plan en el correo (opcional) |
+
+Con la aplicación abierta, cada 5 minutos se revisa si hay correos en su hora, por ejemplo el resumen de las 7:00.
 
 ## Estados del plan
 

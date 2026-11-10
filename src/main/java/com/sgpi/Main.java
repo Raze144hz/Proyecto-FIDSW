@@ -34,6 +34,7 @@ import com.sgpi.model.Rol;
 import com.sgpi.model.User;
 import com.sgpi.ui.VistaActividades;
 import com.sgpi.ui.VistaAreas;
+import com.sgpi.ui.VistaPreferencias;
 
 public class Main extends Application {
 
@@ -48,6 +49,9 @@ public class Main extends Application {
         this.stage = stage;
 
         database.init();
+
+        // HU-015: envía los correos pendientes, como el resumen diario, mientras la aplicación está abierta.
+        database.iniciarRevisionDeCorreos(5);
 
         stage.setTitle(
                 "SGPI - Sistema de Gestión de Procesos Institucionales"
@@ -265,6 +269,12 @@ public class Main extends Application {
                         notificaciones,
                         cerrarSesion
                 );
+
+        // HU-015: cada usuario elige la frecuencia de sus correos y ve los que le llegaron.
+        Button preferencias = new Button("Preferencias");
+        preferencias.setId("btnPreferencias");
+        preferencias.setOnAction(event -> new VistaPreferencias(database, usuario).mostrar(stage));
+        topbar.getChildren().add(topbar.getChildren().indexOf(cerrarSesion), preferencias);
 
         // HU-010: el administrador gestiona las áreas de la estructura organizacional.
         if (Rol.ADMIN.equals(usuario.rol())) {

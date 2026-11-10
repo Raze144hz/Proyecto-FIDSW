@@ -1,5 +1,14 @@
 # Registro de cambios
 
+## HU-015: notificaciones por correo y alertas (10 de noviembre de 2026)
+
+- Cada notificación del sistema también se envía por correo: la asignación de una actividad (nueva), el envío de un plan a revisión, la aprobación y la devolución. El correo trae el resumen, el código del plan y, si está configurada `SGPI_URL_BASE`, el enlace al plan.
+- El envío es por SMTP con Jakarta Mail (nueva dependencia `org.eclipse.angus:angus-mail`). El servidor se configura con variables de entorno `SGPI_SMTP_*`; sin servidor, los correos quedan pendientes.
+- Regla de negocio: en **Preferencias** cada usuario elige la frecuencia de sus correos (inmediata, resumen diario a las 7:00 o desactivada) y ve la lista de correos con su estado.
+- Los correos se envían en un hilo aparte después de guardar la operación: si el servidor falla, la acción del usuario no se pierde y el correo se reintenta hasta 3 veces.
+- Criterio 2: el indicador **Notificaciones (n)** con el conteo de no leídas ya estaba en la barra superior desde HU-017.
+- Nueva tabla `correos` y columna `usuarios.frecuencia_correo`. 8 pruebas en `NotificacionesCorreoTest`.
+
 ## HU-010: estructura organizacional (10 de noviembre de 2026)
 
 - Nueva tabla `areas` con código, nombre y estado (activa o inactiva). Una base nueva trae Calidad, Sistemas, Planeación y Talento Humano; en una base anterior se registran solas las áreas que ya usaban los planes y los directores.
