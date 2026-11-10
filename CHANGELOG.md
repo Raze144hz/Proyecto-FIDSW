@@ -1,5 +1,14 @@
 # Registro de cambios
 
+## HU-010: estructura organizacional (10 de noviembre de 2026)
+
+- Nueva tabla `areas` con código, nombre y estado (activa o inactiva). Una base nueva trae Calidad, Sistemas, Planeación y Talento Humano; en una base anterior se registran solas las áreas que ya usaban los planes y los directores.
+- El administrador gestiona las áreas desde el botón **Áreas** de la barra superior: crear, modificar, activar o desactivar y eliminar.
+- Criterio 1: un área nueva queda habilitada de inmediato para asignar planes. El formulario del plan ya no tiene un campo de texto libre para el área, sino una lista con las áreas activas, y la capa de datos rechaza áreas no registradas o desactivadas.
+- Criterio 2 y regla de negocio: un área con planes o usuarios activos no se elimina; la aplicación lo indica y sugiere desactivarla.
+- Si un área cambia de nombre, sus planes y sus usuarios quedan con el nombre nuevo, así el director sigue viendo los planes de su área.
+- 10 pruebas en `EstructuraOrganizacionalTest`.
+
 ## HU-003: carga de evidencias (10 de noviembre de 2026)
 
 - Cada actividad puede tener evidencias en PDF, DOCX, JPG o PNG, de hasta 10 MB. Además de la extensión se revisa la firma del archivo, para no aceptar, por ejemplo, un ejecutable renombrado a `.pdf`.
