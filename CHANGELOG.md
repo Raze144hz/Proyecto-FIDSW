@@ -1,5 +1,13 @@
 # Registro de cambios
 
+## HU-003: carga de evidencias (10 de noviembre de 2026)
+
+- Cada actividad puede tener evidencias en PDF, DOCX, JPG o PNG, de hasta 10 MB. Además de la extensión se revisa la firma del archivo, para no aceptar, por ejemplo, un ejecutable renombrado a `.pdf`.
+- Las cargan el coordinador o el responsable asignado, con el plan en ejecución. La carga queda en el historial (`EVIDENCIA_CARGADA`).
+- RN-03: una actividad solo pasa a FINALIZADA si tiene al menos una evidencia. Con esto queda corregido el defecto D-02 del acta del Sprint 4.
+- En la ventana de actividades: columna **Evidencias**, botón **Cargar evidencia...** y lista de evidencias con opción de guardar una copia.
+- Nueva tabla `evidencias` (se crea sola al abrir la app) y 9 pruebas en `EvidenciasTest`.
+
 ## Rama `mejoras/refactor-hu001-hu004` (3 de noviembre de 2026)
 
 ### Reorganización del código

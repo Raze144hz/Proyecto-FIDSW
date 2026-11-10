@@ -54,7 +54,7 @@ La distribución de HU sigue la prioridad de la Propuesta y las dependencias de 
 | HU-006 | Autenticación y control de roles | Media | David Galindo |
 | HU-018 | Recuperación y restablecimiento de contraseña | Alta | David Álvarez |
 | HU-008 | Administración y asignación de roles de usuario | Media | Por asignar |
-| HU-010 | Gestión de la estructura organizacional | Media | Por asignar |
+| HU-010 | Gestión de la estructura organizacional | Media | Juan Sebastián Martínez (no se hizo en este sprint; pasa al Sprint 5) |
 | HU-002 | Registro de un nuevo plan de acción | Media | Juan Sebastián Martínez |
 
 ### Sprint 4 (22 oct – 4 nov) — Evidencias, seguimiento y aprobación
@@ -92,6 +92,7 @@ La distribución de HU sigue la prioridad de la Propuesta y las dependencias de 
 | HU-020 | Cierre y evaluación final de planes de acción | Alta | Por asignar |
 | HU-014a | Informe consolidado de cumplimiento | Media | Por asignar |
 | HU-009 | Configuración general del sistema | Media | Por asignar |
+| HU-010 | Gestión de la estructura organizacional (viene del Sprint 3) | Media | Juan Sebastián Martínez |
 
 ### Cierre (19 nov – [entrega final]) — Prioridad baja, estabilización y entrega
 
@@ -106,7 +107,7 @@ La distribución de HU sigue la prioridad de la Propuesta y las dependencias de 
 |---|---|---|---|
 | HU-011 | Exportación de planes de acción a PDF y Excel | Baja | Por asignar |
 | HU-014b | Drill-down del informe gerencial | Baja | Por asignar |
-| HU-015 | Notificaciones por correo electrónico y alertas | Baja | Por asignar |
+| HU-015 | Notificaciones por correo electrónico y alertas | Baja | Juan Sebastián Martínez |
 | HU-007 | Pruebas de validación del módulo de informes | Media | Por asignar |
 
 ## Reglas para mantener el cronograma al día
