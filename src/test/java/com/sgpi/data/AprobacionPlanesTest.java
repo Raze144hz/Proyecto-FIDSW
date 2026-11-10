@@ -143,7 +143,7 @@ class AprobacionPlanesTest {
     @Test
     @DisplayName("El director no revisa planes de otra área")
     void directorDeOtraArea() {
-        Plan plan = crearPlanPendiente("Financiera");
+        Plan plan = crearPlanPendiente("Sistemas");
 
         assertTrue(database.listarPendientesRevision(director).isEmpty());
         assertThrows(IllegalStateException.class, () -> database.aprobarPlan(plan.id(), director));

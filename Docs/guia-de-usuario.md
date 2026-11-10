@@ -17,7 +17,7 @@ En la barra superior están el botón **Notificaciones (n)**, con el número de 
 
 | Rol | Qué ve | Qué puede hacer |
 |---|---|---|
-| ADMIN | Tabla de planes y formulario | Crear, modificar y eliminar planes; enviarlos a revisión y llevar su ejecución |
+| ADMIN | Tabla de planes, formulario y botón **Áreas** | Lo mismo que el coordinador y, además, gestionar las áreas de la estructura organizacional (HU-010) |
 | COORDINADOR | Tabla de planes y formulario | Lo mismo que ADMIN |
 | RESPONSABLE | Tabla de planes | Consulta los planes; registra el avance de las actividades que tiene asignadas cuando el plan está en ejecución |
 | DIRECTOR | Vista de revisión de planes de su área | Aprobar o devolver con observaciones los planes pendientes de su área |
@@ -25,7 +25,7 @@ En la barra superior están el botón **Notificaciones (n)**, con el número de 
 ## 3. Registrar un plan (coordinador o administrador)
 
 1. Pulse **Nuevo** para limpiar el formulario.
-2. Escriba el objetivo y el área responsable y elija las fechas de inicio y de fin.
+2. Escriba el objetivo, elija el **área responsable** en la lista y elija las fechas de inicio y de fin. La lista solo trae las áreas activas que registró el administrador (ver la sección 9).
 3. Pulse **Crear plan**. El plan recibe un código único (por ejemplo `PA-2026-0001`) y queda en **BORRADOR**.
 
 Si falta un dato, la aplicación lo indica, por ejemplo "Debe ingresar el objetivo del plan.".
@@ -86,6 +86,17 @@ No se puede reenviar un plan con observaciones sin atender, y un plan devuelto n
 **Ver historial del plan** muestra cada cambio con la fecha, quién lo hizo, el estado anterior y el nuevo: creación, edición, eliminación, cambios de estado y cambios de actividades. En las devoluciones también muestra la observación.
 
 Cuando un plan se envía a revisión, el director del área recibe una notificación.
+
+## 9. Estructura organizacional (administrador)
+
+El botón **Áreas** de la barra superior, que solo ve el administrador, abre la lista de áreas y dependencias (HU-010) con su código, su nombre, si está activa y cuántos planes y usuarios activos tiene.
+
+- **Crear un área:** pulse **Nueva**, escriba el **Código** (hasta 10 caracteres: letras sin tilde, números y guion; se guarda en mayúsculas) y el **Nombre**, y pulse **Crear área**. Queda activa y aparece de inmediato en la lista de áreas del formulario del plan. No se repiten códigos ni nombres.
+- **Modificar un área:** selecciónela, cambie el código o el nombre y pulse **Actualizar área**. Si cambia el nombre, sus planes y sus usuarios (por ejemplo el director) quedan con el nombre nuevo.
+- **Desactivar o activar:** un área desactivada ya no aparece para planes nuevos, pero sus planes la conservan y se pueden seguir editando.
+- **Eliminar:** solo se puede eliminar un área sin planes ni usuarios activos. Si tiene alguno, la aplicación lo indica y sugiere desactivarla.
+
+Una base nueva trae las áreas Calidad (CAL), Sistemas (SIS), Planeación (PLA) y Talento Humano (THU). Al abrir una base de una versión anterior, las áreas que ya usaban los planes y los directores se registran solas.
 
 ## Estados del plan
 
