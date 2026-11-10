@@ -74,6 +74,8 @@ No se puede reenviar un plan con observaciones sin atender, y un plan devuelto n
 
 - **Iniciar ejecución:** solo para un plan **APROBADO** y sin observaciones pendientes. El plan queda **EN EJECUCION**.
 - **Registrar avance (HU-004):** con el plan en ejecución, abra **Actividades del plan**, seleccione una actividad, elija el nuevo estado (**PENDIENTE**, **EN PROGRESO** o **FINALIZADA**) y pulse **Actualizar estado de la seleccionada**. Lo pueden hacer el coordinador, el administrador o el responsable asignado a esa actividad.
+- **Cargar evidencias (HU-003):** con el plan en ejecución, seleccione la actividad en **Actividades del plan** y pulse **Cargar evidencia...**. Se aceptan archivos **PDF, DOCX, JPG y PNG** de hasta **10 MB**; si el formato no es válido, el sistema lo rechaza y muestra los formatos permitidos. La columna **Evidencias** indica si la actividad ya tiene soporte. Con **Ver evidencias de la seleccionada** se ve la lista y se puede guardar una copia de cada archivo.
+- **Evidencia antes de finalizar (RN-03):** una actividad solo pasa a **FINALIZADA** si tiene al menos una evidencia cargada.
 - **Avance:** la barra de la ventana y la columna **Avance** de la tabla muestran actividades **FINALIZADA** sobre el total. Una actividad en progreso no suma.
 - **Finalizar plan:** el plan en ejecución queda **FINALIZADO**. Si el plan tiene actividades, todas deben estar finalizadas (avance 100 %).
 

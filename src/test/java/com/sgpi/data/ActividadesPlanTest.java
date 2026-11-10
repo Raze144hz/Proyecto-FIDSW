@@ -11,6 +11,7 @@ import com.sgpi.model.EstadoPlan;
 import com.sgpi.model.Plan;
 import com.sgpi.model.RegistroHistorial;
 import com.sgpi.model.User;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -105,6 +106,8 @@ class ActividadesPlanTest {
         Actividad a3 = database.agregarActividad(plan.id(), "Actividad 3", null, FIN, coordinador);
         database.agregarActividad(plan.id(), "Actividad 4", null, FIN, coordinador);
         ponerEnEjecucion(plan);
+        conEvidencia(a1);
+        conEvidencia(a3);
 
         database.cambiarEstadoActividad(a1.id(), EstadoActividad.FINALIZADA, responsable);
         assertEquals(25, database.calcularAvance(plan.id()));
@@ -150,6 +153,7 @@ class ActividadesPlanTest {
 
         assertThrows(IllegalStateException.class, () -> database.finalizarPlan(plan.id(), coordinador));
 
+        conEvidencia(actividad);
         database.cambiarEstadoActividad(actividad.id(), EstadoActividad.FINALIZADA, responsable);
         database.finalizarPlan(plan.id(), coordinador);
 
@@ -165,6 +169,7 @@ class ActividadesPlanTest {
         Actividad otra = database.agregarActividad(plan.id(), "Actividad 2", null, FIN, coordinador);
         database.eliminarActividad(otra.id(), coordinador);
         ponerEnEjecucion(plan);
+        conEvidencia(actividad);
         database.cambiarEstadoActividad(actividad.id(), EstadoActividad.FINALIZADA, responsable);
 
         List<String> acciones = database.listarHistorial(plan.id()).stream().map(RegistroHistorial::accion).toList();
@@ -195,6 +200,12 @@ class ActividadesPlanTest {
         database.enviarARevision(plan.id(), coordinador);
         database.aprobarPlan(plan.id(), director);
         database.iniciarEjecucion(plan.id(), coordinador);
+    }
+
+    /** RN-03: para finalizar una actividad hace falta al menos una evidencia (HU-003). */
+    private void conEvidencia(Actividad actividad) {
+        database.cargarEvidencia(actividad.id(), "soporte.pdf",
+                "%PDF-1.4 soporte".getBytes(StandardCharsets.US_ASCII), coordinador);
     }
 
     private String estadoDe(Plan plan) {

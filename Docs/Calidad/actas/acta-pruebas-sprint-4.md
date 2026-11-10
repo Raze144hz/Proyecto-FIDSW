@@ -105,7 +105,7 @@ No están en el documento de casos.
 | Defecto | Issue | Descripción | Severidad | Responsable | Estado |
 |---|---|---|---|---|---|
 | D-01 | PR #76 | El detalle del plan del director no mostraba el porcentaje de avance; solo aparecía en la columna de la tabla. CP-HU004-01 pide verlo en el detalle. | Baja | | Corregido en el PR #76: el detalle muestra "Avance: N % (x de y actividades finalizadas)" |
-| D-02 | #4 | Una actividad pasa a FINALIZADA sin evidencias. La regla RN-03 pide al menos una, pero depende de HU-003. | Media | Responsable de HU-003 | Abierto |
+| D-02 | #4 | Una actividad pasa a FINALIZADA sin evidencias. La regla RN-03 pide al menos una, pero depende de HU-003. | Media | Responsable de HU-003 | Corregido con HU-003: una actividad sin evidencia ya no se puede finalizar |
 | D-03 | #4 | No existen los cortes de seguimiento con comentario (RN-04). | Media | Por asignar | Abierto |
 | D-04 | — | El documento de casos usa los estados POR_HACER y EN_PROCESO; la aplicación usa PENDIENTE y EN PROGRESO. | Baja | | Corregido: el documento de casos ya usa PENDIENTE y EN PROGRESO |
 

@@ -8,6 +8,7 @@ import java.time.LocalDate;
  *
  * @param responsableId usuario responsable, o {@code null} si aún no tiene responsable
  * @param responsable nombre del responsable, o {@code null}
+ * @param evidencias cantidad de evidencias cargadas (HU-003)
  */
 public record Actividad(
         long id,
@@ -16,9 +17,15 @@ public record Actividad(
         Long responsableId,
         String responsable,
         LocalDate fechaLimite,
-        String estado) {
+        String estado,
+        int evidencias) {
 
     public boolean finalizada() {
         return EstadoActividad.FINALIZADA.equals(estado);
+    }
+
+    /** HU-003: la actividad tiene al menos una evidencia cargada. */
+    public boolean conEvidencia() {
+        return evidencias > 0;
     }
 }
