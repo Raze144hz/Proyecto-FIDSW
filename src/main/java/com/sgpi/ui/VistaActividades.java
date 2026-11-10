@@ -4,10 +4,16 @@ import com.sgpi.data.DataService;
 import com.sgpi.model.Actividad;
 import com.sgpi.model.EstadoActividad;
 import com.sgpi.model.EstadoPlan;
+import com.sgpi.model.Evidencia;
 import com.sgpi.model.Plan;
 import com.sgpi.model.Rol;
 import com.sgpi.model.User;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Objects;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.geometry.Insets;
@@ -20,6 +26,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -29,6 +36,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -38,7 +46,8 @@ import javafx.stage.Window;
  *
  * <ul>
  *   <li>El coordinador agrega o elimina actividades mientras el plan está en borrador o devuelto.</li>
- *   <li>Con el plan en ejecución, el coordinador o el responsable asignado registran el avance.</li>
+ *   <li>Con el plan en ejecución, el coordinador o el responsable asignado registran el avance y cargan
+ *       evidencias (HU-003). Una actividad sin evidencia no se puede finalizar (RN-03).</li>
  *   <li>La barra muestra el avance: actividades finalizadas sobre el total.</li>
  * </ul>
  */
@@ -49,6 +58,8 @@ public class VistaActividades {
     private final Plan plan;
 
     private final TableView<Actividad> tabla = new TableView<>();
+    private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
     private final ProgressBar barra = new ProgressBar(0);
     private final Label avance = new Label();
 
@@ -103,11 +114,18 @@ public class VistaActividades {
             contenido.getChildren().add(ayuda);
         }
 
+        Button verEvidencias = new Button("Ver evidencias de la seleccionada");
+        verEvidencias.setId("btnVerEvidencias");
+        verEvidencias.disableProperty().bind(tabla.getSelectionModel().selectedItemProperty().isNull());
+        verEvidencias.setOnAction(event -> mostrarEvidencias(ventana, tabla.getSelectionModel().getSelectedItem()));
+
         Button cerrar = new Button("Cerrar");
         cerrar.setCancelButton(true);
         cerrar.setOnAction(event -> ventana.close());
-        HBox pie = new HBox(cerrar);
-        pie.setAlignment(Pos.CENTER_RIGHT);
+        Region separador = new Region();
+        HBox.setHgrow(separador, Priority.ALWAYS);
+        HBox pie = new HBox(10, verEvidencias, separador, cerrar);
+        pie.setAlignment(Pos.CENTER_LEFT);
         contenido.getChildren().add(pie);
 
         contenido.setPadding(new Insets(20));
@@ -134,7 +152,12 @@ public class VistaActividades {
         TableColumn<Actividad, String> estado = new TableColumn<>("Estado");
         estado.setCellValueFactory(dato -> new ReadOnlyStringWrapper(dato.getValue().estado()));
 
-        tabla.getColumns().addAll(descripcion, responsable, fecha, estado);
+        TableColumn<Actividad, String> evidencias = new TableColumn<>("Evidencias");
+        evidencias.setCellValueFactory(dato -> new ReadOnlyStringWrapper(dato.getValue().conEvidencia()
+                ? "Con evidencia (" + dato.getValue().evidencias() + ")"
+                : "Sin evidencia"));
+
+        tabla.getColumns().addAll(descripcion, responsable, fecha, estado, evidencias);
         tabla.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         descripcion.setMinWidth(280);
         tabla.setPlaceholder(new Label("El plan no tiene actividades registradas."));
@@ -204,12 +227,99 @@ public class VistaActividades {
             ejecutar(() -> database.cambiarEstadoActividad(actividad.id(), estado.getValue(), usuario));
         });
 
+        Button cargar = new Button("Cargar evidencia...");
+        cargar.setId("btnCargarEvidencia");
+        cargar.disableProperty().bind(tabla.getSelectionModel().selectedItemProperty().isNull());
+        cargar.setOnAction(event -> cargarEvidencia(cargar.getScene().getWindow(),
+                tabla.getSelectionModel().getSelectedItem()));
+
         Region espacio = new Region();
         HBox.setHgrow(espacio, Priority.ALWAYS);
 
-        HBox fila = new HBox(10, new Label("Nuevo estado"), estado, actualizar, espacio);
+        HBox fila = new HBox(10, new Label("Nuevo estado"), estado, actualizar, espacio, cargar);
         fila.setAlignment(Pos.CENTER_LEFT);
         return fila;
+    }
+
+    /** HU-003: el usuario elige un archivo y se carga como evidencia de la actividad. */
+    private void cargarEvidencia(Window ventana, Actividad actividad) {
+        FileChooser selector = new FileChooser();
+        selector.setTitle("Evidencia para \"" + actividad.descripcion() + "\"");
+        selector.getExtensionFilters().add(new FileChooser.ExtensionFilter(
+                "Evidencias (" + DataService.FORMATOS_VALIDOS + ")", "*.pdf", "*.docx", "*.jpg", "*.jpeg", "*.png"));
+        File archivo = selector.showOpenDialog(ventana);
+        if (archivo == null) {
+            return;
+        }
+
+        ejecutar(() -> {
+            if (archivo.length() > DataService.TAMANO_MAXIMO_EVIDENCIA) {
+                throw new IllegalArgumentException("El archivo supera el máximo de "
+                        + DataService.TAMANO_MAXIMO_EVIDENCIA / (1024 * 1024) + " MB.");
+            }
+            byte[] contenido;
+            try {
+                contenido = Files.readAllBytes(archivo.toPath());
+            } catch (IOException exception) {
+                throw new IllegalStateException("No se pudo leer el archivo: " + exception.getMessage(), exception);
+            }
+            database.cargarEvidencia(actividad.id(), archivo.getName(), contenido, usuario);
+        });
+    }
+
+    /** Lista las evidencias de una actividad y permite guardar una copia de cada archivo. */
+    private void mostrarEvidencias(Window propietario, Actividad actividad) {
+        List<Evidencia> evidencias = database.listarEvidencias(actividad.id());
+
+        ListView<Evidencia> lista = new ListView<>();
+        lista.getItems().setAll(evidencias);
+        lista.setPlaceholder(new Label("La actividad no tiene evidencias."));
+        lista.setCellFactory(vista -> new ListCell<>() {
+            @Override
+            protected void updateItem(Evidencia item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? null : item.nombreArchivo() + "  |  " + item.formato() + ", "
+                        + Math.max(1, item.tamano() / 1024) + " KB  |  " + item.cargadoPor() + ", "
+                        + item.cargadoEn().format(FORMATO_FECHA));
+            }
+        });
+
+        Stage ventana = new Stage();
+        ventana.initOwner(propietario);
+        ventana.initModality(Modality.WINDOW_MODAL);
+        ventana.setTitle("Evidencias de \"" + actividad.descripcion() + "\"");
+
+        Button descargar = new Button("Guardar copia...");
+        descargar.disableProperty().bind(lista.getSelectionModel().selectedItemProperty().isNull());
+        descargar.setOnAction(event -> {
+            Evidencia evidencia = lista.getSelectionModel().getSelectedItem();
+            FileChooser selector = new FileChooser();
+            selector.setInitialFileName(evidencia.nombreArchivo());
+            File destino = selector.showSaveDialog(ventana);
+            if (destino != null) {
+                ejecutar(() -> {
+                    try {
+                        Files.write(destino.toPath(), database.descargarEvidencia(evidencia.id()));
+                    } catch (IOException exception) {
+                        throw new IllegalStateException("No se pudo guardar el archivo: " + exception.getMessage(),
+                                exception);
+                    }
+                });
+            }
+        });
+
+        Button cerrar = new Button("Cerrar");
+        cerrar.setCancelButton(true);
+        cerrar.setOnAction(event -> ventana.close());
+
+        HBox botones = new HBox(10, descargar, cerrar);
+        botones.setAlignment(Pos.CENTER_RIGHT);
+        VBox contenido = new VBox(10, new Label(evidencias.size() + " evidencia(s)"), lista, botones);
+        contenido.setPadding(new Insets(15));
+        VBox.setVgrow(lista, Priority.ALWAYS);
+
+        ventana.setScene(new Scene(contenido, 620, 360));
+        ventana.showAndWait();
     }
 
     private void ejecutar(Runnable accion) {
