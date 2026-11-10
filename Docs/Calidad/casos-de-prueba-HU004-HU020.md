@@ -3,8 +3,6 @@
 Casos diseñados a partir de los criterios de aceptación del issue [#4](https://github.com/Raze144hz/Proyecto-FIDSW/issues/4) (HU-004), del issue [#28](https://github.com/Raze144hz/Proyecto-FIDSW/issues/28) (HU-020) y de las [reglas de negocio precisadas el 18 de octubre](../propuesta-y-requisitos.md#23-reglas-de-negocio-precisadas-18-de-octubre-de-2026) (RN-01 a RN-05). Siguen el [formato de caso de prueba](formato-caso-de-prueba.md).
 
 > **Estado:** los casos CP-HU004-01, 02 y 04 se ejecutaron el 4 de noviembre de 2026 y pasan; los resultados están en el [acta de pruebas del Sprint 4](actas/acta-pruebas-sprint-4.md). CP-HU004-03 y 05 esperan la carga de evidencias (HU-003) y los cortes de seguimiento. Los casos de HU-020 se ejecutan cuando se programe (Sprint 5 del [cronograma](../Planning/cronograma-desarrollo.md)).
->
-> En la aplicación los estados de actividad se llaman PENDIENTE, EN PROGRESO y FINALIZADA; en estos casos, POR_HACER equivale a PENDIENTE y EN_PROCESO a EN PROGRESO.
 
 Datos comunes: un plan "Auditoría interna de procesos 2026" del área Calidad, en estado EN EJECUCION, con el coordinador `coordinador@sgpi.local`, la directora del área `director@sgpi.local` y el responsable `responsable@sgpi.local`.
 
@@ -19,7 +17,7 @@ Datos comunes: un plan "Auditoría interna de procesos 2026" del área Calidad, 
 | Criterio de aceptación | Dado que un plan tiene actividades registradas, cuando accedo a su detalle, entonces el sistema muestra el porcentaje de avance calculado. |
 | Tipo / prioridad | Funcional / Alta |
 | Rol | Director de área |
-| Precondiciones | El plan tiene 4 actividades: 1 en FINALIZADA, 1 en EN_PROCESO y 2 en POR_HACER. |
+| Precondiciones | El plan tiene 4 actividades: 1 en FINALIZADA, 1 en EN PROGRESO y 2 en PENDIENTE. |
 | Datos de prueba | 1 de 4 actividades finalizadas |
 
 **Pasos:** 1. Iniciar sesión como director. 2. Abrir el detalle del plan.
@@ -33,10 +31,10 @@ Datos comunes: un plan "Auditoría interna de procesos 2026" del área Calidad, 
 | Criterio de aceptación | Dado que se completa una actividad, cuando se actualiza su estado, entonces el porcentaje de avance del plan se recalcula automáticamente. |
 | Tipo / prioridad | Funcional / Alta |
 | Rol | Coordinador |
-| Precondiciones | El mismo plan de CP-HU004-01 (25 %). La actividad en EN_PROCESO tiene una evidencia cargada. |
-| Datos de prueba | Actividad en EN_PROCESO con evidencia |
+| Precondiciones | El mismo plan de CP-HU004-01 (25 %). La actividad en EN PROGRESO tiene una evidencia cargada. |
+| Datos de prueba | Actividad en EN PROGRESO con evidencia |
 
-**Pasos:** 1. Iniciar sesión como coordinador. 2. Pasar la actividad en EN_PROCESO a FINALIZADA. 3. Volver al detalle del plan.
+**Pasos:** 1. Iniciar sesión como coordinador. 2. Pasar la actividad en EN PROGRESO a FINALIZADA. 3. Volver al detalle del plan.
 
 **Resultado esperado:** el avance pasa de 25 % a 50 % sin recargar datos a mano, y el historial registra el cambio de estado de la actividad.
 
@@ -47,7 +45,7 @@ Datos comunes: un plan "Auditoría interna de procesos 2026" del área Calidad, 
 | Regla de negocio | Una actividad solo pasa a *Finalizada* si tiene al menos una evidencia. |
 | Tipo / prioridad | Funcional / Alta |
 | Rol | Coordinador |
-| Precondiciones | El plan tiene una actividad en POR_HACER sin evidencias. |
+| Precondiciones | El plan tiene una actividad en PENDIENTE sin evidencias. |
 | Datos de prueba | Actividad sin evidencia |
 
 **Pasos:** 1. Iniciar sesión como coordinador. 2. Intentar mover la actividad a FINALIZADA.

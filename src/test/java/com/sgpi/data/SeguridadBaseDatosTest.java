@@ -1,6 +1,7 @@
 package com.sgpi.data;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -14,12 +15,18 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.Clock;
 import java.util.UUID;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-/** Pruebas de la corrección del hallazgo java:S2115 de SonarQube (base de datos sin contraseña). */
+/**
+ * Pruebas de la corrección del hallazgo java:S2115 de SonarQube (base de datos sin contraseña).
+ *
+ * <p>Las bases se crean con {@link #sinVariables(String)} para que el resultado no dependa de si el
+ * equipo donde corren las pruebas tiene definida la variable {@value DataService#VARIABLE_CLAVE}.
+ */
 class SeguridadBaseDatosTest {
 
     private static final String SIN_CLAVE = "";
@@ -27,6 +34,10 @@ class SeguridadBaseDatosTest {
     private final String nombre = "prueba-" + UUID.randomUUID();
     private final String urlLocal = "jdbc:h2:./data/" + nombre;
     private final Path archivoClave = Path.of("data", nombre + ".clave");
+
+    private static DataService sinVariables(String url) {
+        return new DataService(url, Clock.systemDefaultZone(), nombreVariable -> null);
+    }
 
     @AfterEach
     void borrarBaseLocal() throws IOException {
@@ -44,7 +55,7 @@ class SeguridadBaseDatosTest {
     @DisplayName("La base de datos rechaza conexiones sin contraseña")
     void laBaseRechazaConexionesSinClave() {
         String url = "jdbc:h2:mem:sgpi-" + UUID.randomUUID() + ";DB_CLOSE_DELAY=-1";
-        new DataService(url).init();
+        sinVariables(url).init();
 
         assertThrows(SQLException.class, () -> DriverManager.getConnection(url, "sa", SIN_CLAVE));
     }
@@ -52,16 +63,29 @@ class SeguridadBaseDatosTest {
     @Test
     @DisplayName("La base local nueva recibe una contraseña aleatoria guardada en data/")
     void laBaseLocalNuevaGuardaSuClave() throws IOException {
-        new DataService(urlLocal).init();
+        sinVariables(urlLocal).init();
 
         assertTrue(Files.exists(archivoClave));
         assertTrue(Files.readString(archivoClave, StandardCharsets.UTF_8).length() >= 32);
         assertThrows(SQLException.class, () -> DriverManager.getConnection(urlLocal, "sa", SIN_CLAVE));
 
         // Al abrir la aplicación otra vez se lee la misma clave y los usuarios siguen ahí.
-        DataService otraVez = new DataService(urlLocal);
+        DataService otraVez = sinVariables(urlLocal);
         otraVez.init();
         assertTrue(otraVez.authenticate("coordinador@sgpi.local", "Coord123*").isPresent());
+    }
+
+    @Test
+    @DisplayName("Si existe la variable SGPI_DB_PASSWORD, se usa esa contraseña y no se crea el archivo de clave")
+    void laVariableDeEntornoTienePrioridad() throws SQLException {
+        String clave = "clave-de-la-variable-" + UUID.randomUUID();
+        DataService database = new DataService(urlLocal, Clock.systemDefaultZone(),
+                nombreVariable -> DataService.VARIABLE_CLAVE.equals(nombreVariable) ? clave : null);
+        database.init();
+
+        assertFalse(Files.exists(archivoClave));
+        DriverManager.getConnection(urlLocal, "sa", clave).close();
+        assertTrue(database.authenticate("coordinador@sgpi.local", "Coord123*").isPresent());
     }
 
     @Test
@@ -74,7 +98,7 @@ class SeguridadBaseDatosTest {
             statement.execute("INSERT INTO dato_anterior VALUES (7)");
         }
 
-        DataService database = new DataService(urlLocal);
+        DataService database = sinVariables(urlLocal);
         database.init();
 
         assertThrows(SQLException.class, () -> DriverManager.getConnection(urlLocal, "sa", SIN_CLAVE));

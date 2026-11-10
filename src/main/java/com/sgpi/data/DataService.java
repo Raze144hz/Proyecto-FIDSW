@@ -34,6 +34,7 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.function.UnaryOperator;
 import org.mindrot.jbcrypt.BCrypt;
 
 /**
@@ -81,6 +82,7 @@ public class DataService {
 
     private final String url;
     private final Clock reloj;
+    private final UnaryOperator<String> entorno;
 
     /** Contraseña de la base. Las bases en memoria usan una aleatoria, distinta en cada instancia. */
     private String claveBaseDatos = generarClave();
@@ -96,8 +98,17 @@ public class DataService {
 
     /** Permite además fijar el reloj, para probar reglas que dependen del tiempo (bloqueo de cuentas). */
     public DataService(String url, Clock reloj) {
+        this(url, reloj, System::getenv);
+    }
+
+    /**
+     * Permite además fijar de dónde se leen las variables de entorno, para que las pruebas no dependan de
+     * las variables que tenga definidas el equipo donde corren (por ejemplo {@value #VARIABLE_CLAVE}).
+     */
+    DataService(String url, Clock reloj, UnaryOperator<String> entorno) {
         this.url = url;
         this.reloj = reloj;
+        this.entorno = entorno;
     }
 
     // ------------------------------------------------------------------ inicialización
@@ -139,7 +150,7 @@ public class DataService {
      * </ol>
      */
     private String prepararClave() throws IOException, SQLException {
-        String desdeEntorno = System.getenv(VARIABLE_CLAVE);
+        String desdeEntorno = entorno.apply(VARIABLE_CLAVE);
         if (desdeEntorno != null && !desdeEntorno.isBlank()) {
             return desdeEntorno;
         }
