@@ -1,5 +1,14 @@
 # Registro de cambios
 
+## HU-005: avisos de vencimiento de actividades (18 de noviembre de 2026)
+
+- Criterio 1: al abrir la aplicación y cada 5 minutos se revisan las actividades de los planes aprobados o en ejecución. Si a una actividad no finalizada le quedan 5 días o menos, su responsable recibe un aviso con la actividad, el plan y la fecha límite.
+- Regla de negocio: el aviso se repite una sola vez cuando queda 1 día o menos ("Último aviso"). Cada aviso sale una vez aunque la revisión corra muchas veces al día.
+- Criterio 2: una actividad FINALIZADA no genera avisos. Tampoco los planes en borrador o en revisión.
+- Los avisos son notificaciones del sistema (contador **Notificaciones (n)**) y salen por correo según la preferencia de HU-015 (inmediato, resumen de las 7:00 o desactivado). Una actividad sin responsable se avisa al coordinador del plan.
+- La revisión periódica ahora corre también sin servidor SMTP; antes solo arrancaba con `SGPI_SMTP_HOST` configurado.
+- Sin tablas nuevas. 8 pruebas en `VencimientosActividadesTest` (76 en total).
+
 ## HU-015: notificaciones por correo y alertas (10 de noviembre de 2026)
 
 - Cada notificación del sistema también se envía por correo: la asignación de una actividad (nueva), el envío de un plan a revisión, la aprobación y la devolución. El correo trae el resumen, el código del plan y, si está configurada `SGPI_URL_BASE`, el enlace al plan.

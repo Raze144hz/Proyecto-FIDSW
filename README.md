@@ -37,7 +37,7 @@ A nivel de seguridad, el sistema contempla autenticación de usuarios y control 
 
 ## 🧪 Estado actual del prototipo
 
-Corte: 3 de noviembre de 2026, rama `mejoras/refactor-hu001-hu004`.
+Corte: 18 de noviembre de 2026, rama `feature/hu-005-vencimientos` (sobre `develop`, con los PR #76 a #85).
 
 | Funcionalidad | Historias | Estado |
 |---|---|---|
@@ -48,8 +48,11 @@ Corte: 3 de noviembre de 2026, rama `mejoras/refactor-hu001-hu004`.
 | Envío a revisión, aprobación o devolución con observaciones, notificaciones internas (al coordinador y al director) e historial | HU-017 | Implementado, con 12 pruebas JUnit; pendiente la revisión del PR por otro integrante |
 | Tablero Kanban | HU-012a, HU-012b | Diseñado (diagramas y modelo de datos); sin programar |
 | Cierre del plan con evaluación del director | HU-020 | Diseñado; sin programar. **Finalizar** exige el 100 % de avance pero no pide evaluación |
-| Carga, versiones, búsqueda y filtrado de evidencias | HU-003, HU-019, HU-016 | Sin programar |
-| Alertas de vencimiento y correo | HU-005, HU-015 | Sin programar |
+| Carga de evidencias (PDF, DOCX, JPG y PNG de hasta 10 MB); una actividad solo se finaliza con evidencia (RN-03) | HU-003 | Implementado, con 9 pruebas JUnit |
+| Versiones, búsqueda y filtrado de evidencias | HU-019, HU-016 | Sin programar |
+| Áreas de la estructura organizacional, activas o inactivas | HU-010 | Implementado, con 10 pruebas JUnit |
+| Notificaciones por correo SMTP con frecuencia inmediata, resumen diario a las 7:00 o desactivada | HU-015 | Implementado, con 8 pruebas JUnit (sin servidor SMTP los correos quedan pendientes) |
+| Avisos de vencimiento de actividades a 5 días y a 1 día, al responsable, en el sistema y por correo | HU-005 | Implementado, con 8 pruebas JUnit |
 | Reportes, informes y exportación a PDF y Excel | HU-011, HU-014a, HU-014b | Sin programar |
 
 El mapeo completo entre historias, issues y estado real está en [`Docs/Planning/trazabilidad-hu-issues.md`](Docs/Planning/trazabilidad-hu-issues.md).
@@ -67,7 +70,7 @@ El mapeo completo entre historias, issues y estado real está en [`Docs/Planning
 *   **Interfaz:** JavaFX (aplicación de escritorio)
 *   **Base de Datos:** H2 con JDBC en el prototipo
 *   **Seguridad:** contraseñas con hash BCrypt
-*   **Construcción y pruebas:** Maven (con Maven Wrapper) y JUnit 5. Las 37 pruebas se corren localmente con `mvnw clean test` (ver [`README-PROTOTIPO.md`](README-PROTOTIPO.md#pruebas-automáticas)).
+*   **Construcción y pruebas:** Maven (con Maven Wrapper) y JUnit 5. Las 76 pruebas se corren localmente con `mvnw clean test` (ver [`README-PROTOTIPO.md`](README-PROTOTIPO.md#pruebas-automáticas)).
 *   **Herramientas:** GitHub Projects, Git
 
 ## ▶️ Cómo ejecutar el prototipo

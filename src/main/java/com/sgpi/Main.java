@@ -50,7 +50,8 @@ public class Main extends Application {
 
         database.init();
 
-        // HU-015: envía los correos pendientes, como el resumen diario, mientras la aplicación está abierta.
+        // HU-015 y HU-005: al abrir y cada 5 minutos envía los correos pendientes (como el resumen diario) y
+        // genera los avisos de vencimiento de actividades.
         database.iniciarRevisionDeCorreos(5);
 
         stage.setTitle(
