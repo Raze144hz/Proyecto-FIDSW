@@ -7,7 +7,7 @@ Diagramas de diseño para los dos casos de uso elegidos en el ejercicio de la Se
 
 Desde la revisión con el profesor del 16 de octubre, los diagramas también incluyen el seguimiento del plan de acción (**HU-004**, seguimiento de avance) y, desde el 18 de octubre, su cierre (**HU-020**, cierre y evaluación final).
 
-Todos los diagramas están en PNG en la carpeta [`/Graficas`](../../Graficas) y están hechos en **draw.io** (diagrams.net). Su fuente editable es el archivo `.drawio` del mismo nombre en [`Graficas/fuentes`](../../Graficas/fuentes) (ver [cómo editarlos](#cómo-editar-los-diagramas)).
+Todos los diagramas están en PNG editable (`.drawio.png`) en la carpeta [`/Graficas`](../../Graficas) y están hechos en **draw.io** (diagrams.net). Su fuente editable es el archivo `.drawio` del mismo nombre, al lado de cada imagen (ver [cómo editarlos](#cómo-editar-los-diagramas)).
 
 ## 0. Arquitectura objetivo y prototipo implementado
 
@@ -38,7 +38,7 @@ Tomadas para que requisitos, diagramas, base de datos y pruebas digan lo mismo:
 
 ## 1. Diagrama de clases
 
-![Diagrama de clases](../../Graficas/diagrama-clases.png)
+![Diagrama de clases](../../Graficas/diagrama-clases.drawio.png)
 
 - Clases del dominio: `Usuario`, `Rol`, `Area`, `Busqueda`, `Evidencia`, `PlanAccion`, `EstadoPlan`, `Actividad`, `EstadoActividad`, `Observacion`, `Notificacion`, `HistorialPlan` y `SeguimientoPlan`.
 - Un `Usuario` tiene un `Rol` y pertenece a un `Area`. Es responsable de evidencias y de actividades, coordina o dirige planes de acción, escribe observaciones, registra seguimientos y recibe notificaciones.
@@ -60,7 +60,7 @@ Tomadas para que requisitos, diagramas, base de datos y pruebas digan lo mismo:
 
 ## 2. Modelo relacional de la base de datos
 
-![Modelo relacional de la base de datos](../../Graficas/modelo-relacional-bd.png)
+![Modelo relacional de la base de datos](../../Graficas/modelo-relacional-bd.drawio.png)
 
 El script equivalente para PostgreSQL está en [`Database/modelo-objetivo-postgresql.sql`](../../Database/modelo-objetivo-postgresql.sql).
 
@@ -117,7 +117,7 @@ La primera versión del seguimiento registraba un porcentaje digitado por una pe
 
 ## 3. Diagrama de componentes
 
-![Diagrama de componentes](../../Graficas/diagrama-componentes.png)
+![Diagrama de componentes](../../Graficas/diagrama-componentes.drawio.png)
 
 - Notación de la Sesión 15: componente con ícono, interfaz provista (bola) e interfaz requerida (media luna).
 - Cliente SGPI (JavaFX 17) con tres vistas: Revisión de Planes (HU-017), Seguimiento de Planes (HU-004 y HU-020) y Búsqueda de Evidencias (HU-016).
@@ -141,7 +141,7 @@ Javalin 6 y Jakarta Mail 2.1 son propuestas del 18 de octubre (ver [supuestos](#
 
 ## 4. Diagrama de despliegue
 
-![Diagrama de despliegue](../../Graficas/diagrama-despliegue.png)
+![Diagrama de despliegue](../../Graficas/diagrama-despliegue.drawio.png)
 
 - Tres nodos: «Cliente» PC del usuario, «Servidor» de aplicaciones y «Servidor» de base de datos.
 - Artefactos desplegados en cada nodo (incluida la carpeta `evidencias/`, donde el Gestor de Archivos guarda los archivos) y conectores «TCP/IP» con su protocolo (HTTPS y JDBC) y multiplicidad.
@@ -150,13 +150,13 @@ Javalin 6 y Jakarta Mail 2.1 son propuestas del 18 de octubre (ver [supuestos](#
 
 ## 5. Diagrama de despliegue unido con componentes
 
-![Diagrama de despliegue con componentes](../../Graficas/diagrama-despliegue-con-componentes.png)
+![Diagrama de despliegue con componentes](../../Graficas/diagrama-despliegue-con-componentes.drawio.png)
 
 Mismos nodos y conectores del punto 4, con los componentes del punto 3 y su herramienta, ubicados dentro del nodo donde se ejecutan (formato de la diapositiva "Uniendo diagrama de despliegue con componentes").
 
 ## 6. Diagrama de secuencia (HU-017)
 
-![Diagrama de secuencia de HU-017](../../Graficas/diagrama-secuencia-hu017.png)
+![Diagrama de secuencia de HU-017](../../Graficas/diagrama-secuencia-hu017.drawio.png)
 
 - Participantes: el director de área, el coordinador y los componentes del punto 3 que intervienen en HU-017: Vista Revisión de Planes, Gestión de Planes de Acción, Seguridad y Roles, Notificaciones, Persistencia y BD SGPI.
 - Los mensajes son las operaciones de las interfaces del punto 3 y los métodos del diagrama de clases: `aprobar()`, `devolver(observacion)`, `puedeEjecutarse()`, `tienePermiso(accion)`, `enviar(destinatario, mensaje)`, `guardar(entidad)`, `consultar(criterios)` y `buscarPorId(id)`. `listarPendientes(area)` es la operación de `IAprobacionPlanes` con la que la vista del director carga los planes de su área.
@@ -167,7 +167,7 @@ Mismos nodos y conectores del punto 4, con los componentes del punto 3 y su herr
 
 ## 7. Diagrama de procesos (HU-017, HU-004 y HU-020)
 
-![Diagrama de procesos de HU-017, HU-004 y HU-020](../../Graficas/diagrama-procesos-hu017.png)
+![Diagrama de procesos de HU-017, HU-004 y HU-020](../../Graficas/diagrama-procesos-hu017.drawio.png)
 
 - Diagrama de actividades con cuatro carriles: Coordinador, Sistema SGPI, Director de área y Responsable de actividad. Las decisiones son rombos.
 - Sigue el ciclo de vida del plan: BORRADOR → PENDIENTE DE REVISION → APROBADO → EN EJECUCION → FINALIZADO.
@@ -192,14 +192,14 @@ Si el equipo decide una aplicación web o MySQL, hay que actualizar los diagrama
 
 ## Cómo editar los diagramas
 
-Todos los diagramas están hechos en **draw.io** (https://app.diagrams.net o draw.io de escritorio). Cada uno tiene su archivo `.drawio` en [`Graficas/fuentes`](../../Graficas/fuentes) (los del Taller de Diseño, en [`Docs/diagramas`](../diagramas)), y su imagen se exporta desde draw.io **con el diagrama incluido**: los PNG de `Graficas` y los SVG de `Docs/diagramas` también se abren y se editan directamente en draw.io.
+Todos los diagramas están hechos en **draw.io** (https://app.diagrams.net o draw.io de escritorio). Cada uno tiene su archivo `.drawio` al lado de su imagen PNG (en `Graficas`, `Graficas/entrega-1`, [`Docs/diagramas`](../diagramas) y `Docs/Retrospective`), y su imagen se exporta desde draw.io **con el diagrama incluido**: los PNG también se abren y se editan directamente en draw.io.
 
 1. Abrir el `.drawio` en draw.io (**File → Open** o arrastrarlo a la ventana).
 2. Editar y guardar (**File → Save**).
-3. Exportar la imagen con el mismo nombre de antes: **File → Export as → PNG** (o **SVG** para los de `Docs/diagramas`), con **Include a copy of my diagram** marcado.
+3. Exportar la imagen con el mismo nombre de antes (`<nombre>.drawio.png`): **File → Export as → PNG**, con **Include a copy of my diagram** marcado, para que la imagen siga siendo editable.
 
 Con draw.io de escritorio también se exporta desde la terminal, por ejemplo desde la carpeta `Graficas`:
 
 ```
-draw.io --export --format png --embed-diagram --border 10 --scale 1.5 --output diagrama-clases.png fuentes/diagrama-clases.drawio
+draw.io --export --format png --embed-diagram --border 10 --scale 1.5 --output diagrama-clases.drawio.png diagrama-clases.drawio
 ```

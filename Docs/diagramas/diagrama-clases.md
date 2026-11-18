@@ -4,9 +4,9 @@
 |---|---|
 | Historias de usuario | HU-017 (principal), HU-004 y HU-016 |
 | Issue | #67 (sub-issue de HU-017, #25) |
-| Fuente editable | [`diagrama-clases.drawio`](diagrama-clases.drawio) (draw.io); la imagen [`diagrama-clases.svg`](diagrama-clases.svg) se exporta desde draw.io con el diagrama incluido, así que también se abre en draw.io |
+| Fuente editable | [`diagrama-clases.drawio`](diagrama-clases.drawio) (draw.io); la imagen [`diagrama-clases.drawio.png`](diagrama-clases.drawio.png) se exporta desde draw.io con el diagrama incluido, así que también se abre en draw.io |
 
-![Diagrama de clases](diagrama-clases.svg)
+![Diagrama de clases](diagrama-clases.drawio.png)
 
 ## Organización
 

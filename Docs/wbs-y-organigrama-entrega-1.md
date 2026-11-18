@@ -108,7 +108,7 @@ El organigrama representa la distribución de responsabilidades y funciones para
 
 Nuestro equipo trabaja bajo la orientación del Product Owner/Cliente, Ing. Kerwin Barros, quien representa al cliente y valida que el desarrollo responda a las necesidades planteadas, de esta manera, el organigrama permite identificar fácilmente quién es responsable de cada área y cómo se organiza el equipo durante el desarrollo del proyecto.
 
-![Organigrama del equipo Los FIS](../Graficas/entrega-1/wbs-organigrama.png)
+![Organigrama del equipo Los FIS](../Graficas/entrega-1/wbs-organigrama.drawio.png)
 
 | Integrante | Rol para el organigrama |
 |---|---|

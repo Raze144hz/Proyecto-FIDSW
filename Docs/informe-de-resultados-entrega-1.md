@@ -53,13 +53,13 @@ En esta sección se anexan las capturas que permiten verificar los principales r
 
 ### 7.1. WBS
 
-![WBS: estructura jerárquica](../Graficas/entrega-1/informe-wbs-arbol.png)
+![WBS: estructura jerárquica](../Graficas/entrega-1/informe-wbs-arbol.drawio.png)
 
 ![WBS: tabla de elementos](../Graficas/entrega-1/informe-wbs-tabla.png)
 
 ### 7.2. Organigrama
 
-![Organigrama del equipo](../Graficas/entrega-1/informe-organigrama.png)
+![Organigrama del equipo](../Graficas/entrega-1/wbs-organigrama.drawio.png)
 
 ### 7.3. Requisitos
 

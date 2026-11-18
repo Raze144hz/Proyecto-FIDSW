@@ -273,7 +273,7 @@ flowchart LR
 
 ### 3.2 Componentes e interfaces
 
-![Diagrama de componentes](../diagramas/diagrama-componentes.svg)
+![Diagrama de componentes](../diagramas/diagrama-componentes.drawio.png)
 
 El diagrama de componentes ([explicación](../diagramas/diagrama-componentes.md)) define qué ofrece y qué necesita cada componente. Una interfaz **provista** es el contrato que el componente implementa; una **requerida** es el contrato del que depende y que implementa otro componente.
 
@@ -406,11 +406,11 @@ sequenceDiagram
     V-->>D: El plan queda EN REVISION
 ```
 
-El diagrama de secuencia completo de HU-017 con los componentes de esta arquitectura está en [`Graficas/diagrama-secuencia-hu017.png`](../../Graficas/diagrama-secuencia-hu017.png) y se explica en [`arquitectura.md`](arquitectura.md#6-diagrama-de-secuencia-hu-017).
+El diagrama de secuencia completo de HU-017 con los componentes de esta arquitectura está en [`Graficas/diagrama-secuencia-hu017.drawio.png`](../../Graficas/diagrama-secuencia-hu017.drawio.png) y se explica en [`arquitectura.md`](arquitectura.md#6-diagrama-de-secuencia-hu-017).
 
 ### 3.8 Despliegue
 
-![Diagrama de despliegue](../diagramas/diagrama-despliegue.svg)
+![Diagrama de despliegue](../diagramas/diagrama-despliegue.drawio.png)
 
 | Nodo «device» | Entorno de ejecución | Artefactos | Mínimos propuestos |
 |---|---|---|---|
