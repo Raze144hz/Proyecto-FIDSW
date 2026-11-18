@@ -1,5 +1,5 @@
 -- Modelo relacional objetivo del SGPI (PostgreSQL 16).
--- Equivale a Graficas/modelo-relacional-bd.png (fuente: Graficas/fuentes/modelo-relacional-bd.puml)
+-- Equivale a Graficas/modelo-relacional-bd.png (fuente en draw.io: Graficas/fuentes/modelo-relacional-bd.drawio)
 -- y cubre HU-016, HU-017, HU-004 y HU-020 según las decisiones del 18 de octubre de 2026
 -- (ver Docs/Arquitectura/arquitectura.md), más HU-015 y HU-005 (tabla correo, 18 de noviembre).
 --

@@ -7,7 +7,7 @@ Diagramas de diseño para los dos casos de uso elegidos en el ejercicio de la Se
 
 Desde la revisión con el profesor del 16 de octubre, los diagramas también incluyen el seguimiento del plan de acción (**HU-004**, seguimiento de avance) y, desde el 18 de octubre, su cierre (**HU-020**, cierre y evaluación final).
 
-Todos los diagramas están en PNG en la carpeta [`/Graficas`](../../Graficas). Su fuente editable está en [`Graficas/fuentes`](../../Graficas/fuentes): en PlantUML (`.puml`) los de clases, modelo relacional, secuencia y procesos, y en SVG los de componentes y de despliegue con componentes. El diagrama de despliegue todavía no tiene fuente.
+Todos los diagramas están en PNG en la carpeta [`/Graficas`](../../Graficas) y están hechos en **draw.io** (diagrams.net). Su fuente editable es el archivo `.drawio` del mismo nombre en [`Graficas/fuentes`](../../Graficas/fuentes) (ver [cómo editarlos](#cómo-editar-los-diagramas)).
 
 ## 0. Arquitectura objetivo y prototipo implementado
 
@@ -190,20 +190,16 @@ Mismos nodos y conectores del punto 4, con los componentes del punto 3 y su herr
 
 Si el equipo decide una aplicación web o MySQL, hay que actualizar los diagramas. Están pendientes de la revisión técnica del líder técnico.
 
-## Cómo regenerar las imágenes desde las fuentes
+## Cómo editar los diagramas
 
-Las fuentes de los diagramas de clases, modelo relacional, secuencia y procesos están en [`Graficas/fuentes`](../../Graficas/fuentes). Se abren en cualquier editor de PlantUML (por ejemplo, la extensión de PlantUML de VS Code o el servidor web de PlantUML), o se generan las imágenes desde la carpeta `Graficas` con:
+Todos los diagramas están hechos en **draw.io** (https://app.diagrams.net o draw.io de escritorio). Cada uno tiene su archivo `.drawio` en [`Graficas/fuentes`](../../Graficas/fuentes) (los del Taller de Diseño, en [`Docs/diagramas`](../diagramas)), y su imagen se exporta desde draw.io **con el diagrama incluido**: los PNG de `Graficas` y los SVG de `Docs/diagramas` también se abren y se editan directamente en draw.io.
+
+1. Abrir el `.drawio` en draw.io (**File → Open** o arrastrarlo a la ventana).
+2. Editar y guardar (**File → Save**).
+3. Exportar la imagen con el mismo nombre de antes: **File → Export as → PNG** (o **SVG** para los de `Docs/diagramas`), con **Include a copy of my diagram** marcado.
+
+Con draw.io de escritorio también se exporta desde la terminal, por ejemplo desde la carpeta `Graficas`:
 
 ```
-java -jar plantuml.jar -tpng -o .. fuentes/*.puml
+draw.io --export --format png --embed-diagram --border 10 --scale 1.5 --output diagrama-clases.png fuentes/diagrama-clases.drawio
 ```
-
-Los diagramas de componentes y de despliegue con componentes tienen su fuente en SVG (`diagrama-componentes.svg` y `diagrama-despliegue-con-componentes.svg`). Se abren en el navegador y se editan con Inkscape o con un editor de texto (cada texto del diagrama es una etiqueta `<text>`). Para exportar el PNG al mismo tamaño que el de `Graficas`, desde esa carpeta:
-
-```
-inkscape fuentes/diagrama-componentes.svg --export-type=png --export-width=3440 --export-filename=diagrama-componentes.png
-```
-
-Usan la fuente DejaVu Sans; si no está instalada, el texto sale en Arial y puede cambiar un poco de ancho.
-
-El diagrama de despliegue no tiene fuente editable en el repositorio: se generó con un script que no se subió, y sus cambios del 18 de octubre se hicieron directamente sobre el PNG.

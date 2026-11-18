@@ -20,6 +20,6 @@ El código fuente y la documentación se organizan en las siguientes carpetas:
 * `/src` - Código del prototipo y pruebas automáticas.
 * `/Database` - Esquema del prototipo (H2) y modelo objetivo (PostgreSQL).
 * `/Docs` - Documentación formal (requisitos, arquitectura, calidad, planeación, actas y reportes).
-* `/Graficas` - Diagramas, capturas y evidencias; `/Graficas/fuentes` tiene las fuentes PlantUML.
+* `/Graficas` - Diagramas, capturas y evidencias; `/Graficas/fuentes` tiene las fuentes editables en draw.io (`.drawio`).
 * `/Script` - Scripts de apoyo, como el recorrido automático para las evidencias.
 * `/Wiki` - Respaldo de esta documentación.
