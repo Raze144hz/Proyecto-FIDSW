@@ -8,7 +8,7 @@
 **Sprint:** 8 al 21 de octubre de 2026
 **Técnica:** estrella de mar (*Starfish*)
 
-![Retrospectiva del Sprint 3 con la técnica de estrella de mar](starfish-sprint-3.svg)
+![Retrospectiva del Sprint 3 con la técnica de estrella de mar](starfish-sprint-3.drawio.png)
 
 La estrella de mar divide la conversación en cinco brazos:
 

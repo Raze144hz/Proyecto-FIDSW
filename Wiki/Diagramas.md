@@ -16,15 +16,15 @@ En esta sección se documentan los diagramas estructurales, de comportamiento y 
 Los diagramas están en la carpeta [`Graficas`](https://github.com/Raze144hz/Proyecto-FIDSW/tree/main/Graficas) del repositorio y se explican en [`Docs/Arquitectura/arquitectura.md`](https://github.com/Raze144hz/Proyecto-FIDSW/blob/main/Docs/Arquitectura/arquitectura.md).
 
 ### Diagrama de componentes
-![Diagrama de componentes](https://github.com/Raze144hz/Proyecto-FIDSW/blob/main/Graficas/diagrama-componentes.png?raw=true)
+![Diagrama de componentes](https://github.com/Raze144hz/Proyecto-FIDSW/blob/main/Graficas/diagrama-componentes.drawio.png?raw=true)
 
 ### Diagrama de despliegue
-![Diagrama de despliegue](https://github.com/Raze144hz/Proyecto-FIDSW/blob/main/Graficas/diagrama-despliegue.png?raw=true)
+![Diagrama de despliegue](https://github.com/Raze144hz/Proyecto-FIDSW/blob/main/Graficas/diagrama-despliegue.drawio.png?raw=true)
 
 ### Diagrama de clases
-![Diagrama de clases](https://github.com/Raze144hz/Proyecto-FIDSW/blob/main/Graficas/diagrama-clases.png?raw=true)
+![Diagrama de clases](https://github.com/Raze144hz/Proyecto-FIDSW/blob/main/Graficas/diagrama-clases.drawio.png?raw=true)
 
 ### Modelo relacional
-![Modelo relacional](https://github.com/Raze144hz/Proyecto-FIDSW/blob/main/Graficas/modelo-relacional-bd.png?raw=true)
+![Modelo relacional](https://github.com/Raze144hz/Proyecto-FIDSW/blob/main/Graficas/modelo-relacional-bd.drawio.png?raw=true)
 
 Los diagramas de secuencia y de procesos, y el de despliegue unido con componentes, también están en `Graficas`.
