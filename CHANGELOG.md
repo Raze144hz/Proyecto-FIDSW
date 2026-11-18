@@ -1,5 +1,32 @@
 # Registro de cambios
 
+## HU-005: avisos de vencimiento de actividades (18 de noviembre de 2026)
+
+- Criterio 1: al abrir la aplicación y cada 5 minutos se revisan las actividades de los planes aprobados o en ejecución. Si a una actividad no finalizada le quedan 5 días o menos, su responsable recibe un aviso con la actividad, el plan y la fecha límite.
+- Regla de negocio: el aviso se repite una sola vez cuando queda 1 día o menos ("Último aviso"). Cada aviso sale una vez aunque la revisión corra muchas veces al día.
+- Criterio 2: una actividad FINALIZADA no genera avisos. Tampoco los planes en borrador o en revisión.
+- Los avisos son notificaciones del sistema (contador **Notificaciones (n)**) y salen por correo según la preferencia de HU-015 (inmediato, resumen de las 7:00 o desactivado). Una actividad sin responsable se avisa al coordinador del plan.
+- La revisión periódica ahora corre también sin servidor SMTP; antes solo arrancaba con `SGPI_SMTP_HOST` configurado.
+- Sin tablas nuevas. 8 pruebas en `VencimientosActividadesTest` (76 en total).
+
+## HU-015: notificaciones por correo y alertas (10 de noviembre de 2026)
+
+- Cada notificación del sistema también se envía por correo: la asignación de una actividad (nueva), el envío de un plan a revisión, la aprobación y la devolución. El correo trae el resumen, el código del plan y, si está configurada `SGPI_URL_BASE`, el enlace al plan.
+- El envío es por SMTP con Jakarta Mail (nueva dependencia `org.eclipse.angus:angus-mail`). El servidor se configura con variables de entorno `SGPI_SMTP_*`; sin servidor, los correos quedan pendientes.
+- Regla de negocio: en **Preferencias** cada usuario elige la frecuencia de sus correos (inmediata, resumen diario a las 7:00 o desactivada) y ve la lista de correos con su estado.
+- Los correos se envían en un hilo aparte después de guardar la operación: si el servidor falla, la acción del usuario no se pierde y el correo se reintenta hasta 3 veces.
+- Criterio 2: el indicador **Notificaciones (n)** con el conteo de no leídas ya estaba en la barra superior desde HU-017.
+- Nueva tabla `correos` y columna `usuarios.frecuencia_correo`. 8 pruebas en `NotificacionesCorreoTest`.
+
+## HU-010: estructura organizacional (10 de noviembre de 2026)
+
+- Nueva tabla `areas` con código, nombre y estado (activa o inactiva). Una base nueva trae Calidad, Sistemas, Planeación y Talento Humano; en una base anterior se registran solas las áreas que ya usaban los planes y los directores.
+- El administrador gestiona las áreas desde el botón **Áreas** de la barra superior: crear, modificar, activar o desactivar y eliminar.
+- Criterio 1: un área nueva queda habilitada de inmediato para asignar planes. El formulario del plan ya no tiene un campo de texto libre para el área, sino una lista con las áreas activas, y la capa de datos rechaza áreas no registradas o desactivadas.
+- Criterio 2 y regla de negocio: un área con planes o usuarios activos no se elimina; la aplicación lo indica y sugiere desactivarla.
+- Si un área cambia de nombre, sus planes y sus usuarios quedan con el nombre nuevo, así el director sigue viendo los planes de su área.
+- 10 pruebas en `EstructuraOrganizacionalTest`.
+
 ## HU-003: carga de evidencias (10 de noviembre de 2026)
 
 - Cada actividad puede tener evidencias en PDF, DOCX, JPG o PNG, de hasta 10 MB. Además de la extensión se revisa la firma del archivo, para no aceptar, por ejemplo, un ejecutable renombrado a `.pdf`.

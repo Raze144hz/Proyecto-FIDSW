@@ -23,6 +23,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import com.sgpi.data.DataService;
 import com.sgpi.model.Actividad;
+import com.sgpi.model.Area;
 import com.sgpi.model.EstadoPlan;
 import com.sgpi.model.Notificacion;
 import com.sgpi.model.Observacion;
@@ -32,6 +33,8 @@ import com.sgpi.model.ResultadoLogin;
 import com.sgpi.model.Rol;
 import com.sgpi.model.User;
 import com.sgpi.ui.VistaActividades;
+import com.sgpi.ui.VistaAreas;
+import com.sgpi.ui.VistaPreferencias;
 
 public class Main extends Application {
 
@@ -46,6 +49,10 @@ public class Main extends Application {
         this.stage = stage;
 
         database.init();
+
+        // HU-015 y HU-005: al abrir y cada 5 minutos envía los correos pendientes (como el resumen diario) y
+        // genera los avisos de vencimiento de actividades.
+        database.iniciarRevisionDeCorreos(5);
 
         stage.setTitle(
                 "SGPI - Sistema de Gestión de Procesos Institucionales"
@@ -263,6 +270,20 @@ public class Main extends Application {
                         notificaciones,
                         cerrarSesion
                 );
+
+        // HU-015: cada usuario elige la frecuencia de sus correos y ve los que le llegaron.
+        Button preferencias = new Button("Preferencias");
+        preferencias.setId("btnPreferencias");
+        preferencias.setOnAction(event -> new VistaPreferencias(database, usuario).mostrar(stage));
+        topbar.getChildren().add(topbar.getChildren().indexOf(cerrarSesion), preferencias);
+
+        // HU-010: el administrador gestiona las áreas de la estructura organizacional.
+        if (Rol.ADMIN.equals(usuario.rol())) {
+            Button areas = new Button("Áreas");
+            areas.setId("btnAreas");
+            areas.setOnAction(event -> new VistaAreas(database, usuario).mostrar(stage));
+            topbar.getChildren().add(topbar.getChildren().indexOf(notificaciones), areas);
+        }
 
         topbar.setAlignment(
                 Pos.CENTER_LEFT
@@ -618,14 +639,20 @@ public class Main extends Application {
 
         objetivo.setId("txtObjetivo");
 
-        TextField area =
-                new TextField();
+        // HU-010: el área se elige entre las áreas activas de la estructura organizacional.
+        ComboBox<String> area =
+                new ComboBox<>();
 
         area.setPromptText(
                 "Área responsable"
         );
 
-        area.setId("txtArea");
+        area.setMaxWidth(Double.MAX_VALUE);
+
+        area.setId("cmbArea");
+
+        Runnable cargarAreas = () -> area.getItems().setAll(
+                database.listarAreasActivas().stream().map(Area::nombre).toList());
 
         DatePicker fechaInicio =
                 new DatePicker(
@@ -722,7 +749,9 @@ public class Main extends Application {
 
                     objetivo.clear();
 
-                    area.clear();
+                    cargarAreas.run();
+
+                    area.setValue(null);
 
                     fechaInicio.setValue(
                             LocalDate.now()
@@ -779,7 +808,7 @@ public class Main extends Application {
                                     plan.objetivo()
                             );
 
-                            area.setText(
+                            area.setValue(
                                     plan.area()
                             );
 
@@ -826,7 +855,7 @@ public class Main extends Application {
 
                         validarPlan(
                                 objetivo.getText(),
-                                area.getText(),
+                                area.getValue(),
                                 fechaInicio.getValue(),
                                 fechaFin.getValue()
                         );
@@ -845,8 +874,7 @@ public class Main extends Application {
                                                     .trim(),
 
                                             area
-                                                    .getText()
-                                                    .trim(),
+                                                    .getValue(),
 
                                             fechaInicio
                                                     .getValue(),
@@ -874,8 +902,7 @@ public class Main extends Application {
                                             .trim(),
 
                                     area
-                                            .getText()
-                                            .trim(),
+                                            .getValue(),
 
                                     fechaInicio
                                             .getValue(),
@@ -1506,7 +1533,7 @@ public class Main extends Application {
         ) {
 
             throw new IllegalArgumentException(
-                    "Debe ingresar el área responsable."
+                    "Debe seleccionar el área responsable."
             );
         }
 

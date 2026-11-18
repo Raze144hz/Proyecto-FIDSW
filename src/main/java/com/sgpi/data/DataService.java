@@ -1,8 +1,11 @@
 package com.sgpi.data;
 
 import com.sgpi.model.Actividad;
+import com.sgpi.model.Area;
+import com.sgpi.model.CorreoSaliente;
 import com.sgpi.model.EstadoActividad;
 import com.sgpi.model.Evidencia;
+import com.sgpi.model.FrecuenciaCorreo;
 import com.sgpi.model.EstadoPlan;
 import com.sgpi.model.Notificacion;
 import com.sgpi.model.Observacion;
@@ -24,17 +27,23 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.text.Normalizer;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.function.UnaryOperator;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -54,6 +63,9 @@ public class DataService {
 
     public static final int MAX_OBJETIVO = 500;
     public static final int MAX_AREA = 150;
+
+    /** HU-010: largo máximo del código de un área (letras mayúsculas, números y guion). */
+    public static final int MAX_CODIGO_AREA = 10;
     public static final int MAX_OBSERVACION = 1000;
     public static final int MAX_DESCRIPCION_ACTIVIDAD = 300;
 
@@ -77,6 +89,35 @@ public class DataService {
 
     private static final SecureRandom ALEATORIO = new SecureRandom();
 
+    /** HU-015: hora a la que sale el resumen diario de notificaciones. */
+    public static final LocalTime HORA_RESUMEN_DIARIO = LocalTime.of(7, 0);
+
+    /** HU-015: intentos de envío de un correo antes de dejarlo con error. */
+    public static final int MAX_INTENTOS_CORREO = 3;
+
+    /** HU-015: variable de entorno con la dirección web del SGPI, para poner el enlace del plan en el correo. */
+    static final String VARIABLE_URL_BASE = "SGPI_URL_BASE";
+
+    private static final String ASUNTO_RESUMEN = "SGPI: resumen diario de notificaciones";
+    private static final int MAX_CUERPO_CORREO = 8000;
+    private static final String SEPARADOR_RESUMEN = "\n\n----------\n\n";
+
+    /** HU-010: áreas que se crean en una base nueva, con su código. */
+    private static final String[][] AREAS_INICIALES = {
+        {"CAL", "Calidad"},
+        {"SIS", "Sistemas"},
+        {"PLA", "Planeación"},
+        {"THU", "Talento Humano"}
+    };
+
+    private static final String SQL_AREAS = """
+            SELECT a.id, a.codigo, a.nombre, a.activa,
+                   (SELECT COUNT(*) FROM planes p WHERE LOWER(TRIM(p.area))=LOWER(a.nombre)) AS planes,
+                   (SELECT COUNT(*) FROM usuarios u
+                    WHERE u.activo=TRUE AND LOWER(TRIM(u.area))=LOWER(a.nombre)) AS usuarios
+            FROM areas a
+            """;
+
     private static final String SELECT_PLANES =
             "SELECT id, codigo, objetivo, area, fecha_inicio, fecha_fin, estado FROM planes ";
     private static final String SQL_TODOS_LOS_PLANES = SELECT_PLANES + "ORDER BY id DESC";
@@ -92,6 +133,12 @@ public class DataService {
 
     /** Contraseña de la base. Las bases en memoria usan una aleatoria, distinta en cada instancia. */
     private String claveBaseDatos = generarClave();
+
+    /** HU-015: envío de correos ({@code null} si no hay servidor configurado) y dónde se ejecuta. */
+    private EnvioCorreo envioCorreo;
+    private Executor ejecutorCorreo;
+    private boolean hayCorreosNuevos;
+    private ScheduledExecutorService revisionPeriodica;
 
     public DataService() {
         this(URL_POR_DEFECTO);
@@ -115,6 +162,19 @@ public class DataService {
         this.url = url;
         this.reloj = reloj;
         this.entorno = entorno;
+        this.envioCorreo = CorreoSmtp.desdeEntorno(entorno);
+        // Los correos se envían en un hilo aparte, para que un servidor lento no congele la ventana.
+        this.ejecutorCorreo = Executors.newSingleThreadExecutor(tarea -> {
+            Thread hilo = new Thread(tarea, "sgpi-correo");
+            hilo.setDaemon(true);
+            return hilo;
+        });
+    }
+
+    /** Permite a las pruebas cambiar el envío de correos y enviarlos en el mismo hilo. */
+    void usarEnvioCorreo(EnvioCorreo envio, Executor ejecutor) {
+        this.envioCorreo = envio;
+        this.ejecutorCorreo = ejecutor;
     }
 
     // ------------------------------------------------------------------ inicialización
@@ -133,6 +193,8 @@ public class DataService {
                 seedUser(connection, "Coordinador Demo", "coordinador@sgpi.local", "Coord123*", Rol.COORDINADOR, null);
                 seedUser(connection, "Responsable Demo", "responsable@sgpi.local", "Resp123*", Rol.RESPONSABLE, null);
                 seedUser(connection, "Director Demo", "director@sgpi.local", "Dir123*", Rol.DIRECTOR, "Calidad");
+
+                registrarAreasIniciales(connection);
             }
         } catch (Exception exception) {
             throw new RuntimeException("No fue posible iniciar la base de datos.", exception);
@@ -223,6 +285,16 @@ public class DataService {
                 )
                 """);
 
+        // HU-010: estructura organizacional. Los planes y los usuarios guardan el nombre del área.
+        statement.executeUpdate("""
+                CREATE TABLE IF NOT EXISTS areas (
+                    id BIGINT GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+                    codigo VARCHAR(10) NOT NULL UNIQUE,
+                    nombre VARCHAR(150) NOT NULL UNIQUE,
+                    activa BOOLEAN NOT NULL DEFAULT TRUE
+                )
+                """);
+
         // HU-017: aprobación y retroalimentación.
         statement.executeUpdate("ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS area VARCHAR(150)");
         statement.executeUpdate("ALTER TABLE planes ADD COLUMN IF NOT EXISTS fecha_envio TIMESTAMP");
@@ -304,6 +376,25 @@ public class DataService {
                     cargado_en TIMESTAMP NOT NULL,
                     FOREIGN KEY (actividad_id) REFERENCES actividades(id) ON DELETE CASCADE,
                     FOREIGN KEY (cargado_por) REFERENCES usuarios(id)
+                )
+                """);
+
+        // HU-015: preferencia de correo de cada usuario y correos de notificación por enviar.
+        statement.executeUpdate("ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS frecuencia_correo VARCHAR(20) "
+                + "NOT NULL DEFAULT '" + FrecuenciaCorreo.INMEDIATA + "'");
+        statement.executeUpdate("""
+                CREATE TABLE IF NOT EXISTS correos (
+                    id BIGINT GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+                    usuario_id BIGINT NOT NULL,
+                    destinatario VARCHAR(180) NOT NULL,
+                    asunto VARCHAR(200) NOT NULL,
+                    cuerpo VARCHAR(8000) NOT NULL,
+                    creado_en TIMESTAMP NOT NULL,
+                    enviar_desde TIMESTAMP NOT NULL,
+                    enviado_en TIMESTAMP,
+                    intentos INT NOT NULL DEFAULT 0,
+                    ultimo_error VARCHAR(500),
+                    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
                 )
                 """);
     }
@@ -438,10 +529,11 @@ public class DataService {
         validarDatosPlan(objetivo, area, inicio, fin);
 
         String objetivoLimpio = objetivo.trim();
-        String areaLimpia = area.trim();
         String estado = EstadoPlan.BORRADOR; // HU-017: todo plan nuevo empieza en borrador.
 
         return enTransaccion(connection -> {
+            // HU-010: el área debe estar registrada y activa.
+            String areaLimpia = resolverArea(connection, area, null);
             long id;
 
             try (PreparedStatement statement = connection.prepareStatement(
@@ -496,10 +588,13 @@ public class DataService {
                         + EstadoPlan.DEVUELTO + ".");
             }
 
+            // HU-010: un plan puede conservar su área aunque se haya desactivado, pero no pasar a otra inactiva.
+            String areaLimpia = resolverArea(connection, area, plan.area());
+
             try (PreparedStatement statement = connection.prepareStatement(
                     "UPDATE planes SET objetivo=?, area=?, fecha_inicio=?, fecha_fin=? WHERE id=?")) {
                 statement.setString(1, objetivo.trim());
-                statement.setString(2, area.trim());
+                statement.setString(2, areaLimpia);
                 statement.setDate(3, Date.valueOf(inicio));
                 statement.setDate(4, Date.valueOf(fin));
                 statement.setLong(5, id);
@@ -562,6 +657,289 @@ public class DataService {
         }
     }
 
+    // ------------------------------------------------------------------ HU-010: estructura organizacional
+
+    /** Todas las áreas, con la cantidad de planes y de usuarios activos de cada una. */
+    public List<Area> listarAreas() {
+        return consultar(SQL_AREAS + "ORDER BY a.nombre", DataService::mapearArea);
+    }
+
+    /** Áreas que se pueden asignar a un plan. */
+    public List<Area> listarAreasActivas() {
+        return consultar(SQL_AREAS + "WHERE a.activa=TRUE ORDER BY a.nombre", DataService::mapearArea);
+    }
+
+    /** El administrador registra un área con su código y su nombre; queda activa para asignar planes. */
+    public Area crearArea(String codigo, String nombre, User administrador) {
+        validarAdministrador(administrador);
+        String codigoLimpio = validarCodigoArea(codigo);
+        String nombreLimpio = validarNombreArea(nombre);
+
+        return enTransaccion(connection -> {
+            validarAreaUnica(connection, codigoLimpio, nombreLimpio, null);
+
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO areas (codigo, nombre, activa) VALUES (?, ?, TRUE)",
+                    Statement.RETURN_GENERATED_KEYS)) {
+                statement.setString(1, codigoLimpio);
+                statement.setString(2, nombreLimpio);
+                statement.executeUpdate();
+
+                try (ResultSet keys = statement.getGeneratedKeys()) {
+                    keys.next();
+                    return new Area(keys.getLong(1), codigoLimpio, nombreLimpio, true, 0, 0);
+                }
+            }
+        });
+    }
+
+    /**
+     * Cambia el código o el nombre de un área. Si cambia el nombre, los planes y los usuarios del área
+     * quedan con el nombre nuevo, para que no pierdan la relación.
+     */
+    public void actualizarArea(long areaId, String codigo, String nombre, User administrador) {
+        validarAdministrador(administrador);
+        String codigoLimpio = validarCodigoArea(codigo);
+        String nombreLimpio = validarNombreArea(nombre);
+
+        ejecutarEnTransaccion(connection -> {
+            Area actual = leerArea(connection, areaId);
+            validarAreaUnica(connection, codigoLimpio, nombreLimpio, areaId);
+
+            try (PreparedStatement statement =
+                    connection.prepareStatement("UPDATE areas SET codigo=?, nombre=? WHERE id=?")) {
+                statement.setString(1, codigoLimpio);
+                statement.setString(2, nombreLimpio);
+                statement.setLong(3, areaId);
+                statement.executeUpdate();
+            }
+
+            if (!actual.nombre().equals(nombreLimpio)) {
+                for (String tabla : new String[] {"planes", "usuarios"}) {
+                    try (PreparedStatement statement = connection.prepareStatement(
+                            "UPDATE " + tabla + " SET area=? WHERE LOWER(TRIM(area))=LOWER(?)")) {
+                        statement.setString(1, nombreLimpio);
+                        statement.setString(2, actual.nombre());
+                        statement.executeUpdate();
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * Activa o desactiva un área. Un área desactivada no se ofrece para planes nuevos, pero sus planes y
+     * usuarios la conservan.
+     */
+    public void cambiarEstadoArea(long areaId, boolean activa, User administrador) {
+        validarAdministrador(administrador);
+
+        ejecutarEnTransaccion(connection -> {
+            leerArea(connection, areaId);
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE areas SET activa=? WHERE id=?")) {
+                statement.setBoolean(1, activa);
+                statement.setLong(2, areaId);
+                statement.executeUpdate();
+            }
+        });
+    }
+
+    /**
+     * Elimina un área. Regla de HU-010: no se elimina un área con planes o usuarios activos asociados; en
+     * ese caso se sugiere desactivarla.
+     */
+    public void eliminarArea(long areaId, User administrador) {
+        validarAdministrador(administrador);
+
+        ejecutarEnTransaccion(connection -> {
+            Area area = leerArea(connection, areaId);
+
+            if (area.tieneAsociados()) {
+                throw new IllegalStateException("El área " + area.nombre() + " tiene " + area.planes()
+                        + " plan(es) y " + area.usuarios() + " usuario(s) activo(s) asociados, así que no se "
+                        + "puede eliminar. Puede desactivarla para que no se asigne a planes nuevos.");
+            }
+
+            try (PreparedStatement statement = connection.prepareStatement("DELETE FROM areas WHERE id=?")) {
+                statement.setLong(1, areaId);
+                statement.executeUpdate();
+            }
+        });
+    }
+
+    /**
+     * Crea las áreas iniciales en una base nueva y registra las áreas que ya usaban los planes y los
+     * usuarios de una base anterior, para que sigan siendo válidas.
+     */
+    private void registrarAreasIniciales(Connection connection) throws SQLException {
+        boolean vacia;
+        try (Statement statement = connection.createStatement();
+                ResultSet result = statement.executeQuery("SELECT COUNT(*) FROM areas")) {
+            result.next();
+            vacia = result.getInt(1) == 0;
+        }
+
+        if (vacia) {
+            for (String[] area : AREAS_INICIALES) {
+                insertarAreaSiFalta(connection, area[0], area[1]);
+            }
+        }
+
+        List<String> enUso = new ArrayList<>();
+        try (Statement statement = connection.createStatement();
+                ResultSet result = statement.executeQuery("""
+                        SELECT DISTINCT TRIM(area) FROM planes WHERE TRIM(area)<>''
+                        UNION
+                        SELECT DISTINCT TRIM(area) FROM usuarios WHERE area IS NOT NULL AND TRIM(area)<>''
+                        """)) {
+            while (result.next()) {
+                enUso.add(result.getString(1));
+            }
+        }
+
+        for (String nombre : enUso) {
+            insertarAreaSiFalta(connection, codigoSugerido(connection, nombre), nombre);
+        }
+    }
+
+    private void insertarAreaSiFalta(Connection connection, String codigo, String nombre) throws SQLException {
+        try (PreparedStatement consulta =
+                connection.prepareStatement("SELECT 1 FROM areas WHERE LOWER(nombre)=LOWER(?)")) {
+            consulta.setString(1, nombre);
+            try (ResultSet result = consulta.executeQuery()) {
+                if (result.next()) {
+                    return;
+                }
+            }
+        }
+
+        try (PreparedStatement insert =
+                connection.prepareStatement("INSERT INTO areas (codigo, nombre, activa) VALUES (?, ?, TRUE)")) {
+            insert.setString(1, codigo);
+            insert.setString(2, nombre);
+            insert.executeUpdate();
+        }
+    }
+
+    /** Código a partir de las tres primeras letras del nombre, sin tildes; si ya existe, se le agrega un número. */
+    private static String codigoSugerido(Connection connection, String nombre) throws SQLException {
+        String letras = Normalizer.normalize(nombre, Normalizer.Form.NFD)
+                .replaceAll("[^A-Za-z0-9]", "")
+                .toUpperCase(Locale.ROOT);
+        String base = letras.isEmpty() ? "AREA" : letras.substring(0, Math.min(3, letras.length()));
+
+        String codigo = base;
+        for (int numero = 2; existeCodigoArea(connection, codigo); numero++) {
+            codigo = base + numero;
+        }
+        return codigo;
+    }
+
+    private static boolean existeCodigoArea(Connection connection, String codigo) throws SQLException {
+        try (PreparedStatement statement =
+                connection.prepareStatement("SELECT 1 FROM areas WHERE UPPER(codigo)=UPPER(?)")) {
+            statement.setString(1, codigo);
+            try (ResultSet result = statement.executeQuery()) {
+                return result.next();
+            }
+        }
+    }
+
+    /**
+     * Devuelve el nombre registrado del área (sin espacios de más y con sus mayúsculas). El área debe
+     * existir y estar activa, salvo que sea la que el plan ya tenía.
+     */
+    private String resolverArea(Connection connection, String area, String areaActual) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(
+                "SELECT nombre, activa FROM areas WHERE LOWER(nombre)=LOWER(TRIM(?))")) {
+            statement.setString(1, area);
+            try (ResultSet result = statement.executeQuery()) {
+                if (!result.next()) {
+                    throw new IllegalArgumentException("El área \"" + area.trim() + "\" no está registrada. "
+                            + "El administrador puede crearla en la opción Áreas.");
+                }
+
+                String nombre = result.getString("nombre");
+                boolean mismaArea = normalizar(nombre).equals(normalizar(areaActual));
+                if (!result.getBoolean("activa") && !mismaArea) {
+                    throw new IllegalArgumentException(
+                            "El área " + nombre + " está desactivada y no se puede asignar a planes.");
+                }
+                return nombre;
+            }
+        }
+    }
+
+    private Area leerArea(Connection connection, long areaId) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_AREAS + "WHERE a.id=?")) {
+            statement.setLong(1, areaId);
+            try (ResultSet result = statement.executeQuery()) {
+                if (!result.next()) {
+                    throw new IllegalArgumentException("El área no existe.");
+                }
+                return mapearArea(result);
+            }
+        }
+    }
+
+    private static void validarAreaUnica(Connection connection, String codigo, String nombre, Long excepto)
+            throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(
+                "SELECT codigo, nombre FROM areas WHERE (UPPER(codigo)=UPPER(?) OR LOWER(nombre)=LOWER(?)) "
+                + "AND id<>?")) {
+            statement.setString(1, codigo);
+            statement.setString(2, nombre);
+            statement.setLong(3, excepto == null ? -1 : excepto);
+            try (ResultSet result = statement.executeQuery()) {
+                if (result.next()) {
+                    boolean mismoCodigo = result.getString("codigo").equalsIgnoreCase(codigo);
+                    throw new IllegalArgumentException(mismoCodigo
+                            ? "Ya existe un área con el código " + codigo + "."
+                            : "Ya existe un área con el nombre " + result.getString("nombre") + ".");
+                }
+            }
+        }
+    }
+
+    private static String validarCodigoArea(String codigo) {
+        if (codigo == null || codigo.isBlank()) {
+            throw new IllegalArgumentException("El código del área es obligatorio.");
+        }
+        String limpio = codigo.trim().toUpperCase(Locale.ROOT);
+        if (limpio.length() > MAX_CODIGO_AREA || !limpio.matches("[A-Z0-9-]+")) {
+            throw new IllegalArgumentException("El código del área debe tener hasta " + MAX_CODIGO_AREA
+                    + " caracteres, solo letras sin tilde, números y guion.");
+        }
+        return limpio;
+    }
+
+    private static String validarNombreArea(String nombre) {
+        if (nombre == null || nombre.isBlank()) {
+            throw new IllegalArgumentException("El nombre del área es obligatorio.");
+        }
+        String limpio = nombre.trim().replaceAll("\\s+", " ");
+        if (limpio.length() > MAX_AREA) {
+            throw new IllegalArgumentException("El nombre del área no puede superar los " + MAX_AREA + " caracteres.");
+        }
+        return limpio;
+    }
+
+    private static Area mapearArea(ResultSet result) throws SQLException {
+        return new Area(
+                result.getLong("id"),
+                result.getString("codigo"),
+                result.getString("nombre"),
+                result.getBoolean("activa"),
+                result.getInt("planes"),
+                result.getInt("usuarios"));
+    }
+
+    private static void validarAdministrador(User usuario) {
+        if (!Rol.ADMIN.equals(usuario.rol())) {
+            throw new IllegalStateException("Solo el administrador puede gestionar la estructura organizacional.");
+        }
+    }
+
     // ------------------------------------------------------------------ HU-017: aprobación
 
     /** El coordinador envía el plan al director de área (enviarRevision en el diagrama de clases). */
@@ -594,7 +972,7 @@ public class DataService {
 
             // Avisa a los directores que pueden revisar el plan (los de su área o sin área asignada).
             for (long directorId : directoresDelArea(connection, plan.area())) {
-                notificar(connection, directorId, planId,
+                notificar(connection, directorId, plan, "SGPI: plan " + plan.codigo() + " pendiente de su revisión",
                         "El plan " + plan.codigo() + " del área " + plan.area() + " está pendiente de su revisión.");
             }
         });
@@ -620,7 +998,8 @@ public class DataService {
 
             registrarRevision(connection, planId, EstadoPlan.APROBADO, director);
             registrarHistorial(connection, plan, director, "APROBACION", EstadoPlan.APROBADO, null);
-            notificar(connection, plan.creadoPor(), planId, "El plan " + plan.codigo() + " fue aprobado por "
+            notificar(connection, plan.creadoPor(), plan, "SGPI: plan " + plan.codigo() + " aprobado",
+                    "El plan " + plan.codigo() + " fue aprobado por "
                     + director.nombre() + ". Ya puede iniciar su ejecución.");
         });
     }
@@ -664,7 +1043,8 @@ public class DataService {
 
             registrarRevision(connection, planId, EstadoPlan.DEVUELTO, director);
             registrarHistorial(connection, plan, director, "DEVOLUCION", EstadoPlan.DEVUELTO, texto);
-            notificar(connection, plan.creadoPor(), planId, "El plan " + plan.codigo() + " fue devuelto por "
+            notificar(connection, plan.creadoPor(), plan, "SGPI: plan " + plan.codigo() + " devuelto con observaciones",
+                    "El plan " + plan.codigo() + " fue devuelto por "
                     + director.nombre() + " con observaciones: " + texto);
         });
     }
@@ -861,6 +1241,271 @@ public class DataService {
                 result.getTimestamp("fecha").toLocalDateTime()), planId);
     }
 
+    // ------------------------------------------------------------------ HU-015: correos de notificación
+
+    /** Indica si hay un servidor de correo configurado; si no, los correos quedan pendientes. */
+    public boolean correoConfigurado() {
+        return envioCorreo != null;
+    }
+
+    /** Frecuencia con la que el usuario recibe sus notificaciones por correo. */
+    public String obtenerFrecuenciaCorreo(User usuario) {
+        List<String> valor = consultar("SELECT frecuencia_correo FROM usuarios WHERE id=?",
+                result -> result.getString(1), usuario.id());
+        if (valor.isEmpty()) {
+            throw new IllegalArgumentException("El usuario no existe.");
+        }
+        return valor.get(0);
+    }
+
+    /**
+     * Regla de negocio de HU-015: cada usuario elige la frecuencia de sus correos o los desactiva. Las
+     * notificaciones dentro del sistema no cambian.
+     */
+    public void cambiarFrecuenciaCorreo(User usuario, String frecuencia) {
+        if (!FrecuenciaCorreo.TODAS.contains(frecuencia)) {
+            throw new IllegalArgumentException("Frecuencia de correo no válida: " + frecuencia + ".");
+        }
+
+        ejecutarEnTransaccion(connection -> {
+            try (PreparedStatement statement =
+                    connection.prepareStatement("UPDATE usuarios SET frecuencia_correo=? WHERE id=?")) {
+                statement.setString(1, frecuencia);
+                statement.setLong(2, usuario.id());
+                statement.executeUpdate();
+            }
+
+            // Si desactiva los correos, los que estaban esperando el resumen diario ya no se envían.
+            if (FrecuenciaCorreo.DESACTIVADA.equals(frecuencia)) {
+                try (PreparedStatement statement = connection.prepareStatement(
+                        "DELETE FROM correos WHERE usuario_id=? AND enviado_en IS NULL")) {
+                    statement.setLong(1, usuario.id());
+                    statement.executeUpdate();
+                }
+            }
+        });
+    }
+
+    /** Correos de notificación del usuario, del más reciente al más antiguo. */
+    public List<CorreoSaliente> listarCorreos(User usuario) {
+        return consultar("""
+                SELECT id, destinatario, asunto, cuerpo, creado_en, enviar_desde, enviado_en, ultimo_error
+                FROM correos WHERE usuario_id=? ORDER BY creado_en DESC, id DESC
+                """, result -> {
+                    Timestamp enviado = result.getTimestamp("enviado_en");
+                    return new CorreoSaliente(
+                            result.getLong("id"),
+                            result.getString("destinatario"),
+                            result.getString("asunto"),
+                            result.getString("cuerpo"),
+                            result.getTimestamp("creado_en").toLocalDateTime(),
+                            result.getTimestamp("enviar_desde").toLocalDateTime(),
+                            enviado == null ? null : enviado.toLocalDateTime(),
+                            result.getString("ultimo_error"));
+                }, usuario.id());
+    }
+
+    /**
+     * Envía los correos que ya están en su hora (los inmediatos y los resúmenes diarios vencidos). Un
+     * correo que falla se reintenta hasta {@value #MAX_INTENTOS_CORREO} veces. Devuelve cuántos se
+     * enviaron. Sin servidor configurado no hace nada y los correos quedan pendientes.
+     */
+    public synchronized int enviarCorreosPendientes() {
+        EnvioCorreo envio = envioCorreo;
+        if (envio == null) {
+            return 0;
+        }
+
+        List<CorreoSaliente> pendientes = consultar("""
+                SELECT id, destinatario, asunto, cuerpo, creado_en, enviar_desde, enviado_en, ultimo_error
+                FROM correos WHERE enviado_en IS NULL AND enviar_desde<=? AND intentos<? ORDER BY id
+                """, result -> new CorreoSaliente(
+                        result.getLong("id"),
+                        result.getString("destinatario"),
+                        result.getString("asunto"),
+                        result.getString("cuerpo"),
+                        result.getTimestamp("creado_en").toLocalDateTime(),
+                        result.getTimestamp("enviar_desde").toLocalDateTime(),
+                        null,
+                        null), Timestamp.valueOf(LocalDateTime.now(reloj)), MAX_INTENTOS_CORREO);
+
+        int enviados = 0;
+        for (CorreoSaliente correo : pendientes) {
+            String error = null;
+            try {
+                envio.enviar(correo.destinatario(), correo.asunto(), correo.cuerpo() + pieDeCorreo());
+                enviados++;
+            } catch (Exception exception) {
+                error = exception.getMessage() == null ? exception.getClass().getSimpleName() : exception.getMessage();
+            }
+            registrarResultadoEnvio(correo.id(), error);
+        }
+        return enviados;
+    }
+
+    private void registrarResultadoEnvio(long correoId, String error) {
+        String sql = error == null
+                ? "UPDATE correos SET enviado_en=?, intentos=intentos+1, ultimo_error=NULL WHERE id=?"
+                : "UPDATE correos SET intentos=intentos+1, ultimo_error=? WHERE id=?";
+
+        try (Connection connection = connect(); PreparedStatement statement = connection.prepareStatement(sql)) {
+            if (error == null) {
+                statement.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now(reloj)));
+            } else {
+                statement.setString(1, error.length() > 500 ? error.substring(0, 500) : error);
+            }
+            statement.setLong(2, correoId);
+            statement.executeUpdate();
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    /**
+     * Deja el correo listo según la preferencia del usuario: inmediato, sumado al resumen del día o
+     * ninguno si los desactivó.
+     */
+    private void encolarCorreo(Connection connection, long usuarioId, PlanInfo plan, String asunto, String mensaje)
+            throws SQLException {
+        String destinatario;
+        String frecuencia;
+        try (PreparedStatement statement = connection.prepareStatement(
+                "SELECT correo, frecuencia_correo FROM usuarios WHERE id=? AND activo=TRUE")) {
+            statement.setLong(1, usuarioId);
+            try (ResultSet result = statement.executeQuery()) {
+                if (!result.next()) {
+                    return;
+                }
+                destinatario = result.getString("correo");
+                frecuencia = result.getString("frecuencia_correo");
+            }
+        }
+
+        if (FrecuenciaCorreo.DESACTIVADA.equals(frecuencia)) {
+            return;
+        }
+
+        LocalDateTime ahora = LocalDateTime.now(reloj);
+        String detalle = mensaje + "\n\nPlan: " + plan.codigo() + " (área " + plan.area() + ")\n" + enlaceDelPlan(plan);
+
+        if (FrecuenciaCorreo.DIARIA.equals(frecuencia)) {
+            LocalDateTime proximoResumen = ahora.toLocalDate().atTime(HORA_RESUMEN_DIARIO);
+            if (!ahora.isBefore(proximoResumen)) {
+                proximoResumen = proximoResumen.plusDays(1);
+            }
+            if (sumarAlResumen(connection, usuarioId, proximoResumen, detalle)) {
+                return;
+            }
+            insertarCorreo(connection, usuarioId, destinatario, ASUNTO_RESUMEN,
+                    "Resumen de sus notificaciones del SGPI:" + SEPARADOR_RESUMEN + detalle, ahora, proximoResumen);
+            return;
+        }
+
+        insertarCorreo(connection, usuarioId, destinatario, asunto, detalle, ahora, ahora);
+        hayCorreosNuevos = true;
+    }
+
+    /** Agrega la notificación al resumen diario que ya está esperando, si cabe. */
+    private boolean sumarAlResumen(Connection connection, long usuarioId, LocalDateTime enviarDesde, String detalle)
+            throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement("""
+                SELECT id, cuerpo FROM correos
+                WHERE usuario_id=? AND enviado_en IS NULL AND asunto=? AND enviar_desde=?
+                """)) {
+            statement.setLong(1, usuarioId);
+            statement.setString(2, ASUNTO_RESUMEN);
+            statement.setTimestamp(3, Timestamp.valueOf(enviarDesde));
+            try (ResultSet result = statement.executeQuery()) {
+                if (!result.next()) {
+                    return false;
+                }
+                String cuerpo = result.getString("cuerpo") + SEPARADOR_RESUMEN + detalle;
+                if (cuerpo.length() > MAX_CUERPO_CORREO) {
+                    return false;
+                }
+                try (PreparedStatement update =
+                        connection.prepareStatement("UPDATE correos SET cuerpo=? WHERE id=?")) {
+                    update.setString(1, cuerpo);
+                    update.setLong(2, result.getLong("id"));
+                    update.executeUpdate();
+                }
+                return true;
+            }
+        }
+    }
+
+    private void insertarCorreo(Connection connection, long usuarioId, String destinatario, String asunto,
+            String cuerpo, LocalDateTime creadoEn, LocalDateTime enviarDesde) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement("""
+                INSERT INTO correos (usuario_id, destinatario, asunto, cuerpo, creado_en, enviar_desde)
+                VALUES (?, ?, ?, ?, ?, ?)
+                """)) {
+            statement.setLong(1, usuarioId);
+            statement.setString(2, destinatario);
+            statement.setString(3, asunto.length() > 200 ? asunto.substring(0, 200) : asunto);
+            statement.setString(4, cuerpo.length() > MAX_CUERPO_CORREO ? cuerpo.substring(0, MAX_CUERPO_CORREO) : cuerpo);
+            statement.setTimestamp(5, Timestamp.valueOf(creadoEn));
+            statement.setTimestamp(6, Timestamp.valueOf(enviarDesde));
+            statement.executeUpdate();
+        }
+    }
+
+    /**
+     * Enlace al plan si está configurada la dirección web del SGPI ({@value #VARIABLE_URL_BASE}). El
+     * prototipo es de escritorio, así que sin esa dirección el correo indica dónde verlo en la aplicación.
+     */
+    private String enlaceDelPlan(PlanInfo plan) {
+        String base = entorno.apply(VARIABLE_URL_BASE);
+        if (base == null || base.isBlank()) {
+            return "Puede verlo en el SGPI, en el botón Notificaciones.";
+        }
+        String limpia = base.trim().endsWith("/") ? base.trim() : base.trim() + "/";
+        return "Enlace: " + limpia + "planes/" + plan.codigo();
+    }
+
+    private static String pieDeCorreo() {
+        return "\n\n--\nSGPI - Sistema de Gestión de Procesos Institucionales.\n"
+                + "Puede cambiar la frecuencia de estos correos o desactivarlos en Preferencias.";
+    }
+
+    /**
+     * Revisa cada {@code minutos} si hay correos en su hora, por ejemplo el resumen diario de las 7:00, y
+     * genera los avisos de vencimiento de HU-005. Corre también sin servidor de correo: los avisos quedan
+     * como notificaciones en el sistema.
+     */
+    public synchronized void iniciarRevisionDeCorreos(long minutos) {
+        if (revisionPeriodica != null) {
+            return;
+        }
+        revisionPeriodica = Executors.newSingleThreadScheduledExecutor(tarea -> {
+            Thread hilo = new Thread(tarea, "sgpi-correo-periodico");
+            hilo.setDaemon(true);
+            return hilo;
+        });
+        revisionPeriodica.scheduleWithFixedDelay(() -> {
+            try {
+                enviarCorreosPendientes();
+                notificarVencimientos();
+            } catch (RuntimeException exception) {
+                // Si falla la base, se vuelve a intentar en la siguiente revisión.
+                System.getLogger(DataService.class.getName()).log(System.Logger.Level.WARNING,
+                        "No fue posible revisar los correos pendientes y los vencimientos: "
+                                + exception.getMessage());
+            }
+        }, 0, minutos, TimeUnit.MINUTES);
+    }
+
+    /** Después de confirmar una transacción que generó correos inmediatos, los envía sin bloquear la ventana. */
+    private void programarEnvioCorreos() {
+        if (!hayCorreosNuevos) {
+            return;
+        }
+        hayCorreosNuevos = false;
+        if (envioCorreo != null) {
+            ejecutorCorreo.execute(this::enviarCorreosPendientes);
+        }
+    }
+
     // ------------------------------------------------------------------ HU-002 y HU-004: actividades
 
     /** Usuarios activos con rol RESPONSABLE, para asignarlos a actividades. */
@@ -936,6 +1581,13 @@ public class DataService {
             }
 
             registrarHistorial(connection, plan, usuario, "ACTIVIDAD_AGREGADA", plan.estado(), texto);
+
+            // HU-015: el responsable recibe la notificación y el correo de la actividad asignada.
+            if (responsableId != null) {
+                notificar(connection, responsableId, plan, "SGPI: nueva actividad asignada en el plan " + plan.codigo(),
+                        "Se le asignó la actividad \"" + texto + "\" del plan " + plan.codigo() + " (área "
+                        + plan.area() + "), con fecha límite " + fechaLimite + ".");
+            }
 
             return new Actividad(id, planId, texto, responsableId, responsable, fechaLimite,
                     EstadoActividad.PENDIENTE, 0);
@@ -1291,9 +1943,11 @@ public class DataService {
             try {
                 T resultado = operacion.ejecutar(connection);
                 connection.commit();
+                programarEnvioCorreos();
                 return resultado;
             } catch (SQLException | RuntimeException exception) {
                 connection.rollback();
+                hayCorreosNuevos = false;
                 throw exception;
             }
         } catch (SQLException exception) {
@@ -1423,15 +2077,104 @@ public class DataService {
         }
     }
 
-    private void notificar(Connection connection, long usuarioId, long planId, String mensaje)
+    /**
+     * Registra la notificación dentro del sistema y, según la preferencia del usuario, deja listo el
+     * correo (HU-015). El correo se envía después de confirmar la transacción.
+     */
+    private void notificar(Connection connection, long usuarioId, PlanInfo plan, String asunto, String mensaje)
             throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(
                 "INSERT INTO notificaciones (usuario_id, plan_id, mensaje, fecha) VALUES (?, ?, ?, ?)")) {
             statement.setLong(1, usuarioId);
-            statement.setLong(2, planId);
+            statement.setLong(2, plan.id());
             statement.setString(3, mensaje);
             statement.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now(reloj)));
             statement.executeUpdate();
+        }
+
+        encolarCorreo(connection, usuarioId, plan, asunto, mensaje);
+    }
+
+    // ------------------------------------------------------------------ HU-005: avisos de vencimiento
+
+    /** HU-005: primer aviso, cuando a la actividad le quedan 5 días o menos. */
+    public static final int DIAS_PRIMER_AVISO = 5;
+
+    /** HU-005: el aviso se repite cuando queda 1 día o menos, si la actividad sigue pendiente. */
+    public static final int DIAS_SEGUNDO_AVISO = 1;
+
+    /**
+     * Regla de negocio de HU-005: avisa al responsable de cada actividad no finalizada de un plan aprobado o
+     * en ejecución a {@value #DIAS_PRIMER_AVISO} días de su fecha límite, y repite el aviso a
+     * {@value #DIAS_SEGUNDO_AVISO} día. Cada aviso se envía una sola vez aunque la verificación corra muchas
+     * veces al día. Los avisos usan {@code notificar}, así que también salen por correo según la preferencia
+     * del usuario (HU-015). Una actividad sin responsable se avisa al coordinador que creó el plan.
+     *
+     * @return cuántos avisos nuevos se generaron
+     */
+    public int notificarVencimientos() {
+        LocalDate hoy = LocalDate.now(reloj);
+        return enTransaccion(connection -> {
+            List<Object[]> porVencer = new ArrayList<>();
+            try (PreparedStatement statement = connection.prepareStatement("""
+                    SELECT a.descripcion, a.responsable_id, a.fecha_limite,
+                           p.id, p.codigo, p.area, p.estado, p.creado_por
+                    FROM actividades a JOIN planes p ON p.id = a.plan_id
+                    WHERE a.estado<>? AND a.fecha_limite<=? AND p.estado IN (?, ?)
+                    ORDER BY a.fecha_limite, a.id
+                    """)) {
+                statement.setString(1, EstadoActividad.FINALIZADA);
+                statement.setDate(2, Date.valueOf(hoy.plusDays(DIAS_PRIMER_AVISO)));
+                statement.setString(3, EstadoPlan.APROBADO);
+                statement.setString(4, EstadoPlan.EN_EJECUCION);
+                try (ResultSet result = statement.executeQuery()) {
+                    while (result.next()) {
+                        long responsable = result.getLong("responsable_id");
+                        long destinatario = result.wasNull() ? result.getLong("creado_por") : responsable;
+                        porVencer.add(new Object[] {
+                            result.getString("descripcion"),
+                            result.getDate("fecha_limite").toLocalDate(),
+                            destinatario,
+                            new PlanInfo(result.getLong("id"), result.getString("codigo"), result.getString("area"),
+                                    result.getString("estado"), result.getLong("creado_por"))
+                        });
+                    }
+                }
+            }
+
+            int avisos = 0;
+            for (Object[] fila : porVencer) {
+                String descripcion = (String) fila[0];
+                LocalDate fechaLimite = (LocalDate) fila[1];
+                long destinatario = (long) fila[2];
+                PlanInfo plan = (PlanInfo) fila[3];
+
+                boolean ultimoAviso = !fechaLimite.isAfter(hoy.plusDays(DIAS_SEGUNDO_AVISO));
+                // El texto es fijo por actividad y aviso: así se reconoce si ya se envió.
+                String mensaje = (ultimoAviso ? "Último aviso" : "Aviso") + " de vencimiento: la actividad \""
+                        + descripcion + "\" del plan " + plan.codigo() + " tiene fecha límite el " + fechaLimite
+                        + " y aún no está finalizada.";
+                if (yaNotificado(connection, destinatario, plan.id(), mensaje)) {
+                    continue;
+                }
+                notificar(connection, destinatario, plan, "SGPI: actividad por vencer en el plan " + plan.codigo(),
+                        mensaje);
+                avisos++;
+            }
+            return avisos;
+        });
+    }
+
+    private static boolean yaNotificado(Connection connection, long usuarioId, long planId, String mensaje)
+            throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(
+                "SELECT 1 FROM notificaciones WHERE usuario_id=? AND plan_id=? AND mensaje=?")) {
+            statement.setLong(1, usuarioId);
+            statement.setLong(2, planId);
+            statement.setString(3, mensaje);
+            try (ResultSet result = statement.executeQuery()) {
+                return result.next();
+            }
         }
     }
 

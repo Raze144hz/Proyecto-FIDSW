@@ -1,7 +1,7 @@
 -- Modelo relacional objetivo del SGPI (PostgreSQL 16).
--- Equivale a Graficas/modelo-relacional-bd.png (fuente: Graficas/fuentes/modelo-relacional-bd.puml)
+-- Equivale a Graficas/modelo-relacional-bd.png (fuente en draw.io: Graficas/fuentes/modelo-relacional-bd.drawio)
 -- y cubre HU-016, HU-017, HU-004 y HU-020 según las decisiones del 18 de octubre de 2026
--- (ver Docs/Arquitectura/arquitectura.md).
+-- (ver Docs/Arquitectura/arquitectura.md), más HU-015 y HU-005 (tabla correo, 18 de noviembre).
 --
 -- El prototipo NO usa este script: usa H2 con el esquema de Database/prototipo-h2.sql,
 -- que solo cubre HU-017.
@@ -21,6 +21,8 @@ CREATE TABLE usuario (
     nombre VARCHAR(100) NOT NULL,
     correo VARCHAR(100) NOT NULL UNIQUE,
     contrasena VARCHAR(255) NOT NULL,            -- hash BCrypt (RNF-03)
+    frecuencia_correo VARCHAR(20) NOT NULL DEFAULT 'INMEDIATA'
+        CHECK (frecuencia_correo IN ('INMEDIATA', 'DIARIA', 'DESACTIVADA')),   -- HU-015
     id_rol INT NOT NULL REFERENCES rol(id_rol),
     id_area INT NOT NULL REFERENCES area(id_area)
 );
@@ -89,6 +91,21 @@ CREATE TABLE notificacion (
     leida BOOLEAN NOT NULL DEFAULT FALSE,
     id_usuario INT NOT NULL REFERENCES usuario(id_usuario),
     id_plan INT REFERENCES plan_accion(id_plan) ON DELETE CASCADE
+);
+
+-- HU-015: correo de cada notificación según la frecuencia del usuario; se reintenta hasta 3 veces.
+-- HU-005: los avisos de vencimiento son notificaciones y siguen la misma regla.
+CREATE TABLE correo (
+    id_correo SERIAL PRIMARY KEY,
+    destinatario VARCHAR(180) NOT NULL,
+    asunto VARCHAR(200) NOT NULL,
+    cuerpo TEXT NOT NULL,
+    creado_en TIMESTAMP NOT NULL,
+    enviar_desde TIMESTAMP NOT NULL,             -- en el resumen diario, la siguiente 7:00
+    enviado_en TIMESTAMP,                        -- NULL mientras no se haya enviado
+    intentos INT NOT NULL DEFAULT 0,
+    ultimo_error VARCHAR(500),
+    id_usuario INT NOT NULL REFERENCES usuario(id_usuario)
 );
 
 -- Corte de seguimiento (HU-004): comentario del coordinador y avance calculado en esa fecha.
