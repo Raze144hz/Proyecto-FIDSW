@@ -1469,11 +1469,12 @@ public class DataService {
     }
 
     /**
-     * Revisa cada {@code minutos} si hay correos en su hora, por ejemplo el resumen diario de las 7:00.
-     * Sin servidor de correo configurado no hace nada.
+     * Revisa cada {@code minutos} si hay correos en su hora, por ejemplo el resumen diario de las 7:00, y
+     * genera los avisos de vencimiento de HU-005. Corre también sin servidor de correo: los avisos quedan
+     * como notificaciones en el sistema.
      */
     public synchronized void iniciarRevisionDeCorreos(long minutos) {
-        if (envioCorreo == null || revisionPeriodica != null) {
+        if (revisionPeriodica != null) {
             return;
         }
         revisionPeriodica = Executors.newSingleThreadScheduledExecutor(tarea -> {
@@ -1484,10 +1485,12 @@ public class DataService {
         revisionPeriodica.scheduleWithFixedDelay(() -> {
             try {
                 enviarCorreosPendientes();
+                notificarVencimientos();
             } catch (RuntimeException exception) {
                 // Si falla la base, se vuelve a intentar en la siguiente revisión.
                 System.getLogger(DataService.class.getName()).log(System.Logger.Level.WARNING,
-                        "No fue posible revisar los correos pendientes: " + exception.getMessage());
+                        "No fue posible revisar los correos pendientes y los vencimientos: "
+                                + exception.getMessage());
             }
         }, 0, minutos, TimeUnit.MINUTES);
     }
@@ -2090,6 +2093,89 @@ public class DataService {
         }
 
         encolarCorreo(connection, usuarioId, plan, asunto, mensaje);
+    }
+
+    // ------------------------------------------------------------------ HU-005: avisos de vencimiento
+
+    /** HU-005: primer aviso, cuando a la actividad le quedan 5 días o menos. */
+    public static final int DIAS_PRIMER_AVISO = 5;
+
+    /** HU-005: el aviso se repite cuando queda 1 día o menos, si la actividad sigue pendiente. */
+    public static final int DIAS_SEGUNDO_AVISO = 1;
+
+    /**
+     * Regla de negocio de HU-005: avisa al responsable de cada actividad no finalizada de un plan aprobado o
+     * en ejecución a {@value #DIAS_PRIMER_AVISO} días de su fecha límite, y repite el aviso a
+     * {@value #DIAS_SEGUNDO_AVISO} día. Cada aviso se envía una sola vez aunque la verificación corra muchas
+     * veces al día. Los avisos usan {@code notificar}, así que también salen por correo según la preferencia
+     * del usuario (HU-015). Una actividad sin responsable se avisa al coordinador que creó el plan.
+     *
+     * @return cuántos avisos nuevos se generaron
+     */
+    public int notificarVencimientos() {
+        LocalDate hoy = LocalDate.now(reloj);
+        return enTransaccion(connection -> {
+            List<Object[]> porVencer = new ArrayList<>();
+            try (PreparedStatement statement = connection.prepareStatement("""
+                    SELECT a.descripcion, a.responsable_id, a.fecha_limite,
+                           p.id, p.codigo, p.area, p.estado, p.creado_por
+                    FROM actividades a JOIN planes p ON p.id = a.plan_id
+                    WHERE a.estado<>? AND a.fecha_limite<=? AND p.estado IN (?, ?)
+                    ORDER BY a.fecha_limite, a.id
+                    """)) {
+                statement.setString(1, EstadoActividad.FINALIZADA);
+                statement.setDate(2, Date.valueOf(hoy.plusDays(DIAS_PRIMER_AVISO)));
+                statement.setString(3, EstadoPlan.APROBADO);
+                statement.setString(4, EstadoPlan.EN_EJECUCION);
+                try (ResultSet result = statement.executeQuery()) {
+                    while (result.next()) {
+                        long responsable = result.getLong("responsable_id");
+                        long destinatario = result.wasNull() ? result.getLong("creado_por") : responsable;
+                        porVencer.add(new Object[] {
+                            result.getString("descripcion"),
+                            result.getDate("fecha_limite").toLocalDate(),
+                            destinatario,
+                            new PlanInfo(result.getLong("id"), result.getString("codigo"), result.getString("area"),
+                                    result.getString("estado"), result.getLong("creado_por"))
+                        });
+                    }
+                }
+            }
+
+            int avisos = 0;
+            for (Object[] fila : porVencer) {
+                String descripcion = (String) fila[0];
+                LocalDate fechaLimite = (LocalDate) fila[1];
+                long destinatario = (long) fila[2];
+                PlanInfo plan = (PlanInfo) fila[3];
+
+                boolean ultimoAviso = !fechaLimite.isAfter(hoy.plusDays(DIAS_SEGUNDO_AVISO));
+                // El texto es fijo por actividad y aviso: así se reconoce si ya se envió.
+                String mensaje = (ultimoAviso ? "Último aviso" : "Aviso") + " de vencimiento: la actividad \""
+                        + descripcion + "\" del plan " + plan.codigo() + " tiene fecha límite el " + fechaLimite
+                        + " y aún no está finalizada.";
+                if (yaNotificado(connection, destinatario, plan.id(), mensaje)) {
+                    continue;
+                }
+                notificar(connection, destinatario, plan, "SGPI: actividad por vencer en el plan " + plan.codigo(),
+                        mensaje);
+                avisos++;
+            }
+            return avisos;
+        });
+    }
+
+    private static boolean yaNotificado(Connection connection, long usuarioId, long planId, String mensaje)
+            throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(
+                "SELECT 1 FROM notificaciones WHERE usuario_id=? AND plan_id=? AND mensaje=?")) {
+            statement.setLong(1, usuarioId);
+            statement.setLong(2, planId);
+            statement.setString(3, mensaje);
+            try (ResultSet result = statement.executeQuery()) {
+                return result.next();
+            }
+        }
     }
 
     private void validarDirector(User usuario) {

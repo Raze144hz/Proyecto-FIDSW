@@ -9,7 +9,7 @@
 - Sprints de **dos semanas**, de jueves a miércoles, igual que el Sprint 2 (23 sep – 7 oct).
 - Cada sprint sigue la misma estructura del Sprint 2: Planning el primer día, desarrollo, **congelamiento de código y pruebas** el penúltimo día, y **Sprint Review + Retrospectiva** el último día.
 - ~~Stack: backend **Java 17 + Spring**, frontend **web** y base de datos relacional (**PostgreSQL**, por confirmar frente a MySQL según el RNF-09).~~ **Corregido el 18 de octubre:** ese supuesto no se cumplió. El prototipo es una aplicación de escritorio en **Java 17 + JavaFX** con base de datos **H2** local, y la arquitectura objetivo es un cliente JavaFX con una API en Java 17 y **PostgreSQL 16** (ver [arquitectura](../Arquitectura/arquitectura.md)). Las menciones a Spring y a un frontend web en el Sprint 2 reajustado se dejan como registro de lo que se planeó en su momento.
-- **Fecha de entrega final: [POR CONFIRMAR CON EL PROFESOR].** El cronograma asume que el proyecto cierra a finales de noviembre; si la fecha es otra, se ajusta el sprint de cierre.
+- **Fecha de entrega final: viernes 20 de noviembre de 2026** (confirmada el 17 de noviembre). Ese día se entregan el prototipo final, el reporte de pruebas, el repositorio de código actualizado, el informe postmortem y el reporte gerencial. El sprint de Cierre va del 19 al 20 de noviembre.
 - Festivos en Colombia dentro del periodo: **12 de octubre**, **2 de noviembre** y **16 de noviembre** (lunes).
 
 ## Estado real del Sprint 2 al 3 de octubre

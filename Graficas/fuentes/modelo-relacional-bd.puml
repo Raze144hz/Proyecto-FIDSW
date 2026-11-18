@@ -1,5 +1,6 @@
 @startuml modelo-relacional-bd
-' Modelo relacional (objetivo) de la base de datos del SGPI para HU-016, HU-017, HU-004 y HU-020.
+' Modelo relacional (objetivo) de la base de datos del SGPI para HU-016, HU-017, HU-004, HU-020,
+' HU-015 y HU-005 (correos de notificación y avisos de vencimiento, agregados el 18 de noviembre).
 ' El DDL equivalente está en Database/modelo-objetivo-postgresql.sql.
 ' Para generar la imagen, desde la carpeta Graficas: java -jar plantuml.jar -tpng -o .. fuentes/modelo-relacional-bd.puml
 !theme plain
@@ -32,6 +33,7 @@ entity USUARIO {
   • nombre : VARCHAR(100)
   • correo : VARCHAR(100) <<UK>>
   • contrasena : VARCHAR(255)
+  • frecuencia_correo : VARCHAR(20)
   • id_rol : INT <<FK>>
   • id_area : INT <<FK>>
 }
@@ -96,6 +98,20 @@ entity NOTIFICACION {
   <U+2007><U+2007>id_plan : INT <<FK>>
 }
 
+entity CORREO {
+  • id_correo : INT <<PK>>
+  --
+  • destinatario : VARCHAR(180)
+  • asunto : VARCHAR(200)
+  • cuerpo : TEXT
+  • creado_en : TIMESTAMP
+  • enviar_desde : TIMESTAMP
+  <U+2007><U+2007>enviado_en : TIMESTAMP
+  • intentos : INT
+  <U+2007><U+2007>ultimo_error : VARCHAR(500)
+  • id_usuario : INT <<FK>>
+}
+
 entity SEGUIMIENTO_PLAN {
   • id_seguimiento : INT <<PK>>
   --
@@ -130,6 +146,7 @@ PLAN_ACCION ||--o{ OBSERVACION
 USUARIO ||--o{ OBSERVACION
 USUARIO ||--o{ NOTIFICACION
 PLAN_ACCION |o--o{ NOTIFICACION
+USUARIO ||--o{ CORREO
 USUARIO ||--o{ HISTORIAL_PLAN
 PLAN_ACCION ||--o{ SEGUIMIENTO_PLAN
 USUARIO ||--o{ SEGUIMIENTO_PLAN
@@ -146,6 +163,13 @@ note bottom of ACTIVIDAD
   estado: POR_HACER, EN_PROCESO o FINALIZADA.
   Avance del plan (HU-004) = actividades FINALIZADA
   / total de actividades; se calcula, no se guarda.
+end note
+
+note bottom of CORREO
+  HU-015: cada NOTIFICACION también sale por correo según
+  USUARIO.frecuencia_correo (INMEDIATA, DIARIA a las 7:00
+  o DESACTIVADA). HU-005: los avisos de vencimiento
+  (5 días y 1 día) son NOTIFICACION y siguen la misma regla.
 end note
 
 legend right
