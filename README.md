@@ -110,7 +110,7 @@ El repositorio está organizado de la siguiente manera para mantener el orden y 
     *   `com.sgpi.model`: entidades (`Plan`, `Actividad`, `User`…) y constantes de roles y estados.
 *   `/Database`: Modelos de base de datos y scripts DDL/DML.
 *   `/Script`: Scripts de ejecución, configuración y pruebas.
-*   `/Graficas`: Recursos visuales, capturas de pantalla, diagramas y organigramas; `/Graficas/fuentes` tiene las fuentes editables de los diagramas, hechos en draw.io (`.drawio`).
+*   `/Graficas`: Recursos visuales, capturas de pantalla, diagramas y organigramas. Los diagramas están hechos en draw.io: cada PNG tiene al lado su `.drawio` editable.
 *   `/Wiki`: Respaldo de la documentación de la Wiki (ver su [README](Wiki/README.md)).
 *   `pom.xml`, `mvnw`, `mvnw.cmd` y `.mvn/`: Configuración de Maven y Maven Wrapper.
 

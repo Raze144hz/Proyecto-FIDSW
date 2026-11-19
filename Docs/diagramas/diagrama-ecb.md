@@ -4,9 +4,9 @@
 |---|---|
 | Historias de usuario | HU-017 (principal), HU-004 y HU-016 |
 | Issue | #66 (sub-issue de HU-017, #25) |
-| Fuente editable | [`diagrama-ecb.drawio`](diagrama-ecb.drawio) (draw.io); la imagen [`diagrama-ecb.svg`](diagrama-ecb.svg) se exporta desde draw.io con el diagrama incluido, así que también se abre en draw.io |
+| Fuente editable | [`diagrama-ecb.drawio`](diagrama-ecb.drawio) (draw.io); la imagen [`diagrama-ecb.drawio.png`](diagrama-ecb.drawio.png) se exporta desde draw.io con el diagrama incluido, así que también se abre en draw.io |
 
-![Diagrama de análisis ECB](diagrama-ecb.svg)
+![Diagrama de análisis ECB](diagrama-ecb.drawio.png)
 
 ## Qué muestra
 
