@@ -1,0 +1,18 @@
+Pruebas automáticas: mvnw clean test
+Ejecutado por: David Álvarez Rodríguez, en su equipo con Windows 11
+Fecha: 19 de noviembre de 2026
+Versión: rama develop @ 0427fc8, con el mismo código y las mismas pruebas que main @ d61e931
+JDK: OpenJDK 25.0.4 (Microsoft), el de JAVA_HOME que usa el Maven Wrapper; el proyecto compila para Java 17
+
+com.sgpi.data.ActividadesPlanTest: Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.400 s -- in com.sgpi.data.ActividadesPlanTest
+com.sgpi.data.AprobacionPlanesTest: Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.280 s -- in com.sgpi.data.AprobacionPlanesTest
+com.sgpi.data.EstructuraOrganizacionalTest: Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.739 s -- in com.sgpi.data.EstructuraOrganizacionalTest
+com.sgpi.data.EvidenciasTest: Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.838 s -- in com.sgpi.data.EvidenciasTest
+com.sgpi.data.GestionPlanesTest: Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.973 s -- in com.sgpi.data.GestionPlanesTest
+com.sgpi.data.InicioSesionTest: Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.389 s -- in com.sgpi.data.InicioSesionTest
+com.sgpi.data.NotificacionesCorreoTest: Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.837 s -- in com.sgpi.data.NotificacionesCorreoTest
+com.sgpi.data.SeguridadBaseDatosTest: Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.029 s -- in com.sgpi.data.SeguridadBaseDatosTest
+com.sgpi.data.VencimientosActividadesTest: Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.392 s -- in com.sgpi.data.VencimientosActividadesTest
+
+Total: 76 pruebas, 0 fallos, 0 errores, 0 omitidas. BUILD SUCCESS.
+Nota: con JDK 25, JaCoCo 0.8.12 muestra avisos al instrumentar clases del JDK (java.sql.*); no afectan las pruebas.
