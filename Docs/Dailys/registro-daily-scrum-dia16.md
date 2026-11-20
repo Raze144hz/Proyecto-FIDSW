@@ -1,6 +1,6 @@
 # Registro de Daily Scrum - Día 16
 
-**Fecha:** 14/10/2026 **Scrum Master:** Miguel Ángel Gómez López **Asistentes:** David Galindo, Miguel Gómez, Juan Martínez, David Álvarez
+**Fecha:** 13/10/2026 **Scrum Master:** Miguel Ángel Gómez López **Asistentes:** David Galindo, Miguel Gómez, Juan Martínez, David Álvarez
 
 ## Reporte de Estado
 
