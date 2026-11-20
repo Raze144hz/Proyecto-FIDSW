@@ -50,6 +50,7 @@ Los tres están asignados a David Álvarez, con la etiqueta `Entrega-final`, la 
 - **CP-007:** la revisión periódica de vencimientos (cada 5 minutos) generó un aviso a las 15:24, entre la aprobación del plan y la finalización de la actividad. Es el comportamiento esperado; después de finalizar no apareció ningún aviso nuevo.
 - **CP-006:** en el primer intento la fecha límite escrita no se confirmó al pasar con Tab y quedó otra fecha. Se volvió a crear la actividad confirmando con Enter. Es una mejora de usabilidad del selector de fecha, no un defecto del aviso.
 - **CP-005:** se usaron correos que no corresponden a cuentas reales para no bloquear ninguna cuenta.
+- **17 puntos de prueba en el *Progress report*:** al crear el plan, los casos CP-001 a CP-005 quedaron también, por error, en la suite raíz, además de en sus suites de HU. Esas 5 copias nunca se ejecutaron y se quitaron de la suite raíz después de la ejecución; aun así, el *Progress report* de Azure conserva el histórico y muestra 17 puntos (12 ejecutados y 5 sin ejecutar). Los casos reales son 12 y los 12 se ejecutaron.
 
 ## 5. Evidencias
 
