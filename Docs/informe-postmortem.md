@@ -17,7 +17,7 @@ Pontificia Universidad Javeriana, Facultad de Ingeniería
 |---|---|
 | Objetivo | Prototipo funcional del SGPI con su documentación de requisitos, diseño, Scrum y pruebas |
 | Alcance logrado | 8 de 22 HU implementadas con pruebas, 2 en parte; ciclo completo de un plan de acción funcionando |
-| Calidad | 76 pruebas JUnit en verde; SonarQube y JaCoCo desde el PR #77; casos de prueba ejecutados en interfaz y en Azure DevOps **[completar con el resultado]** |
+| Calidad | 76 pruebas JUnit en verde; SonarQube y JaCoCo desde el PR #77; 12 casos de prueba ejecutados en Azure DevOps: 9 pasaron y 3 fallaron, con 3 bugs registrados ([reporte de pruebas](Calidad/reporte-pruebas-entrega-final.md)) |
 | Tiempo | Entrega en la fecha (20 nov), con el alcance reducido frente al cronograma |
 
 ## 2. Línea de tiempo
@@ -78,8 +78,8 @@ Pontificia Universidad Javeriana, Facultad de Ingeniería
 | HU implementadas / planeadas | 8 / 22 (+ 2 parciales) |
 | Pruebas JUnit | 76, 0 fallos |
 | Pull requests unidos a `develop` | 39 (hasta el #85) |
-| Defectos registrados en actas | 12 (8 del Sprint 2 y 4 del Sprint 4) + **[completar]** bugs de Azure DevOps |
-| Casos de prueba en Azure DevOps | **[completar]** diseñados / ejecutados / aprobados / fallidos |
+| Defectos registrados en actas | 15: 12 en actas (8 del Sprint 2 y 4 del Sprint 4) y 3 bugs en Azure DevOps (#272, #273 y #274) |
+| Casos de prueba en Azure DevOps | 12 diseñados / 12 ejecutados / 9 aprobados / 3 fallidos |
 
 ## 8. Acciones pendientes después de la entrega
 
