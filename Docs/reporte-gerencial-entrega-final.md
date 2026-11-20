@@ -51,7 +51,7 @@ Las 4 pruebas restantes (`SeguridadBaseDatosTest`) cubren la clave de la base de
 | HU implementadas con pruebas | 8 de 22 (36 %) | 2 más en parte |
 | HU de prioridad Alta implementadas | 2 de 6 (HU-001 y HU-005) | Pendientes: HU-012a, HU-016, HU-018 y HU-020 |
 | Pruebas automáticas | 76, 0 fallos | 12 (Entrega 2) → 37 (3 nov) → 68 (10 nov) → 76 (18 nov) |
-| Pull requests unidos a `develop` | 39 | 1 en septiembre, 31 en octubre, 8 en noviembre (hasta el #85) |
+| Pull requests unidos | 52 | 34 en octubre y 18 en noviembre (hasta el #93), contando los de `develop` a `main` |
 | Casos de prueba en Azure DevOps | 12 diseñados y 12 ejecutados (CP-001 a CP-012) | 9 pasaron y 3 fallaron (75 %); ver el [reporte de pruebas](Calidad/reporte-pruebas-entrega-final.md) |
 | Defectos registrados en actas | 8 (Sprint 2) + 4 (Sprint 4) + 3 bugs en Azure DevOps (#272, #273 y #274) | Los 3 bugs quedan abiertos en el backlog |
 | Dailies registradas | Día 1 a 18 al 19 nov | Varias se subieron días después (ver postmortem) |

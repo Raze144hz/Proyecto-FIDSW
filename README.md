@@ -37,7 +37,7 @@ A nivel de seguridad, el sistema contempla autenticación de usuarios y control 
 
 ## 🧪 Estado actual del prototipo
 
-Corte: 18 de noviembre de 2026, rama `feature/hu-005-vencimientos` (sobre `develop`, con los PR #76 a #85).
+Corte: 19 de noviembre de 2026, rama `main` (PR #93). Resultado de las pruebas: [reporte de pruebas de la entrega final](Docs/Calidad/reporte-pruebas-entrega-final.md).
 
 | Funcionalidad | Historias | Estado |
 |---|---|---|
@@ -93,10 +93,11 @@ Requisitos, usuarios de prueba y pruebas automáticas: [`README-PROTOTIPO.md`](R
 | Entrega 2 | [Reporte gerencial del Sprint 2](Docs/reporte-gerencial-entrega-2.md), [acta de pruebas](Docs/Calidad/actas/acta-pruebas-sprint-2.md), [evidencias del prototipo](Docs/Calidad/evidencias/evidencias-entrega-2.md) |
 | Arquitectura | [`Docs/Arquitectura/arquitectura.md`](Docs/Arquitectura/arquitectura.md) (arquitectura objetivo y diferencias con el prototipo), [`Docs/Arquitectura/modelos-arquitectonicos.md`](Docs/Arquitectura/modelos-arquitectonicos.md) (modelo monolítico del prototipo y modelo cliente-servidor de tres niveles) |
 | Base de datos | [Esquema del prototipo (H2)](Database/prototipo-h2.sql), [modelo objetivo (PostgreSQL)](Database/modelo-objetivo-postgresql.sql) |
+| Entrega final | [Reporte de pruebas](Docs/Calidad/reporte-pruebas-entrega-final.md), [reporte gerencial](Docs/reporte-gerencial-entrega-final.md), [informe postmortem](Docs/informe-postmortem.md) |
 | Calidad | [Definition of Done](Docs/Calidad/definition-of-done.md), [formato de caso de prueba](Docs/Calidad/formato-caso-de-prueba.md), [formato de acta de pruebas](Docs/Calidad/formato-acta-de-pruebas.md), [casos de HU-016 y HU-017](Docs/Calidad/casos-de-prueba-HU016-HU017.md), [casos de HU-004 y HU-020](Docs/Calidad/casos-de-prueba-HU004-HU020.md), [reporte de pruebas de la entrega final](Docs/Calidad/reporte-pruebas-entrega-final.md) (12 casos en Azure DevOps) |
 | Planeación | Actas de Sprint Planning del [Sprint 2](Docs/Planning/Acta-Planning-Sprint2.md) y del [Sprint 3](Docs/Planning/Acta-Planning-Sprint3.md), [cronograma de desarrollo](Docs/Planning/cronograma-desarrollo.md), [trazabilidad HU ↔ issues](Docs/Planning/trazabilidad-hu-issues.md) |
 | Scrum | [Dailies](Docs/Dailys) |
-| Uso del prototipo | [Guía de usuario](Docs/guia-de-usuario.md) |
+| Uso del prototipo | [Guía de usuario](Docs/guia-de-usuario.md), [guion de la demostración](Docs/guion-demostracion.md) |
 
 ## 📂 Estructura del Repositorio
 
