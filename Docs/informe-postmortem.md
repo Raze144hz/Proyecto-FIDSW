@@ -5,7 +5,7 @@ SGPI: Sistema de Gestión de Procesos Institucionales
 Grupo Los FIS
 Pontificia Universidad Javeriana, Facultad de Ingeniería
 
-> Borrador del 18 de noviembre de 2026 (David Álvarez). Se revisa con todo el equipo en la Retrospectiva final antes de la entrega del viernes 20. Fuentes: retrospectivas y reviews, actas de pruebas, [cronograma](Planning/cronograma-desarrollo.md), [trazabilidad](Planning/trazabilidad-hu-issues.md), historial de GitHub y [reporte gerencial final](reporte-gerencial-entrega-final.md).
+> Versión final del 19 de noviembre de 2026 (David Álvarez), con los resultados de la ejecución de pruebas en Azure DevOps. Fuentes: retrospectivas y reviews, actas de pruebas, [cronograma](Planning/cronograma-desarrollo.md), [trazabilidad](Planning/trazabilidad-hu-issues.md), historial de GitHub y [reporte gerencial final](reporte-gerencial-entrega-final.md).
 >
 > Formato sin culpables: se analizan prácticas y decisiones, no personas.
 
@@ -31,7 +31,9 @@ Pontificia Universidad Javeriana, Facultad de Ingeniería
 | 8 – 21 oct | Sprint 3: 0 de 6 HU del objetivo con código; 24 PR unidos, sobre todo de documentación y diagramas |
 | 22 oct – 4 nov | Sprint 4: refactor del prototipo, HU-001 y HU-004 (PR #76, 37 pruebas) |
 | 5 – 18 nov | Sprint 5: SonarQube y JaCoCo, HU-003, HU-010 y HU-015 (68 pruebas), HU-005 (76 pruebas) |
-| 19 – 20 nov | Cierre: unión a `main`, verificación en clon limpio, pruebas en Azure DevOps, entrega |
+| 18 – 19 nov | Diagramas en draw.io, organización del repositorio y unión de `develop` a `main` (PR #88, #90 y #93); verificación en un clon limpio (76 de 76 pruebas) |
+| 19 nov | Ejecución de los 12 casos de prueba en Azure DevOps: 9 pasaron y 3 fallaron (bugs #272, #273 y #274) |
+| 20 nov | Entrega final y sustentación |
 
 ## 3. Qué salió bien
 
@@ -51,6 +53,8 @@ Pontificia Universidad Javeriana, Facultad de Ingeniería
 | Ramas desincronizadas | Issue #42; en noviembre `main` tenía dailies que `develop` no tenía, y `develop` tenía HU-010 y HU-015 que `main` no tenía | Riesgo de presentar una versión incompleta |
 | Registro Scrum tardío | Dailies subidas días después (las 7 a 14 el 19 y 20 de oct; la 18 con fecha 16/10 subida el 17/11); faltaban actas de Planning, Review y Retro de los Sprints 4 y 5 | Poca evidencia del seguimiento real |
 | Documentación atrasada frente al código | El README decía 37 pruebas cuando había 68; el modelo relacional no tenía la tabla de correos | Riesgo de inconsistencias en la sustentación |
+| Casos de prueba mal ubicados en Azure DevOps | CP-001 a CP-005 quedaron también en la suite raíz del plan #158; el *Progress report* cuenta 17 puntos en vez de 12 | El indicador de ejecución de Azure sale menor al real; se explica en el [reporte de pruebas](Calidad/reporte-pruebas-entrega-final.md) |
+| Pruebas de aceptación al final | Los 12 casos manuales se ejecutaron el día antes de la entrega y encontraron 3 defectos (HU-002, HU-013 y HU-020) | Ya no hubo tiempo de corregirlos |
 | Concentración de trabajo | Buena parte del código de noviembre la hizo una sola persona | Riesgo si esa persona no está disponible |
 
 ## 5. Causas raíz
@@ -59,6 +63,7 @@ Pontificia Universidad Javeriana, Facultad de Ingeniería
 2. **Sin control automático en los PR.** No había un pipeline que corriera las pruebas ni una regla de revisión obligatoria, así que unir sin revisión era lo más fácil.
 3. **El registro Scrum no estaba atado al trabajo diario.** Las dailies y las actas se escribían en lote al final, no el mismo día.
 4. **La documentación se actualizaba aparte del código.** El README y los diagramas no estaban en la checklist del PR.
+5. **Las pruebas manuales no estaban en la DoD de cada HU.** Los casos se diseñaron y ejecutaron al cierre, no al terminar cada historia, así que los defectos aparecieron cuando ya no había sprint para corregirlos.
 
 ## 6. Lecciones aprendidas
 
@@ -70,6 +75,7 @@ Pontificia Universidad Javeriana, Facultad de Ingeniería
 | La documentación es parte de la HU | Agregar a la DoD: README, trazabilidad, CHANGELOG y diagramas afectados actualizados en el mismo PR |
 | Registrar el Scrum el mismo día | Daily de 15 minutos con el registro hecho al terminar; Review y Retro el último día del sprint |
 | Repartir el código | Al menos una HU con código por integrante y por sprint, con revisión cruzada |
+| Probar contra los criterios de aceptación al cerrar cada HU | Ejecutar los casos de prueba de la HU en Azure DevOps antes de moverla a *Done*, no al final del proyecto |
 
 ## 7. Métricas finales
 
@@ -77,12 +83,13 @@ Pontificia Universidad Javeriana, Facultad de Ingeniería
 |---|---|
 | HU implementadas / planeadas | 8 / 22 (+ 2 parciales) |
 | Pruebas JUnit | 76, 0 fallos |
-| Pull requests unidos a `develop` | 39 (hasta el #85) |
-| Defectos registrados en actas | 15: 12 en actas (8 del Sprint 2 y 4 del Sprint 4) y 3 bugs en Azure DevOps (#272, #273 y #274) |
+| Pull requests unidos | 52 (34 en octubre y 18 en noviembre, hasta el #93) |
+| Defectos registrados | 15: 12 en actas (8 del Sprint 2 y 4 del Sprint 4) y 3 bugs en Azure DevOps (#272, #273 y #274) |
 | Casos de prueba en Azure DevOps | 12 diseñados / 12 ejecutados / 9 aprobados / 3 fallidos |
 
 ## 8. Acciones pendientes después de la entrega
 
+- Corregir los bugs #272 (HU-002: nombre y responsable del plan), #273 (HU-013: valor anterior y nuevo en el historial) y #274 (HU-020: evaluación al cerrar).
 - Terminar HU-020, HU-018, HU-016 y HU-012a (prioridad Alta).
 - Reintentos de correo con espera creciente y STARTTLS obligatorio.
 - Separar `DataService` en servicios y repositorios y migrar a PostgreSQL 16.

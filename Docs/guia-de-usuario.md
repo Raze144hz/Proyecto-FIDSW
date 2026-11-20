@@ -133,6 +133,16 @@ El prototipo envía los correos por SMTP. Los datos del servidor se leen de vari
 
 Con la aplicación abierta, cada 5 minutos se revisa si hay correos en su hora, por ejemplo el resumen de las 7:00.
 
+## 11. Avisos de vencimiento de actividades (HU-005)
+
+El responsable de una actividad recibe un aviso en **Notificaciones** (y por correo, según sus preferencias) cuando:
+
+- faltan **5 días o menos** para la fecha límite, y otro aviso cuando falta **1 día o menos**;
+- la actividad no está **FINALIZADA**;
+- el plan está **APROBADO** o **EN EJECUCION**.
+
+Si la actividad no tiene responsable, el aviso le llega a quien creó el plan. La aplicación revisa los vencimientos al abrir y cada 5 minutos, y no repite un aviso que ya envió.
+
 ## Estados del plan
 
 ```
